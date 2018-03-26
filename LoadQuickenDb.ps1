@@ -1,4 +1,6 @@
 ﻿<#2017-08-20 - Copyright 2017 FAJ
+I just added this to GIT
+I have not a clue what i am doing.
 One day I should put in the standard established for Powershell Headers.
 Mod 2017-10-15 - Push *.dat files to the dat subfolder.
 Mod 2017-11-19 - When Quicken exits bring this window to the foreground.
@@ -163,7 +165,7 @@ Try {
         [DllImport("user32.dll")] public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
         [DllImport("user32.dll")] public static extern int SetForegroundWindow(IntPtr hwnd);
         '
-        
+
         if ($Maximize) { $Mode = 3 } else { $Mode = 4 }
         $type = Add-Type -MemberDefinition $sig -Name WindowAPI -PassThru
         $hwnd = $process.MainWindowHandle
@@ -173,7 +175,7 @@ Try {
     #Set-PSDebug -Step
     #start-sleep -Seconds 1
     Show-Process -Process (get-process -id $pid) #-Maximize
-    
+
     #At this point Quicken has exited. Now decide what to do with the data file we where working with.
     if ($bSayit) {$oSynth.SpeakAsync("Do you want to move $($Filename.basename) to the repository?")}
     $MyResponse = read-host "Move $Filename to reposity [y(es)/n(o)]"

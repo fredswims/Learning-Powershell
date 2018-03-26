@@ -1,0 +1,50 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20180113214650
+Username: SUPERCOMPUTER\Super Computer
+RunAs User: SUPERCOMPUTER\Super Computer
+Configuration Name: 
+Machine: SUPERCOMPUTER (Microsoft Windows NT 10.0.16299.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+Process ID: 5868
+PSVersion: 5.1.16299.98
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.16299.98
+BuildVersion: 10.0.16299.98
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is fredarthur.txt
+PS C:\Users\Super Computer\OneDrive\Documents\Powershell> new-item irving.txt
+
+
+    Directory: C:\Users\Super Computer\OneDrive\Documents\Powershell
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        1/13/2018   9:47 PM              0 irving.txt
+
+
+PS C:\Users\Super Computer\OneDrive\Documents\Powershell> add-content irving.txt "hello out there"
+PS C:\Users\Super Computer\OneDrive\Documents\Powershell> gci irving*
+
+
+    Directory: C:\Users\Super Computer\OneDrive\Documents\Powershell
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a---l        1/13/2018   9:47 PM             17 irving.txt
+
+
+PS C:\Users\Super Computer\OneDrive\Documents\Powershell> get-content irving.txt
+hello out there
+PS C:\Users\Super Computer\OneDrive\Documents\Powershell> remove-item irving.txt
+PS C:\Users\Super Computer\OneDrive\Documents\Powershell> Stop-Transcript
+**********************
+Windows PowerShell transcript end
+End time: 20180113214812
+**********************

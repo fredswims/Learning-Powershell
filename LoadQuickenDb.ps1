@@ -1,6 +1,8 @@
 ﻿<#2017-08-20 - Copyright 2017 FAJ
 I just added this to GIT
 I have not a clue what i am doing.
+another change
+ok i got it.
 One day I should put in the standard established for Powershell Headers.
 Mod 2017-10-15 - Push *.dat files to the dat subfolder.
 Mod 2017-11-19 - When Quicken exits bring this window to the foreground.

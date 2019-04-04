@@ -1,4 +1,5 @@
-﻿Set-Location $env:onedrive\swimclub\2017
+﻿# FJ
+Set-Location $env:onedrive\swimclub\2017
 $Database="SwimRiteNow.mdb"
 $DatabasePath=join-path $pwd -childpath $Database
 

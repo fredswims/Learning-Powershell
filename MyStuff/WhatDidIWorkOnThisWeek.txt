@@ -1,0 +1,4 @@
+#https://blogs.msdn.microsoft.com/powershell/2006/09/17/the-wonders-of-date-math-using-windows-powershell/
+$1MonthAgo=[datetime]::now.addmonths(-1)
+
+dir -Recurse | where {$1MonthAgo -le $_.LastWriteTime} | Group Extension | sort -Descending Count |Select -First 10 | Format-Table Count,Name -AutoSize

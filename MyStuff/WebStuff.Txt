@@ -1,0 +1,3 @@
+  $r = Invoke-WebRequest $url -UseDefaultCredentials: $UseDefaultCredentials
+    
+    $table = $r.ParsedHtml.getElementsByTagName("table")[$tableIndex]

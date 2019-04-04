@@ -1,3 +1,0 @@
-gci
-
-show-command *get*

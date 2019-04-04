@@ -1,4 +1,4 @@
-﻿
+﻿#Git
 #https://dfinke.github.io/2016/Data-Crunching-Using-the-content-of-a-text-file-as-a-PowerShell-DSL/
 <#
 COMPND      Ammonia

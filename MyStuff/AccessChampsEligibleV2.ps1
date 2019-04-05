@@ -3,7 +3,7 @@ $Version="2019-03-28.1"
 "FAJ birthday party"
 "Version $Version"
 "add to remote repository."
-
+"Friday"
 #Added code in MakeObjects to flip the event to the heat.
 #This occurs in freestyle relays were the swimmer was leg 1
 #and medley relays were the swimmer was leg 1 or leg 4.

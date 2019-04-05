@@ -1,3 +1,4 @@
+"Saturday"
 #define type accelerator for type accelerators #https://blogs.technet.microsoft.com/heyscriptingguy/2013/07/08/use-powershell-to-find-powershell-type-accelerators/
 $xlr=[psobject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
 $xlr::Add('accelerators',$xlr)

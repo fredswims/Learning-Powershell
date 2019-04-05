@@ -140,6 +140,7 @@ Set-Location $env:onedrive\swimclub\2018
 $Records=Import-Excel -path (join-path $pwd -childpath "SyossetEvents.xlsx")
 
 #Insert them into the datebase
+"Saturday"
 $Database="SwimRiteNowTest.accdb" 
 $DatabasePath=join-path $pwd -childpath $Database
 $l_dbPath = $DatabasePath

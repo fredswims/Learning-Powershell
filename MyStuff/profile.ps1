@@ -1,5 +1,5 @@
 "*** Version::2019-06-13.0"
-#add to git
+#add to git.
 Write-Warning "In function $($MyInvocation.MyCommand.Name): Beginning Common Header"
 #regionProfile
 if ([Environment]::Is64BitProcess){"*** Is 64 bit process"}else {"*** Is 32 bit process"}

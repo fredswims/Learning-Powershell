@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Attribute VB_Name = "EventMaker"
 Option Explicit
 'Public sEvent As String
@@ -6,6 +5,7 @@ Const cDP = vbFalse 'flag for enabling debug.print statements - Global
 Const cEventFilePath = "\Events.csv"
 Const gbAppend = vbFalse
 Dim iEventFile As Integer
+'FAJ
 
 Sub MakeEvents()
 Attribute MakeEvents.VB_ProcData.VB_Invoke_Func = " \n14"
@@ -112,20 +112,20 @@ sEventFilePath = ThisWorkbook.Path & cEventFilePath
     Set f = fs.OpenTextFile(sEventFilePath, iAccessType, cCreateFile, cTristateFalse)
 
     iRowsInTable = 0
-    
+
     'Application.SendKeys "^g ^a {DEL}"    'Clear intermediate screen.  'Big problem with this - don't use. 'It highlites code at end of run.
     'MsgBox "MakeEvents: Make sure the correct number of event columns are set in NextAgeGroup."
-    
+
     'sAnswer = MsgBox("Do you set the correct number of columns in module NextAgeGroup?", vbYesNoCancel, "MakeEvents")
     'If (sAnswer = vbCancel) Or (sAnswer = vbNo) Then End
-   
+
     Debug.Print Now
     sMeetName = Trim(Cells(cRowOrig, cColOrig).Value)
     '
-    
+
     'Figure out the last row of the input table.
     iRowsInTable = FindLastRowInTable(cRowOrig, cColOrig, cLastLine)
-    
+
     'find next (or first) age-group and create events.
     iRow = cRowOrig
     iCol = cColOrig
@@ -143,7 +143,7 @@ sEventFilePath = ThisWorkbook.Path & cEventFilePath
     'Close iEventFile  'close the event file.
     f.Close
     MsgBox ("MakeEvents: Created " & iRecordCount & " events. Finis")
-    
+
     End Sub
     Function NextAgeGroup(ByRef iRowOrig As Integer, ByRef iColOrig As Integer, ByRef iAgeGroup As Integer, ByRef sMeetName As String, ByRef iRecordCount As Integer, f) As Integer
     '2017-12-19 Major modifications to this function.
@@ -172,14 +172,14 @@ sEventFilePath = ThisWorkbook.Path & cEventFilePath
     Dim iColEvent As Integer ' Row Header - The specific event; eg '#18-50 Back'
     Dim iColEventFirst As Integer
     Dim iColEventLast As Integer
-    
+
     'Columns from worksheet
     Dim sGroupName As String
     Dim sEventNo
     Dim sHeat As String
     Dim sName
     Dim sTime As String
-    
+
     Dim sThisEvent
     Dim sThisGroupName As String
     Dim sThisSwitchedEventNo As String
@@ -187,11 +187,11 @@ sEventFilePath = ThisWorkbook.Path & cEventFilePath
 
     'sGroupNames = Array("A  Age Group (8 and Under)", "B  Age Group (9 and 10)", "C  Age Group (11 and 12)", "D  Age Group (13 +)")
     'The Group Names should be added to the spreedsheet
-    
+
     'iRowOrigin is the row where this Age-Group begins
     'iRowOfEvents = iRowOrig + 1
     'iRowNamesStart = iRowOfEvents + 1
-    
+
     'What row contains the events and what row contains the names?
     iRow = iRowOrig
     iCol = iColOrig
@@ -209,7 +209,7 @@ sEventFilePath = ThisWorkbook.Path & cEventFilePath
             iRow = iRow + 1
         End If
     Wend
-        
+
     'Find the last row for this age-group.
     iRowAgeEnd = FindLastRowForThisAgeGroup(iRowOrig, iColOrig)
 
@@ -232,7 +232,7 @@ sEventFilePath = ThisWorkbook.Path & cEventFilePath
         MsgBox cThisSub & "Can not find any events descriptors like #21-25 Breast"
         Stop
     End If
-    
+
     'Build Event-strings for each swimmer in this age-group
     'Produces CSV lines like this;
     'Boys Time Trials,A  Age Group (8 and Under),#06-25 Free,Aleksy Fradlis,2799
@@ -369,7 +369,7 @@ sEventFilePath = ThisWorkbook.Path & cEventFilePath
                         sEventNo = sEventNo & "**" & "DQ" & "**"
                      End If
                 End If 'process Medley Relay, Free Relay, other events.
-                
+
                 '***CONSTRUCT THE EVENT STRING.
                 If bRelay Then sEventNo = Mid(sEventNo, 1, 1) & "r" & Mid(sEventNo, 2)
                 'write the individual or relay event string
@@ -397,7 +397,7 @@ Function FindColumnWithName(sColName As String) As Integer
   '      :=xlWhole, SearchOrder:=xlByColumns, SearchDirection:=xlNext, MatchCase _
   '      :=True, SearchFormat:=False).Activate
   '   Range("Time").Select
-     
+
 'FindColumnWithName = ActiveCell.Column
 
 
@@ -429,20 +429,20 @@ Function WriteEvent(f, ByVal sThisEvent As String)
 '    f.Write "Hello world!"
 '    f.Close
 'End Sub
-    
-    
+
+
 End Function
 Sub HeaderFromA1()
     'ActiveSheet.PageSetup.LeftHeader = Range("A1").Value
 End Sub
-  
+
 Function FindLastRowForThisAgeGroup(ByVal iRow As Integer, ByVal iCol As Integer) As Integer
     'Find the last row for this age-group.
     '2018-11-04 replaces inline code FAJ
     Dim bStop As Boolean
     Dim sTemp As String
     Dim iRowAgeEnd As Integer
-    
+
     bStop = False
     While (bStop = False)
         sTemp = Cells(iRow, iCol).Value
@@ -465,7 +465,7 @@ Function FindLastRowInTable(ByVal iRow As Integer, ByVal iCol As Integer, ByVal 
     Dim iRowsInTable As Integer
     sTemp = ""
     bStop = False
-    
+
     While (bStop = False)
         sTemp = Cells(iRow, iCol).Value
         If sTemp = sLastLine Then
@@ -644,7 +644,7 @@ If (bCalculatedEventTime = False And bCalculatedSplit = False) Then
     For iIndex = 1 To 4
         sTime = SwimTime(sTime, sLegtime(iIndex), 1)
     Next iIndex
-    
+
     'Compare the calculated event-time to the stated event-time (N-0)
     'but first trim leading zeros.
     If (CLng(sTime) = CLng(sLegtime(0))) Then
@@ -692,7 +692,6 @@ End Sub
 
 
 
-=======
 Attribute VB_Name = "EventMaker"
 Option Explicit
 'Public sEvent As String
@@ -806,20 +805,20 @@ sEventFilePath = ThisWorkbook.Path & cEventFilePath
     Set f = fs.OpenTextFile(sEventFilePath, iAccessType, cCreateFile, cTristateFalse)
 
     iRowsInTable = 0
-    
+
     'Application.SendKeys "^g ^a {DEL}"    'Clear intermediate screen.  'Big problem with this - don't use. 'It highlites code at end of run.
     'MsgBox "MakeEvents: Make sure the correct number of event columns are set in NextAgeGroup."
-    
+
     'sAnswer = MsgBox("Do you set the correct number of columns in module NextAgeGroup?", vbYesNoCancel, "MakeEvents")
     'If (sAnswer = vbCancel) Or (sAnswer = vbNo) Then End
-   
+
     Debug.Print Now
     sMeetName = Trim(Cells(cRowOrig, cColOrig).Value)
     '
-    
+
     'Figure out the last row of the input table.
     iRowsInTable = FindLastRowInTable(cRowOrig, cColOrig, cLastLine)
-    
+
     'find next (or first) age-group and create events.
     iRow = cRowOrig
     iCol = cColOrig
@@ -837,7 +836,7 @@ sEventFilePath = ThisWorkbook.Path & cEventFilePath
     'Close iEventFile  'close the event file.
     f.Close
     MsgBox ("MakeEvents: Created " & iRecordCount & " events. Finis")
-    
+
     End Sub
     Function NextAgeGroup(ByRef iRowOrig As Integer, ByRef iColOrig As Integer, ByRef iAgeGroup As Integer, ByRef sMeetName As String, ByRef iRecordCount As Integer, f) As Integer
     '2017-12-19 Major modifications to this function.
@@ -866,14 +865,14 @@ sEventFilePath = ThisWorkbook.Path & cEventFilePath
     Dim iColEvent As Integer ' Row Header - The specific event; eg '#18-50 Back'
     Dim iColEventFirst As Integer
     Dim iColEventLast As Integer
-    
+
     'Columns from worksheet
     Dim sGroupName As String
     Dim sEventNo
     Dim sHeat As String
     Dim sName
     Dim sTime As String
-    
+
     Dim sThisEvent
     Dim sThisGroupName As String
     Dim sThisSwitchedEventNo As String
@@ -881,11 +880,11 @@ sEventFilePath = ThisWorkbook.Path & cEventFilePath
 
     'sGroupNames = Array("A  Age Group (8 and Under)", "B  Age Group (9 and 10)", "C  Age Group (11 and 12)", "D  Age Group (13 +)")
     'The Group Names should be added to the spreedsheet
-    
+
     'iRowOrigin is the row where this Age-Group begins
     'iRowOfEvents = iRowOrig + 1
     'iRowNamesStart = iRowOfEvents + 1
-    
+
     'What row contains the events and what row contains the names?
     iRow = iRowOrig
     iCol = iColOrig
@@ -903,7 +902,7 @@ sEventFilePath = ThisWorkbook.Path & cEventFilePath
             iRow = iRow + 1
         End If
     Wend
-        
+
     'Find the last row for this age-group.
     iRowAgeEnd = FindLastRowForThisAgeGroup(iRowOrig, iColOrig)
 
@@ -926,7 +925,7 @@ sEventFilePath = ThisWorkbook.Path & cEventFilePath
         MsgBox cThisSub & "Can not find any events descriptors like #21-25 Breast"
         Stop
     End If
-    
+
     'Build Event-strings for each swimmer in this age-group
     'Produces CSV lines like this;
     'Boys Time Trials,A  Age Group (8 and Under),#06-25 Free,Aleksy Fradlis,2799
@@ -1063,7 +1062,7 @@ sEventFilePath = ThisWorkbook.Path & cEventFilePath
                         sEventNo = sEventNo & "**" & "DQ" & "**"
                      End If
                 End If 'process Medley Relay, Free Relay, other events.
-                
+
                 '***CONSTRUCT THE EVENT STRING.
                 If bRelay Then sEventNo = Mid(sEventNo, 1, 1) & "r" & Mid(sEventNo, 2)
                 'write the individual or relay event string
@@ -1091,7 +1090,7 @@ Function FindColumnWithName(sColName As String) As Integer
   '      :=xlWhole, SearchOrder:=xlByColumns, SearchDirection:=xlNext, MatchCase _
   '      :=True, SearchFormat:=False).Activate
   '   Range("Time").Select
-     
+
 'FindColumnWithName = ActiveCell.Column
 
 
@@ -1123,20 +1122,20 @@ Function WriteEvent(f, ByVal sThisEvent As String)
 '    f.Write "Hello world!"
 '    f.Close
 'End Sub
-    
-    
+
+
 End Function
 Sub HeaderFromA1()
     'ActiveSheet.PageSetup.LeftHeader = Range("A1").Value
 End Sub
-  
+
 Function FindLastRowForThisAgeGroup(ByVal iRow As Integer, ByVal iCol As Integer) As Integer
     'Find the last row for this age-group.
     '2018-11-04 replaces inline code FAJ
     Dim bStop As Boolean
     Dim sTemp As String
     Dim iRowAgeEnd As Integer
-    
+
     bStop = False
     While (bStop = False)
         sTemp = Cells(iRow, iCol).Value
@@ -1159,7 +1158,7 @@ Function FindLastRowInTable(ByVal iRow As Integer, ByVal iCol As Integer, ByVal 
     Dim iRowsInTable As Integer
     sTemp = ""
     bStop = False
-    
+
     While (bStop = False)
         sTemp = Cells(iRow, iCol).Value
         If sTemp = sLastLine Then
@@ -1338,7 +1337,7 @@ If (bCalculatedEventTime = False And bCalculatedSplit = False) Then
     For iIndex = 1 To 4
         sTime = SwimTime(sTime, sLegtime(iIndex), 1)
     Next iIndex
-    
+
     'Compare the calculated event-time to the stated event-time (N-0)
     'but first trim leading zeros.
     If (CLng(sTime) = CLng(sLegtime(0))) Then
@@ -1386,4 +1385,3 @@ End Sub
 
 
 
->>>>>>> 41ee0154166690cedebc71e59c867db9d6ed5ea8

@@ -50,51 +50,64 @@ Function GetDataFromAccess ($l_queryName)  {
 $Roster=GetDataFromAccess "aqRoster"
 "$($Roster.count) Roster records returned from the database"
 #
-# Collect all of Laurie's files.
-$laurieTemp=import-excel -path .\registration\2019-10-18NewFemales.xlsx -StartRow 2 -StartColumn 1 -EndColumn 2
-$laurieTemp+=import-excel -path .\registration\2019-10-18NewMales.xlsx -StartRow 2 -StartColumn 1 -EndColumn 2
-$laurieTemp+=import-excel -path .\registration\2019-10-18ReturningFeMales.xlsx -StartRow 2 -StartColumn 1 -EndColumn 2
-$laurieTemp+=import-excel -path .\registration\2019-10-18ReturningMales.xlsx -StartRow 2 -StartColumn 1 -EndColumn 2
+# GoogleGroupMembers
+#In Google Groups export the members to a .csv file and convert it to an .xlsx file.
+$GoogleGroupTemp=import-excel -path .\hewlettswimclubGoogleGroup.xlsx -StartRow 1 -StartColumn 1 -EndColumn 2
 # Clean-up data on the Laurie spreadsheet; trim spaces and middle names.
-$FirstNameSplat=@{name='FirstName'; expression={$psitem.'first name'}}
+<# $FirstNameSplat=@{name='FirstName'; expression={$psitem.'first name'}}
 $LastNameSplat=@{name='LastName'; expression={$psitem.'last name'}}
 $FirstLastNameSplat = @{name = "FirstLastName";`
     expression = {if ($psitem."first name".trim().IndexOf(" ") -gt 0)`
     {$psitem.'First Name'.trim().Substring(0,($psitem.'first name'.trim().indexof(" "))) + $psitem."last name".trim()}`
     else {$psitem."first name".trim()+$psitem."last name".trim()}}    }
-
-$Laurie=$laurieTemp |Select-Object -property $FirstNameSplat,$LastNameSplat,$FirstLastNameSplat
-# People who claimed they signed-up
-$OnlineTemp=import-excel -path .\registration\2019-10-20OnlineResponses.xlsx -StartRow 1 -StartColumn 1 -EndColumn 2
+ #>
+ $GoogleGroup=$GoogleGroupTemp
 # Clean-up the data in the spreadsheet.
 $FirstLastNameSplat=@{name = "FirstLastName";`
     expression = {if ($psitem."firstname".trim().IndexOf(" ") -gt 0)`
     {$psitem.'FirstName'.trim().Substring(0,($psitem.'firstname'.trim().indexof(" "))) + $psitem."lastname".trim()}`
     else {$psitem."firstname".trim()+$psitem."lastname".trim()}}    }
-$OnLine=$onlineTemp|select-object -property firstname,LastName,$FirstLastNameSplat
 
 #Create Arrays
-$LaurieArray=foreach($item in $Laurie){$item.FirstLastName}
-if ($LaurieArray.count -eq $laurie.count -and $laurie.count -gt 0){"There are {0} Laurie items" -f $LaurieArray.count} else {Write-error -message "Problem with Laurie data"}
-
-$RosterArray=foreach($item in $Roster) {$item."firstname"+$item."lastname"}
+$GoogleGroupArray=foreach($item in $GoogleGroup){$item.nickname}
+$RosterArray=foreach($item in $Roster) {$item."firstname"+" "+$item."lastname"}
 if ($RosterArray.count -eq $Roster.count -and $Roster.count -gt 0){"There are {0} Roster items" -f $RosterArray.count} else {Write-error -message "Problem with Record data"}
 
-$OnlineArray=foreach($item in $Online) {$item.FirstLastName}
-if ($OnlineArray.count -eq $Online.count -and $Online.count -gt 0){"There are {0} Online items" -f $OnlineArray.count} else {Write-error -message "Problem with Online data"}
-
-#Analysis of data
-#Are there names in the Laurie list that are not in the Roster'
-#because they were not put in the Roster or are misspelled.'
-$NotInRoster=$LaurieArray|Where-Object {($psitem) -notin $RosterArray}
-if ($NotInRoster.count -gt 0) {foreach ($item in $NotInRoster){write-host -ForegroundColor  yellow  "This person is in Lauries list but not in the Roster-> $($item) <-"}}else {"All names in Laurie's list are in the Roster"}
-
-'***** Are there members in the roster ($Roster) who are not on the Laurie list? *****'
-$Roster|Where-Object {($psitem.firstname+$psitem.lastname) -notin $laurieArray}|Select-Object firstname, lastname
-
-'***** people who said they signed up but are not on Laurie list *****'
-#$online|Where-Object {($psitem.firstname+$psitem.lastname) -notin $laurieArray}|Select-Object firstname, lastname|Sort-Object -Unique -property lastname
-$OnlineArray|Where-Object {($psitem) -notin $laurieArray}|Sort-Object -Unique
-
-####################
-
+#Find people in the Google Group who aren't on the swimteam this year.
+"**********************************************"
+$RemovePath="RemoveMeFromGoogleGroup.txt"
+if (Test-Path -path $RemovePath){remove-item $RemovePath}
+out-file -filepath $RemovePath -InputObject ""
+foreach ($longName in $GoogleGroupArray){
+    $flag=0
+    write-host "$Longname ------------------------------------"
+    Foreach ($fullname in $RosterArray){
+        if ($longname -like "*$fullname*"){$flag=$flag+1;write-host "     $longname found in roster with match to  $fullname"} 
+    }
+    if ($flag -eq 0){"??????????????$Longname"}
+    if ($flag -eq 0){out-file -filepath "$RemovePath" -append  -InputObject $Longname}
+    
+}
+#After the people (above) are removed from the Google Group, 
+#check the remaining email address are correct using the Roster as the input reference.
+#Validate email address in the Google Group.
+$email=$roster.email
+$email.count
+$email2=$roster.email2 |Where-Object {$psitem -ne ""}
+$email2.Count
+$email+=$email2
+$email.count
+"**********************************************"
+$RemovePath="emailIsBad.txt"
+if (Test-Path -path $RemovePath){remove-item $RemovePath}
+out-file -filepath $RemovePath -InputObject ""
+foreach ($GoogleEmailAdr in $GoogleGroup."email address"){
+    $flag=0
+    write-host "$GoogleEmailAdr ------------------------------------"
+    Foreach ($RosterEmail in $email){
+        if ($GoogleEmailAdr -like "*$RosterEmail*"){$flag=$flag+1;write-host "     $GoogleEmailAdr found in roster with match to  $RosterEmail"} 
+    }
+    if ($flag -eq 0){"??????????????$GoogleEmailAdr"}
+    if ($flag -eq 0){out-file -filepath "$RemovePath" -append  -InputObject $GoogleEmailAdr}
+    
+}

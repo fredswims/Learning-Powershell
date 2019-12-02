@@ -1,4 +1,19 @@
-﻿#Start-Transcript -path "c:/Users/Super Computer/Documents/SpeakClipOut.txt"
+﻿param ([Parameter(Mandatory = $true,
+    HelpMessage = "Enter the name of the Quicken data file; e.g., Home.qdf : ")]
+    [System.IO.FileInfo]
+    $FileName,
+
+    [Parameter(Mandatory = $false)]
+    [Switch]
+    $Speak
+)
+
+
+
+write-host "file name $filename"
+write-host "Speak $speak"
+
+#Start-Transcript -path "c:/Users/Super Computer/Documents/SpeakClipOut.txt"
 #get-childitem
 $args.Count
 $args
@@ -16,5 +31,5 @@ $oSynth.Speak($SayThis)
 #$oSynth.Speak("goodbye $env:username")
 #foreach ($Voice in $oSynth.GetInstalledVoices()) { $Voice.voiceinfo;$voice.Enabled}
 #$oSynth = $null
-$oSynth.Dispose() 
+$oSynth.Dispose()
 #Stop-Transcript

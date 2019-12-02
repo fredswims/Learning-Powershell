@@ -1,5 +1,5 @@
 ﻿param ([Parameter(Mandatory = $true,
-    HelpMessage = "Enter the name of the Quicken data file; e.g., Home.qdf : ")]
+    HelpMessage = "Enter the name of the data file; e.g., Home.qdf : ")]
     [System.IO.FileInfo]
     $FileName,
 
@@ -136,7 +136,7 @@ else {#destination folder does not exist
     write-host "creating destination folder"
     new-item -path $DestinationDir -itemtype directory # was it created?
 }
-$TranscriptName="Powershell.out"
+$TranscriptName="$filename + .log"
 $TranscriptNameOld=$TranscriptName + ".old"
 
 if (test-path (Join-path $DestinationDir $TranscriptNameold)) {remove-item (Join-path $DestinationDir $TranscriptNameold)}

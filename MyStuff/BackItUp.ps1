@@ -98,6 +98,7 @@ Mod 2018-05-24 'Loop on Read-Host
 
 2019-12-02 Making changes to this routine to make generalized
 MovingAlong
+We can use it but remove the references to Quicken and the repository
 <#
 This script invokes Quicken and requires 2 arguments on the command line invoking it.
 The first argument is the name of a Quicken data file.
@@ -138,8 +139,10 @@ else {#destination folder does not exist
     write-host "creating destination folder"
     new-item -path $DestinationDir -itemtype directory # was it created?
 }
-$TranscriptName=$filename + ".log"
-$TranscriptNameOld=$TranscriptName + ".old"
+$TranscriptName="$($filename).log"
+$TranscriptNameOld="$($TranscriptName).old"
+"TranscriptName is {0} and TranscriptNameOld is {1}" -f $TranscriptName, $TranscriptNameOld
+#Read-Host "just wait"
 
 if (test-path (Join-path $DestinationDir $TranscriptNameold)) {remove-item (Join-path $DestinationDir $TranscriptNameold)}
 if (test-path (Join-path $DestinationDir $TranscriptName)) {rename-item -path (Join-path $DestinationDir $TranscriptName) -newname (Join-path $DestinationDir $TranscriptNameold)}
@@ -237,11 +240,11 @@ Try {
     $ExitCode = 1
     do {
         #$LastExitCode = 0
-        if ($bSayit) {[Void]$oSynth.SpeakAsync(("{0}     you are invoking Quicken with {1}" -f $env:USERNAME, $Filename))}
-
+        if ($bSayit) {[Void]$oSynth.SpeakAsync(("{0} you are invoking {1}" -f ($env:UserName), $DestinationPath))}
+        Write-host "About to Launch $($DestinationPath) using CMD processor."
         cmd /C "$DestinationPath" #launch Quicken using file association and WAIT for it to exit.
         #Start-Process -wait "$DestinationPath" #launch Quicken using file association and WAIT for it to exit.
-
+        #Read-host "CMD returns exit code"
         $ExitCode = $LastExitCode
         write-host "LastExitCode $ExitCode"
         if ($ExitCode -ne 0) {

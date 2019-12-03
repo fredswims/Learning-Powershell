@@ -138,7 +138,7 @@ else {#destination folder does not exist
     write-host "creating destination folder"
     new-item -path $DestinationDir -itemtype directory # was it created?
 }
-$TranscriptName="$filename + .log"
+$TranscriptName=$filename + ".log"
 $TranscriptNameOld=$TranscriptName + ".old"
 
 if (test-path (Join-path $DestinationDir $TranscriptNameold)) {remove-item (Join-path $DestinationDir $TranscriptNameold)}
@@ -182,7 +182,7 @@ Try {
     write-host -ForegroundColor yellow $SayIt
     if ($bSayIt) {[Void]$oSynth.SpeakAsync($SayIt)}
 
-    $SourceDir= split-path $MyInvocation.MyCommand.path -Parent
+    $SourceDir= get-location
     Write-host -ForegroundColor yellow "The path to the Repository is $SourceDir"
 
     #Now test the SourceDir exists. If it doesn't then exit.

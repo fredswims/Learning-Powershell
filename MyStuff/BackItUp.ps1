@@ -126,7 +126,16 @@ If you delete the file it is moved to the RecycleBin.
 #Before starting the Transcript we need to know where the run-time workspace is located.
 Write-Host "**************Beginning Script" -ForegroundColor "Yellow"
 Set-StrictMode -Version latest #Before careful. I don't know all the implications of this setting!
-
+if (test-path $filename){"File exists"}else {read-host "The file does not exist";exit}
+$SourcePath=$filename.fullname
+$SourceDir=$filename.directoryname
+write-host "The arg Filename is $($Filename)"
+write-host "The filename.name is $($filename.name)"
+Write-host "The directory is $($filename.directoryname)"
+Read-Host "The file fullpath is $($filename.fullname)"
+#Filename may look like this ".\xyz.ext" clear the leading ".\".
+#$FileName="$($filename.BaseName)$($filename.Extension)"
+#read-host "$filename"
 #Find the run-time workspace.
 $DestinationDir = Join-Path $env:HOMEDRIVE$env:HOMEPATH "Documents\Quicken" #This is where Quicken likes the run-time file to be.
 write-host "Does destination folder exist?"
@@ -139,7 +148,7 @@ else {#destination folder does not exist
     write-host "creating destination folder"
     new-item -path $DestinationDir -itemtype directory # was it created?
 }
-$TranscriptName="$($filename).log"
+$TranscriptName="$($filename.name).log"
 $TranscriptNameOld="$($TranscriptName).old"
 "TranscriptName is {0} and TranscriptNameOld is {1}" -f $TranscriptName, $TranscriptNameOld
 #Read-Host "just wait"
@@ -185,12 +194,12 @@ Try {
     write-host -ForegroundColor yellow $SayIt
     if ($bSayIt) {[Void]$oSynth.SpeakAsync($SayIt)}
 
-    $SourceDir= get-location
+    #$SourceDir= get-location
     Write-host -ForegroundColor yellow "The path to the Repository is $SourceDir"
 
     #Now test the SourceDir exists. If it doesn't then exit.
     if (!(Test-Path $SourceDir)) {read-host "The path to the Repository Workspace $SourceDir is incorrect"; exit}
-
+  <#
     #Does the Quicken data file exist?
     $SourcePath = Join-Path $SourceDir $FileName
     if (!(Test-Path $SourcePath)) {
@@ -199,8 +208,8 @@ Try {
         write-warning "The file in the Repository is $SourcePath"
         get-item $SourcePath | format-list Fullname, CreationTime, LastWriteTime, LastAccessTime
     }
-
-    $DestinationPath = Join-Path $DestinationDir $FileName #fullpath to Quicken data file.
+#>
+    $DestinationPath = Join-Path $DestinationDir $FileName.name #fullpath to Quicken data file.
     if (test-path $DestinationPath) {
         $TempFolderName = Split-path $DestinationDir -leaf
         $Sayit = "The data file is already in the $tempFolderName folder. Overwrite It? "
@@ -209,15 +218,16 @@ Try {
         Write-Warning  $SayIt
         get-item $DestinationPath | format-list Fullname, CreationTime, LastWriteTime, LastAccessTime
 
-        #$SayIt="$Filename is already in the working folder - Overwrite?"
+        #$SayIt="$($Filename.name) is already in the working folder - Overwrite?"
         Do {
             $MyResponse = Read-host "$SayIt [Y] Yes  [N]  No"
         } until ($MyResponse -like 'y*' -or $MyResponse -like 'n*')
         if ( $MyResponse.tolower() -like "y*") {
-            $Sayit = "Over-writing $Filename"
+            $Sayit = "Over-writing $Filename.name"
             if ($bSayit) {[Void]$oSynth.SpeakAsync($Sayit)}
             Write-Warning  $SayIt
-            Copy-Item $SourcePath $DestinationDir
+            read-host "sourcepath $($SourcePath) and DestinationDir $($DestinationDir)"
+            Copy-Item $SourcePath $DestinationDir -whatif   
             if ($?) {write-warning " $SayIt completed" -Verbose}
         }
         else {
@@ -291,8 +301,10 @@ Try {
         if ($bSayIt) {[void]$oSynth.SpeakAsync($SayIt)}
         #in the repository,
         #<remove-item home.qdf.old>
-        remove-item -Force "$SourcePath.old"
+        if (Test-Path "$SourcePath.old" )  {remove-item -Force "$SourcePath.old"}
         #rename-item home.qdf -> home.qdf.old
+        "about to rename SourcePath {0}" -f $SourcePath
+        read-host "pause"
         rename-item -force $SourcePath "$Sourcepath.old"
         move-Item $DestinationPath $SourceDir -force
         write-host  -foregroundColor Yellow "$($Sayit) at $(Get-Date) " # "V2.15.3"
@@ -301,7 +313,7 @@ Try {
         get-item $SourcePath | format-list Fullname, CreationTime, LastWriteTime, LastAccessTime
     }
     else {
-        $SayIt="Do you want to move $($Filename) to the recycle-bin?"
+        $SayIt="Do you want to move $($Filename.name) to the recycle-bin?"
         if ($bSayit) {[Void]$oSynth.SpeakAsync($SayIt)}
         Do { $MyResponse = Read-host "$($SayIt) [Y] Yes  [N]  No"}
         until ( ($MyResponse -like "y*" ) -or ($MyResponse -like "n*") )

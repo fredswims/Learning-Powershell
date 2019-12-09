@@ -17,13 +17,34 @@ $Excel.ActiveWorkbook.Close()
 $Excel.Quit()
 #>
 
-#v1 FAJ 2019-10-18
+<#
+#v1   FAJ 2019-10-18
+    Create Best Times as HTML Reports
+    Do some clean-up
+    Invoke Procedures in SwimRiteNow excel spreadsheet.
+#v1.1 FAJ 2019-12-09 Add Rank reports
+    Create Rank as PDF and HTML reports
+#>
 
 set-location $env:OneDrive/swimclub/2019/Reports
+#Boys and Girls Best Times as HTML reports
 remove-item "*compact*.old"
 $HtmlPath="BoysBestCompact.html"
 rename-item -force -Path $HtmlPath -NewName "$($HtmlPath).old"
 $HtmlPath="GirlsBestCompact.html"
+rename-item -force -Path $HtmlPath -NewName "$($HtmlPath).old"
+
+#Boys and Girls Rank as PDF and HTML reports
+remove-item "*Rank*.old"
+
+$PdfPath="BoysRank.pdf"
+rename-item -force -Path $PdfPath -NewName "$($PdfPath).old"
+$PdfPath="GirlsRank.pdf"
+rename-item -force -Path $PdfPath -NewName "$($PdfPath).old"
+
+$HtmlPath="BoysRank.html"
+rename-item -force -Path $HtmlPath -NewName "$($HtmlPath).old"
+$HtmlPath="GirlsRank.html"
 rename-item -force -Path $HtmlPath -NewName "$($HtmlPath).old"
 
 set-location $env:OneDrive/swimclub/2019
@@ -38,6 +59,8 @@ $workbook=$objExcel.Workbooks.Open($(Join-Path $dir $xlfile))
 #$worksheet.Activate()
 #$objExcel.Run("HiLite")
 $objExcel.Run("SavePivotTableAsHtml")
+$objExcel.Run("RankReportPdfGirls")
+$objExcel.Run("RankReportPdfBoys")
     #$workbook.save()
 $workbook.Close(0) #without this line you get SAVE pop-up.
     #$objExcel.Save()
@@ -50,3 +73,4 @@ stop-process $thisTaskId
 
 push-location $env:OneDrive/swimclub/2019/Reports
 Get-ChildItem "*compact*"
+Get-ChildItem "*Rank*"

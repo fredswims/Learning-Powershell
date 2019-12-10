@@ -18,14 +18,18 @@ $Excel.Quit()
 #>
 
 <#
-#v1   FAJ 2019-10-18
+v1   FAJ 2019-10-18
     Create Best Times as HTML Reports
     Do some clean-up
     Invoke Procedures in SwimRiteNow excel spreadsheet.
-#v1.1 FAJ 2019-12-09 Add Rank reports
+v1.1 FAJ 2019-12-09 Add Rank reports
     Create Rank as PDF and HTML reports
+V1.2 FAJ 2019-12-09 Rank and HTML reports consolidated in Excel into one module; RankReports
 #>
 
+#shutdown Adobe Pdf reader
+get-process AcroRd* | Sort-Object name | stop-process
+Start-Sleep -Seconds 2
 set-location $env:OneDrive/swimclub/2019/Reports
 #Boys and Girls Best Times as HTML reports
 remove-item "*compact*.old"
@@ -58,9 +62,12 @@ $workbook=$objExcel.Workbooks.Open($(Join-Path $dir $xlfile))
 #$worksheet=$workbook.Worksheets.Item('Boys')
 #$worksheet.Activate()
 #$objExcel.Run("HiLite")
+"Make Best Time HTML Reports"
 $objExcel.Run("SavePivotTableAsHtml")
-$objExcel.Run("RankReportPdfGirls")
-$objExcel.Run("RankReportPdfBoys")
+"Make Rank Reports both PDF and HTML"
+$objExcel.Run("RankReports")
+#$objExcel.Run("RankReportPdfGirls")
+#$objExcel.Run("RankReportPdfBoys")
     #$workbook.save()
 $workbook.Close(0) #without this line you get SAVE pop-up.
     #$objExcel.Save()
@@ -72,5 +79,7 @@ Start-Sleep -seconds 5
 stop-process $thisTaskId
 
 push-location $env:OneDrive/swimclub/2019/Reports
-Get-ChildItem "*compact*"
-Get-ChildItem "*Rank*"
+Get-ChildItem "*compact*" |sort-object -property  LastWriteTime | format-table -property  LastWriteTime, Name -AutoSize
+Get-ChildItem "*Rank*" |sort-object -property  LastWriteTime | format-table -property  LastWriteTime, Name -AutoSize
+
+# "*.html", "*.pdf" | Get-ChildItem |Sort-Object -property LastWriteTime

@@ -1,6 +1,6 @@
 Attribute VB_Name = "HighLitePivotTable"
 Option Explicit
-Const cThisMeet = "2019-03-31 Champs"
+Const cThisMeet = "2019-11-25 Time Trials"
 Const cDisableScreenUpdating = vbTrue
 Const cDP = vbFalse 'flag for enabling debug.print statements - Global
 Const cEventFilePath = "\Events.csv"
@@ -1705,6 +1705,90 @@ For Each vName In sNames()
 Next
 End Sub
 
+Sub RankReportPdfGirls()
+'deprecated - replaced with RankReports()
+'
+' RankReportGirls Macro
+'
+    Worksheets("GirlsTimes").Activate
+    Range("A1:O48").Select
+    
+    'Make PDF file
+    Selection.ExportAsFixedFormat _
+        Type:=xlTypePDF, _
+        Filename:=ActiveWorkbook.Path & "\reports\GirlsRank.pdf", _
+        Quality:=xlQualityStandard, _
+        IncludeDocProperties:=True, _
+        IgnorePrintAreas:=False, _
+        OpenAfterPublish:=True
+        
+    'Make HTML file
+    Dim rSourceData As Range
+    Set rSourceData = Range(Cells(1, 1), Cells(48, 15))
+
+    With ActiveWorkbook.PublishObjects.Add(xlSourceRange, _
+        ActiveWorkbook.Path & "\reports\GirlsRank.html", _
+        "GirlsTimes", _
+        rSourceData.Address, _
+        xlHtmlStatic, "BoysRankReport", "")
+        .Publish (True)
+        .AutoRepublish = False
+    End With
+        
+        
+     'set range to something harmless before exiting.
+     Range("A1:A1").Select
+    
+    
+End Sub
+
+Sub RankReports()
+'
+' 2019-12-09 FAJ Creates Boys and Girls Rank Reports in PDF and HTML formats.
+' RankReportGirls Macro
+' https://docs.microsoft.com/en-us/office/vba/api/excel.range.address
+' see example
+Dim rSourceData As Range
+Dim vName As Variant
+Dim sThisRange As String
+Dim sThisName As String
+Dim sNames(1) As String
+sNames(0) = "Boys-A1:U72"  'Boys and print range
+sNames(1) = "Girls-A1:O48" 'Girls and print range
+
+For Each vName In sNames()
+    sThisName = Mid(vName, 1, InStr(vName, "-") - 1)
+    sThisRange = Mid(vName, InStr(vName, "-") + 1)
+    Worksheets(sThisName & "Times").Activate
+    'Set rSourceData = Range(Cells(1, 1), Cells(72, 21))
+    'Set rSourceData = Range("A1:U72")
+    Set rSourceData = Range(sThisRange)
+    rSourceData.Select
+    'Range("A1:U72").Select
+    
+    'print PDF report
+    Selection.ExportAsFixedFormat _
+        Type:=xlTypePDF, _
+        Filename:=ActiveWorkbook.Path & "\reports\" & sThisName & "Rank.pdf", _
+        Quality:=xlQualityStandard, _
+        IncludeDocProperties:=True, _
+        IgnorePrintAreas:=False, _
+        OpenAfterPublish:=True
+    
+    'print HTML report
+    With ActiveWorkbook.PublishObjects.Add(xlSourceRange, _
+        ActiveWorkbook.Path & "\reports\" & sThisName & "Rank.html", _
+        sThisName & "Times", _
+        rSourceData.Address, _
+        xlHtmlStatic, sThisName & "RankReport", "")
+        .Publish (True)
+        .AutoRepublish = False
+    End With
+    
+    Range("A1").Select 'place cursor here for safely
+
+Next
+End Sub
 
 
 

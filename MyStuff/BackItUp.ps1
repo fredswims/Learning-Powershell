@@ -139,7 +139,7 @@ Read-Host "The file fullpath is $($filename.fullname)"
 #$FileName="$($filename.BaseName)$($filename.Extension)"
 #read-host "$filename"
 #Find the run-time workspace.
-$DestinationDir = Join-Path $env:HOMEDRIVE$env:HOMEPATH "Documents\Quicken" #This is where Quicken likes the run-time file to be.
+$DestinationDir = Join-Path $env:HOMEDRIVE$env:HOMEPATH "Documents\Temp" #This is where Quicken likes the run-time file to be.
 write-host "Does destination folder exist?"
 if (test-path $DestinationDir) {#it exists
     write-host "Destination folder $DestinationDir exists"
@@ -229,7 +229,7 @@ Try {
             if ($bSayit) {[Void]$oSynth.SpeakAsync($Sayit)}
             Write-Warning  $SayIt
             read-host "sourcepath $($SourcePath) and DestinationDir $($DestinationDir)"
-            Copy-Item $SourcePath $DestinationDir -whatif   
+            Copy-Item $SourcePath $DestinationDir -whatif
             if ($?) {write-warning " $SayIt completed" -Verbose}
         }
         else {

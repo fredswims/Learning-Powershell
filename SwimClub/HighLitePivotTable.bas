@@ -1,6 +1,6 @@
 Attribute VB_Name = "HighLitePivotTable"
 Option Explicit
-Const cThisMeet = "2019-11-25 Time Trials"
+Const cThisMeet = "2019-12-15 Long Beach"
 Const cDisableScreenUpdating = vbTrue
 Const cDP = vbFalse 'flag for enabling debug.print statements - Global
 Const cEventFilePath = "\Events.csv"
@@ -1655,7 +1655,12 @@ Sub SavePivotTableAsHtml()
 'Called from Powershell
 'Automate the printing of the pivot table
 'Other printing can be done here in the same manner.
-'
+
+'2020-01-06 FAJ
+'Now makes the Long and Compact report.
+'Gave the reports titles.
+
+
 Dim iRowStart As Integer
 Dim iRowLast As Integer
 Dim iColStart As Integer
@@ -1677,71 +1682,47 @@ For Each vName In sNames()
                 iRowStart = pt.RowRange.Row
                 iRowLast = pt.RowRange.Rows.count + iRowStart - 1
                 Set rSourceData = Range(Cells(iRowStart, iColStart), Cells(iRowLast, iColLast))
+                With ActiveWorkbook.PublishObjects.Add(SourceType:=xlSourceRange, _
+                    Filename:=ActiveWorkbook.Path & "\reports\" & vName & "BestCompact.html", _
+                    Sheet:=vName, _
+                    Source:=rSourceData.Address, _
+                    HtmlType:=xlHtmlStatic, _
+                    DivID:="Best Compact", _
+                    Title:=vName & "-Best-Times-Compact-Report")
+                    .Publish (True)
+                    .AutoRepublish = False
+                End With
             End If
+            If pt.Name = cPVNAME Then
+                iColStart = pt.RowRange.Column
+                iColLast = iColStart + (pt.TableRange2.Columns.count - 1) + 1 ' there is one adjacent to the right most column that is filled with information.
+                iRowStart = pt.RowRange.Row
+                iRowLast = pt.RowRange.Rows.count + iRowStart - 1
+                Set rSourceData = Range(Cells(iRowStart, iColStart), Cells(iRowLast, iColLast))
+                With ActiveWorkbook.PublishObjects.Add(SourceType:=xlSourceRange, _
+                    Filename:=ActiveWorkbook.Path & "\reports\" & vName & "BestFull.html", _
+                    Sheet:=vName, _
+                    Source:=rSourceData.Address, _
+                    HtmlType:=xlHtmlStatic, _
+                    DivID:=vName & "BestFull", _
+                    Title:=vName & "-Best-Times-Long-Report")
+                    .Publish (True)
+                    .AutoRepublish = False
+                End With
 
-'          If pt.Name = cPVNAME Then
 '              ActiveSheet.Columns(pt.RowRange.Column + pt.TableRange2.Columns.count).EntireColumn.Delete
 '              ActiveSheet.Columns(pt.RowRange.Column + pt.TableRange2.Columns.count).EntireColumn.AutoFit
 '              ActiveSheet.Columns(pt.RowRange.Column + pt.TableRange2.Columns.count + 1).EntireColumn.Insert
-'          End If
-        End If
+            End If
+        End If 'compact
     Next
     
 
-    With ActiveWorkbook.PublishObjects.Add(xlSourceRange, _
-        ActiveWorkbook.Path & "\reports\" & vName & "BestCompact.html", _
-        vName, _
-        rSourceData.Address, _
-        xlHtmlStatic, "SwimRiteNow_5953", "")
-        .Publish (True)
-        .AutoRepublish = False
-    End With
-'    ChDir "C:\Users\Super Computer\OneDrive\SwimClub\2019\reports"
-'    Application.Left = 187
-'    Application.Top = 262.75
-'    Application.Goto Reference:="SaveAsHtml"
-'    Application.Left = -220.25
-'    Application.Top = 139
+    'See https://docs.microsoft.com/en-us/office/vba/api/excel.publishobjects.add
+    'Returns a PublishObject object.
+    'Set properties and invoke methods.
 Next
 End Sub
-
-Sub RankReportPdfGirls()
-'deprecated - replaced with RankReports()
-'
-' RankReportGirls Macro
-'
-    Worksheets("GirlsTimes").Activate
-    Range("A1:O48").Select
-    
-    'Make PDF file
-    Selection.ExportAsFixedFormat _
-        Type:=xlTypePDF, _
-        Filename:=ActiveWorkbook.Path & "\reports\GirlsRank.pdf", _
-        Quality:=xlQualityStandard, _
-        IncludeDocProperties:=True, _
-        IgnorePrintAreas:=False, _
-        OpenAfterPublish:=True
-        
-    'Make HTML file
-    Dim rSourceData As Range
-    Set rSourceData = Range(Cells(1, 1), Cells(48, 15))
-
-    With ActiveWorkbook.PublishObjects.Add(xlSourceRange, _
-        ActiveWorkbook.Path & "\reports\GirlsRank.html", _
-        "GirlsTimes", _
-        rSourceData.Address, _
-        xlHtmlStatic, "BoysRankReport", "")
-        .Publish (True)
-        .AutoRepublish = False
-    End With
-        
-        
-     'set range to something harmless before exiting.
-     Range("A1:A1").Select
-    
-    
-End Sub
-
 Sub RankReports()
 '
 ' 2019-12-09 FAJ Creates Boys and Girls Rank Reports in PDF and HTML formats.
@@ -1776,11 +1757,16 @@ For Each vName In sNames()
         OpenAfterPublish:=True
     
     'print HTML report
-    With ActiveWorkbook.PublishObjects.Add(xlSourceRange, _
-        ActiveWorkbook.Path & "\reports\" & sThisName & "Rank.html", _
-        sThisName & "Times", _
-        rSourceData.Address, _
-        xlHtmlStatic, sThisName & "RankReport", "")
+    'See https://docs.microsoft.com/en-us/office/vba/api/excel.publishobjects.add
+    'Returns a PublishObject object.
+    'Set properties and invoke methods.
+    With ActiveWorkbook.PublishObjects.Add(SourceType:=xlSourceRange, _
+        Filename:=ActiveWorkbook.Path & "\reports\" & sThisName & "Rank.html", _
+        Sheet:=sThisName & "Times", _
+        Source:=rSourceData.Address, _
+        HtmlType:=xlHtmlStatic, _
+        DivID:=sThisName & "RankReport", _
+        Title:=sThisName & "-Rank-Report")
         .Publish (True)
         .AutoRepublish = False
     End With

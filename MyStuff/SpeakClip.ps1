@@ -33,3 +33,6 @@ $oSynth.Speak($SayThis)
 #$oSynth = $null
 $oSynth.Dispose()
 #Stop-Transcript
+Write-Warning "End function $($MyInvocation.MyCommand.Name): "
+
+

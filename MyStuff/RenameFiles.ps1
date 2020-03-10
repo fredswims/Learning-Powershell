@@ -1,4 +1,20 @@
-﻿rename-item -Path $fred.name -NewName ($datesubstring + $fredroot + $fred.Extension)
+﻿# THIS WORKS - look at ssingle and double quotes.
+# Can this be simplified with splatting?
+$file="fred.txt"
+new-item $file
+get-item fred.txt | ForEach-Object {rename-item -confirm -path $_.fullname  -NewName "fred$($_.BaseName.replace('f','').replace('ed','yellow'))Ellen$($psitem.Extension)"  }
+
+
+$splat=@{
+NewName="fred$($_.BaseName.replace('f','').replace('ed','yellow'))Ellen$($psitem.Extension)"
+}
+$splat=@{
+  Path="fred.txt"
+  NewName="fred" 
+  }
+Rename-Item -path fred.txt 
+
+rename-item -Path $fred.name -NewName ($datesubstring + $fredroot + $fred.Extension)
 rename-item -Path $fred.name -NewName ($fred.BaseName.Substring($fred.BaseName.IndexOf("20"),$fred.BaseName.Length) + $fred.BaseName.Substring(0,$fred.BaseName.IndexOf("20")) + $fred.Extension)
 
 $fred.BaseName.IndexOf("20"),$fred.BaseName.Length
@@ -33,3 +49,8 @@ rename-item -path $fred.name -NewName ()
   38 $datesubstring + $fredroot + $fred.Extension                                                     
   39 rename-item -Path $fred.name -NewName ($fred.BaseName.Substring($fred.BaseName.IndexOf("20") ,($fred.BaseName.Length - $fred.BaseName.IndexOf("20"))) + $fred.BaseName.Substring(0,($fred.BaseName.IndexOf("20")) + $fred.Extension)             
   40 ls *fre*  
+
+
+  
+  new-item $file
+  rename-item -confirm -path $file  -NewName "fred$($fred.basename.replace('f','').replace('ed','yellow'))Ellen$($fred.Extension)"

@@ -15,7 +15,7 @@ $Version="2019-03-28.1"
 #$l_accessApp | Get-Member
 # https://stackoverflow.com/questions/44682487/use-powershell-to-create-queries-in-ms-access
 
-Set-Location $env:onedrive\swimclub\2018
+Set-Location $env:onedrive\swimclub\2019
 $Database = "SwimRiteNowv3.accdb"
 $DatabasePath = join-path $pwd -childpath $Database
 $l_outputFile = join-path $pwd -childpath "output.csv"
@@ -112,7 +112,7 @@ $AllSwimmers = ($Records).where( {($_.heat -notlike "'U*") -and `
             #Cathy wanted this view - Don't include time trial or crossover meets
         #($_.Meet -notin ("2018-11-19 Time Trials","2019-01-01 Time Trials 2","2019-02-03 Freeport"))} ) | `
         #Include division dual meets (not crossover)
-        ($_.Meet -in ("2018-12-02 Echo", "2018-12-16 Long Beach", "2019-01-06 Plainview", "2019-03-16 Syosset"))} ) | `
+        ($_.Meet -in ("2019-12-15 Long Beach", "2020-01-12 Great Neck", "2020-01-26 Syosset", "2020-02-09 Planview"))} ) | `
     #Use sort to find the UNIQUE meets that a swimmer participated in. The event is not important.
 #Cathy Sort
 #Sort-Object -Property Gender, Swimmer, Meet -Unique | `
@@ -170,14 +170,17 @@ $Inputx | ForEach-Object `
                 #create one object per line written
                 #Map the correct event (carried in Heat) into the Event
                 for ($index=0; $index -lt $thisEvents.count; $index++) {
-                    if ( $thisHeats[$index].substring(1,1) -eq '#' -and $thisEvents[$index] -ne $thisHeats[$index].substring(1,3) ){
+                    WRITE-HOST "Thisheat[Index] is Index $($index) and $($thisHeats[$index])"
+                    if($thisHeats[$index].Length -gt 1) {
+                        if ( $thisHeats[$index].substring(1,1) -eq '#' -and $thisEvents[$index] -ne $thisHeats[$index].substring(1,3) ){
                         #Read-Host "Got one"
                         $thisHold=$thisEvents[$index]
                         $thisEvents[$index] =$thisHeats[$index].substring(1,3)
                         $FlipCount++
                         $thisWarning="<{0}> flipped {1} to {2} heat was {3}" -f $flipcount, $thisHold, $thisEvents[$index], $thisHeats[$index]
                         Write-warning -message "$thiswarning"
-                    }
+                        }
+                    }   
                 }
 
                 $NewRow=[ordered]@{}
@@ -299,4 +302,4 @@ $l_accessApp.CloseCurrentDatabase()
 
 
 
-$records=import-excel .\SwimRiteNow.xlsm -WorksheetName BoysPlainview -EndColumn 14
+#$records=import-excel .\SwimRiteNow.xlsm -WorksheetName BoysPlainview -EndColumn 14

@@ -1,4 +1,5 @@
 <#
+2020-03-28
 Invoke the procedures in Excel that
 generate Best Time html files from the compact version of the pivot tables,
 and generate Rank Reports as html and pdf files.
@@ -32,11 +33,12 @@ V1.2 FAJ 2019-12-09
     Rank and HTML reports consolidated in Excel into one module; RankReports
 V1.2.1 FAJ 2020-01-06
     Added output showing progression of script
-V1.2.2 FAJ 2020-01-08
+V1.2.2 FAJ 2020-01-08.1
     Removed housekeeping. All the reports are overridden.
     Changed report names;
     BoysBestTimes, BoysBestTimesCompact
     The Excel procedures begin with Publish
+    Replaces GenerateBestTimesAndRankReports.ps1
 #>
 $ErrorActionPreference = "Stop"
 "Shutdown Adobe Pdf reader"

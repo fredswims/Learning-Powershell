@@ -1,18 +1,3 @@
-<#
-.SYNOPSIS
-    Short description
-.DESCRIPTION
-    Long description
-.EXAMPLE
-    PS C:\> <example usage>
-    Explanation of what the example does
-.INPUTS
-    Inputs (if any)
-.OUTPUTS
-    Output (if any)
-.NOTES
-    General notes
-#>
 "Speedtest1.ps1"
 #changed $SpeedTestObj to an object rather than an array.
 # https://www.cyberdrain.com/monitoring-with-powershell-monitoring-internet-speeds/
@@ -40,14 +25,14 @@ catch {
     exit 1
 }
 $PreviousResults = if (test-path "$($DownloadLocation)\LastResults.txt") { get-content "$($DownloadLocation)\LastResults.txt" | ConvertFrom-Json }
-"Lauching Speedtest"
+"Lauching Speedtest.exe"
 $SpeedtestResults = & "$($DownloadLocation)\speedtest.exe" --format=json --accept-license --accept-gdpr
 "Speedtest Complete"
 $SpeedtestResults | Out-File "$($DownloadLocation)\LastResults.txt" -Force
 $SpeedtestResults = $SpeedtestResults | ConvertFrom-Json
  
 #creating object
-$SpeedtestObj =[PSCustomObject] @{
+[PSCustomObject]$SpeedtestObj = @{
     downloadspeed = [math]::Round($SpeedtestResults.download.bandwidth / 1000000 * 8, 2)
     uploadspeed   = [math]::Round($SpeedtestResults.upload.bandwidth / 1000000 * 8, 2)
     packetloss    = [math]::Round($SpeedtestResults.packetLoss)
@@ -60,13 +45,10 @@ $SpeedtestObj =[PSCustomObject] @{
     Latency       = [math]::Round($SpeedtestResults.ping.latency)
 }
 "Results of current run"
-$SpeedtestObj
-
+$SpeedtestObj|select-object *
 $SpeedtestHealth = @()
 #Comparing against previous result. Alerting is download or upload differs more than 20%.
 if ($PreviousResults) {
-    write-host "Previous download $([math]::Round($PreviousResults.download.bandwidth/1000000*8,2))"
-    write-host "Previous download $([Math]::round($PreviousResults.upload.bandwidth/1000000*8,2))"
     if ($PreviousResults.download.bandwidth / $SpeedtestResults.download.bandwidth * 100 -le 80) { $SpeedtestHealth += "Download speed difference is more than 20%" }
     if ($PreviousResults.upload.bandwidth / $SpeedtestResults.upload.bandwidth * 100 -le 80) { $SpeedtestHealth += "Upload speed difference is more than 20%" }
 }

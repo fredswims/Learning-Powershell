@@ -14,7 +14,7 @@
     General notes
 #>
 
-$Version="2020-03-11"
+$Version="2020-03-11.1"
 "Author FAJ"
 "Version $Version"
 ($Copyright = "'SwimRiteNow' Copyright 2018 FAJ")

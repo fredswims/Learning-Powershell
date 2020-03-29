@@ -1,15 +1,27 @@
-#FJ
-$Version="2020-03-09"
-"FAJ birthday party"
+<#
+.SYNOPSIS
+    Short description of the script
+.DESCRIPTION
+    Long description of the script
+.EXAMPLE
+    PS C:\\> Get-WhatTimeIsItNow.ps1
+    Explanation of what the example does
+.INPUTS
+    Inputs (if any)
+.OUTPUTS
+    Output (if any)
+.NOTES
+    General notes
+#>
+
+$Version="2020-03-11.1"
+"Author FAJ"
 "Version $Version"
-"add to remote repository."
-"Friday"
-"Friday Night"
-#Added code in MakeObjects to flip the event to the heat.
-#This occurs in freestyle relays were the swimmer was leg 1
-#and medley relays were the swimmer was leg 1 or leg 4.
-#get-process *access* | stop-process
 ($Copyright = "'SwimRiteNow' Copyright 2018 FAJ")
+#Added code in MakeObjects to flip the event to the heat.
+#This occurs in freestyle relays where the swimmer was leg 1
+#and medley relays where the swimmer was leg 1 or leg 4.
+
 # find all the properties and methods
 #$l_accessApp = new-object -ComObject access.application
 #$l_accessApp | Get-Member
@@ -33,7 +45,7 @@ $l_accessApp = new-object -com access.application
 $l_accessApp.OpenCurrentDatabase($l_dbPath)
 if ($? -eq $true) {Write-warning "Database Opened"} else {write-warning "Could not open database! Exiting";exit}
 #$l_query = "SELECT Roster.FirstName,Lastname From Roster;"
-$l_queryName = "aqMeetEvents"
+$l_queryName = "aqMeetEventsThisYear"
 #$l_accessApp.CurrentDB().CreateQueryDef($l_queryName, $l_query)
 
 if (test-path $l_outputFile) {remove-item $l_outputFile }

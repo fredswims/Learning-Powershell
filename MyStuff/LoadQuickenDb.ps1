@@ -103,9 +103,9 @@ Mod 2018-05-24 'Loop on Read-Host
 2020-03-15 FAJ V4.1.2
         Move file to recycle bin works with Powershell 7.
         Replaced ($psversiontable.psedition -ne "CORE") with ($IsCoreClr -ne $true)
-2020-03-15 FAJ V4.1.3
+2020-03-15 FAJ V4.1.3.1
         replaced three lines of [console]::beep(n,m) with single line 'For"
-
+        .1 File increased by Kb rather than Mb
 This script invokes Quicken and requires 2 arguments on the command line invoking it.
 The first argument is the name of a Quicken data file.
 The second argument is the a string with indicates if you want to enable text-to-speech prompts; Speak | NoSpeak
@@ -150,7 +150,7 @@ param ([Parameter(Mandatory = $true,
     $StartStop
 )
 
-($ThisVersion = "2020-03-15 FAJ V4.1.3")
+($ThisVersion = "2020-03-15 FAJ V4.1.3.1")
 write-host "the value of Filename is $Filename"
 write-host "the value of DestinationDir is $Destinationdir"
 write-host "the value of Speak is $Speak"
@@ -353,8 +353,8 @@ Try {
     [timespan]$ElapsedTime=($DoneTime.LastWriteTime -$BeginTime.LastAccessTime)
     "You worked on this file for:"
     $ElapsedTime|format-list *
-    $NewSize=($DoneTime.Length - $BeginTime.Length)/1Mb
-    "File increased by {0} Mb" -f $NewSize
+    $NewSize=($DoneTime.Length - $BeginTime.Length)/1Kb
+    "File increased by {0} Kb" -f $NewSize
     $SayIt = "Do you want to move this file to the repository?"
     if ($bSayit) { [void]$oSynth.SpeakAsync($SayIt) }
     Do { $MyResponse = Read-host "$SayIt [Y] Yes  [N]  No" }

@@ -105,7 +105,7 @@ Mod 2018-05-24 'Loop on Read-Host
         Replaced ($psversiontable.psedition -ne "CORE") with ($IsCoreClr -ne $true)
 2020-03-15 FAJ V4.1.3.1
         replaced three lines of [console]::beep(n,m) with single line 'For"
-        .1 File increased by Kb rather than Mb
+        .1 File increased by Kb rather than Mb FAJ
 This script invokes Quicken and requires 2 arguments on the command line invoking it.
 The first argument is the name of a Quicken data file.
 The second argument is the a string with indicates if you want to enable text-to-speech prompts; Speak | NoSpeak
@@ -336,7 +336,7 @@ Try {
     # Originally the function was called but it was slow.
     # Now the methods are called inline.
     #Maximize-ThisWindow -Process (get-process -id $pid)  #Will this work for CORE?
-    
+
     $null = $type::ShowWindowAsync($hwnd, 3) #SW_RESTORE 9 Activates and displays the window.
     $null = $type::SetForegroundWindow($hwnd) #puts cursor in windows
 <#

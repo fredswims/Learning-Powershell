@@ -1,5 +1,8 @@
-#https://paullimblog.wordpress.com/2017/08/08/ps-tip-parsing-html-from-a-local-file-or-a-string/
 function Covid19 {
+    push-location $env:OneDrive\PowershellScripts\MyStuff\Data\
+    $path="./feature-list.html"
+    $path="./2020-04-04-feature-list.html"
+
 $StatesHere=@'
 Alabama
 Alaska
@@ -55,9 +58,8 @@ Puerto Rico
 District of Columbia
 '@
 $States = $($StatesHere -split "`n").TrimEnd("`r")
-set-location $env:OneDrive\PowershellScripts\MyStuff\Data\
-$path="./feature-list.html"
 
+#https://paullimblog.wordpress.com/2017/08/08/ps-tip-parsing-html-from-a-local-file-or-a-string/
 $html = New-Object -ComObject "HTMLFile"
 $html.IHTMLDocument2_write($(Get-Content -path $path -raw))
 
@@ -75,7 +77,6 @@ for($i=0;$i -lt $innertext.count;$i+=2){
     $Country=""
     $State=""
     $City=""
-    #write-host "$($innertext[$i].innertext):$($innertext[$i+1].innertext)"
     $thisString=$innertext[$i+1].innertext
     $Country=$thisstring.Substring($thisstring.LastIndexOf(" ")+1)
     $vLine=$thisstring.Substring(0,$thisstring.LastIndexOf(" "))
@@ -90,8 +91,6 @@ for($i=0;$i -lt $innertext.count;$i+=2){
     $thisString1=$innertext[$i].innertext
     $index=$thisString1.LastIndexOf(" ")
 
-    #$innertext[$i].innertext
-    #">{0}<>{1}<>{2}<" -f $vline,$City,$State
     $thisobject=   [pscustomobject]@{
         oCount=[long]$innertext[$i].innertext.Substring(0,$index)
         oStatus=$innertext[$i].innertext.Substring($index+1)
@@ -100,10 +99,18 @@ for($i=0;$i -lt $innertext.count;$i+=2){
         oCountry=$Country
     }
     $thisobject
-}
+}#For
 }#end of function
 
-
+Function GroupCovid19 ($object) {
+    #https://stackoverflow.com/questions/5999930/how-to-sum-multiple-items-in-an-object-in-powershell
+    $object | Group-Object ostate | %{
+        New-Object psobject -Property @{
+            State = $_.Name
+            Sum = ($_.Group | Measure-Object oCount -Sum).Sum
+        }
+    } | Sort-Object -property Sum -Descending
+}
 
 
 # $object=$ellen|convertFrom-String -TemplateContent $template

@@ -51,6 +51,8 @@ Washington
 West Virginia
 Wisconsin
 Wyoming
+Puerto Rico
+District of Columbia
 '@
 $States = $($StatesHere -split "`n").TrimEnd("`r")
 set-location $env:OneDrive\PowershellScripts\MyStuff\Data\

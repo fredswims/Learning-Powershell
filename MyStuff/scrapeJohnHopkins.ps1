@@ -3,7 +3,8 @@ function Covid19 {
     $path="./feature-list.html"
     $path="./2020-04-04-feature-list.html"
     
-    #version 1.00 FAJ 2020-04-06
+    #version 1.0.1 FAJ 2020-04-06
+    #added rank
     #run like this '$data=$null;$data=covid19;read-host $data.count;$data|format-table -auto;GroupCovid19 $data'    
     Write-Warning "In function $($MyInvocation.MyCommand.Name): "
 $StatesHere=@'
@@ -76,7 +77,9 @@ District of Columbia
     #The first string looks like '67,551 confirmed' with spaces embedded.
     #The second string looks like 'New York City New York US' with spaces embedded.
     #Both lines must be parsed.
+    $Rank=0
     for($i=0;$i -lt $Innertext.count;$i+=2){
+        $rank++
         $thisstring=""
         $IndexTemp=0
         $Index=0
@@ -112,10 +115,12 @@ District of Columbia
             oCity=$City
             oState=$State
             oCountry=$Country
+            oRank=$Rank
         }
         #push the thisobject to the pipeline.
         $thisobject
     }#End of for.
+Write-Warning "End of function $($MyInvocation.MyCommand.Name): "
 }#end of function
 
 Function GroupCovid19 ($object) {

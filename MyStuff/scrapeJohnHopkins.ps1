@@ -2,7 +2,10 @@ function Covid19 {
     push-location $env:OneDrive\PowershellScripts\MyStuff\Data\
     $path="./feature-list.html"
     $path="./2020-04-04-feature-list.html"
-
+    
+    #version 1.00 FAJ 2020-04-06
+    #run like this '$data=$null;$data=covid19;read-host $data.count;$data|format-table -auto;GroupCovid19 $data'    
+    Write-Warning "In function $($MyInvocation.MyCommand.Name): "
 $StatesHere=@'
 Alabama
 Alaska
@@ -57,49 +60,62 @@ Wyoming
 Puerto Rico
 District of Columbia
 '@
-$States = $($StatesHere -split "`n").TrimEnd("`r")
+    $States = $($StatesHere -split "`n").TrimEnd("`r")
 
-#https://paullimblog.wordpress.com/2017/08/08/ps-tip-parsing-html-from-a-local-file-or-a-string/
-$html = New-Object -ComObject "HTMLFile"
-$html.IHTMLDocument2_write($(Get-Content -path $path -raw))
+    #https://paullimblog.wordpress.com/2017/08/08/ps-tip-parsing-html-from-a-local-file-or-a-string/
+    $html = New-Object -ComObject "HTMLFile"
+    $html.IHTMLDocument2_write($(Get-Content -path $path -raw))
 
-$Innertext=$html.all.tags("P")|Select-Object innertext
-#$ellen=new-object system.collections.arrayList
-#for($i=0;$i -lt $innertext.count;$i=$i+2){$ellen.add("{0}  {1}" -f $innertext[$i].innertext, $innertext[$i+1].innertext)}
-#for($i=0;$i -lt $innertext.count;$i=$i+2){$ellen.add($innertext[$i].innertext + ' ' + $innertext[$i+1].innertext)}
-#Process two at a time.
+    $InnerText=$html.all.tags("P")|Select-Object innertext
+    #$ellen=new-object system.collections.arrayList
+    #for($i=0;$i -lt $innertext.count;$i=$i+2){$ellen.add("{0}  {1}" -f $innertext[$i].innertext, $innertext[$i+1].innertext)}
+    #for($i=0;$i -lt $innertext.count;$i=$i+2){$ellen.add($innertext[$i].innertext + ' ' + $innertext[$i+1].innertext)}
 
-for($i=0;$i -lt $innertext.count;$i+=2){
-    #$LineArray=$innertext[$i+1].innertext -split(' ')
-    $vLine=""
-    $IndexTemp=0
-    $Index=0
-    $Country=""
-    $State=""
-    $City=""
-    $thisString=$innertext[$i+1].innertext
-    $Country=$thisstring.Substring($thisstring.LastIndexOf(" ")+1)
-    $vLine=$thisstring.Substring(0,$thisstring.LastIndexOf(" "))
-    foreach($aState in $States) {
-        $IndexTemp=$vline.LastIndexOf($aState)
-        if ($IndexTemp -gt 0){
-            $Index=$IndexTemp
-            $State=$aState
-            $City=$vline.Substring(0,$index-1)
+    #$innerText is a string with data.
+    #Process two at a time.
+    #The first string looks like '67,551 confirmed' with spaces embedded.
+    #The second string looks like 'New York City New York US' with spaces embedded.
+    #Both lines must be parsed.
+    for($i=0;$i -lt $Innertext.count;$i+=2){
+        $thisstring=""
+        $IndexTemp=0
+        $Index=0
+        $Country=""
+        $State=""
+        $City=""
+        $thisString=$innertext[$i+1].innertext
+        #Country is the last two digits of the string preceeded by a space ' '.
+        $Country=$thisstring.Substring($thisstring.LastIndexOf(" ")+1)
+        #Remove country from the string.
+        $thisstring=$thisstring.Substring(0,$thisstring.LastIndexOf(" "))
+        #Locate the State
+        foreach($aState in $States) {
+            $IndexTemp=$thisstring.LastIndexOf($aState)
+            if ($IndexTemp -gt 0){
+                #Got a State
+                $Index=$IndexTemp
+                $State=$aState
+                #remove the State from the string; the city/county remains
+                $City=$thisstring.Substring(0,$index-1)
+                #stop the 'foreach' operator
+                break
+            }   
+        } 
+        #Parse the number and status
+        $thisString=$innertext[$i].innertext
+        #find the separator between number and status
+        $index=$thisString.LastIndexOf(" ")
+
+        $thisobject=   [pscustomobject]@{
+            oCount=[long]$thisString.Substring(0,$index)
+            oStatus=$thisString.Substring($index+1)
+            oCity=$City
+            oState=$State
+            oCountry=$Country
         }
-    } 
-    $thisString1=$innertext[$i].innertext
-    $index=$thisString1.LastIndexOf(" ")
-
-    $thisobject=   [pscustomobject]@{
-        oCount=[long]$innertext[$i].innertext.Substring(0,$index)
-        oStatus=$innertext[$i].innertext.Substring($index+1)
-        oCity=$City
-        oState=$State
-        oCountry=$Country
-    }
-    $thisobject
-}#For
+        #push the thisobject to the pipeline.
+        $thisobject
+    }#End of for.
 }#end of function
 
 Function GroupCovid19 ($object) {
@@ -152,3 +168,5 @@ Function GroupCovid19 ($object) {
 # $template=@'
 # {[long]Positive:57,159} {[string]Status:confirmed} {[string]City:New York City} {[string]State:New York} {[string]Country:US}
 # '@
+
+#foreach ($state in $states){write-host "This state is $($state)";if($state -eq "Nevada"){write-warning "break";break}}

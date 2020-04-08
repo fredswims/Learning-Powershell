@@ -1,11 +1,13 @@
 function Covid19 {
     push-location $env:OneDrive\PowershellScripts\MyStuff\Data\
     $path="./feature-list.html"
-    $path="./2020-04-04-feature-list.html"
-    
-    #version 1.0.1 FAJ 2020-04-06
+    $path="./2020-04-06-feature-list.html"
+    $path="./2020-04-06T-19-28-feature-list.html"
+
+    #version 1.0.2 FAJ 2020-04-08
+    # new functions GroupCovid19, runthis
     #added rank
-    #run like this '$data=$null;$data=covid19;read-host $data.count;$data|format-table -auto;GroupCovid19 $data'    
+    #run like this '$data=$null;$data=covid19;read-host $data.count;$data|format-table -auto;GroupCovid19 $data'
     Write-Warning "In function $($MyInvocation.MyCommand.Name): "
 $StatesHere=@'
 Alabama
@@ -102,8 +104,8 @@ District of Columbia
                 $City=$thisstring.Substring(0,$index-1)
                 #stop the 'foreach' operator
                 break
-            }   
-        } 
+            }
+        }
         #Parse the number and status
         $thisString=$innertext[$i].innertext
         #find the separator between number and status
@@ -134,6 +136,11 @@ Function GroupCovid19 ($object) {
 }
 
 
+function runthis {
+    $data=$null;$data=covid19;read-host $data.count;$data|format-table -auto;GroupCovid19 $data
+    $sum=GroupCovid19 $data
+    foreach ($state in $states){if($state -in $sum.state){}else {"nope $($state)"}}
+}
 # $object=$ellen|convertFrom-String -TemplateContent $template
 
 # $html.all.tags("P")|Select-Object innertext|ConvertFrom-String -TemplateContent $template

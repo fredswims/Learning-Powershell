@@ -33,3 +33,18 @@ function test-script {
 }
 test-script
 test-script -Verbose
+
+<#
+https://answers.microsoft.com/en-us/windows/forum/all/mat-debug-xxxxlog-files/8875d070-62f9-429b-b3e1-9a6e006c45be?auth=1&page=6
+
+https://docs.microsoft.com/en-us/windows/privacy/manage-connections-from-windows-operating-system-components-to-microsoft-services
+I solved the annoying problem with mat-debug-xxxx.log files for me using the commands:
+
+Get-AppxProvisionedPackage -Online | Where-Object {$_.PackageName -Like "Microsoft.MicrosoftOfficeHub"} | ForEach-Object { Remove-AppxProvisionedPackage -Online -PackageName $_.PackageName}
+
+Get-AppxPackage Microsoft.MicrosoftOfficeHub | Remove-AppxPackage
+
+See: https://docs.microsoft.com/en-us/windows/privacy/manage-connections-from-windows-operating-system-components-to-microsoft-services
+Get-AppxProvisionedPackage -Online | Where-Object {$_.PackageName -Like "Microsoft.MicrosoftOfficeHub"}
+
+#>

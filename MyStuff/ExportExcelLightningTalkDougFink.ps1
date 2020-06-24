@@ -55,7 +55,7 @@ $data=get-process |where-object Company |select-object Company, Name, PM, Handle
 $cfmt=New-ConditionalFormattingIconSet -Range "C:C" -ConditionalFormat ThreeIconSet -IconType arrows
 $data|Export-Excel $xlfile -Show -AutoSize -ConditionalFormat $cfmt
 
-$data=get-process |where-object Company |select -skip 2 -first 7
+$data=get-process |where-object Company |select-object -skip 2 -first 7
 $data
 
 #more in video.

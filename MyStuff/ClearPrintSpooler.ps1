@@ -37,7 +37,9 @@
 [CmdletBinding()]
 param
 (
-	[ValidateNotNullOrEmpty()][string]$PrinterName
+    [parameter(Mandatory=$true)]
+    [ValidateSet("BasementPrinter","WirelessPrinter")]
+	[ValidateNotNullOrEmpty()][string]$PrinterName="BasementPrinter"
 )
 
 Clear-Host

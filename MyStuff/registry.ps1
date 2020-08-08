@@ -17,8 +17,9 @@
 ## 
 ######################################################################
 $searchText = "Super Computer"
+$searchText = "VAIOFRED"
 
-gci . -rec -ea SilentlyContinue |  
+gci . -recURSE -ErrorAction SilentlyContinue |  
    % {  
       if((get-itemproperty -Path $_.PsPath) -match $searchText ) 
       {  

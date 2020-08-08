@@ -1,4 +1,30 @@
-﻿# THIS WORKS - look at ssingle and double quotes.
+﻿set-location $env:TEMP
+$path="config.log"
+remove-item -force -ErrorAction SilentlyContinue -path $path
+new-item -ItemType file -path $path 
+# https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_script_blocks?view=powershell-7
+# Using *** delay-bind script blocks *** with parameters
+# https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_script_blocks?view=powershell-7#using-delay-bind-script-blocks-with-parameters
+# Renames config.log to old_config.log
+# in the scriptblock you can concatenate strings and variables as opposed to a string ["fred $($psitem.basename)) someMoreText"].
+get-item $path | Rename-Item -Confirm -NewName {"old_" + $_.Name.Substring(0,1).ToUpper() + $_.Name.Substring(1).toLower()}
+# I like this because you can use the concatenation operator [+] to form complex strings.
+
+#Here is a simple replace.
+Get-ChildItem *.log | Rename-Item -confirm -NewName { $_.Name -replace '.log','.txt' }
+Get-ChildItem *.log | Rename-Item -confirm -NewName { $psitem.BaseName + $_.Extension.Replace('.log','.txt') }
+#without a delay-bind script block you have to make complex strings and reference variables buy surrounding them in [$()].
+Get-ChildItem *.log | `
+foreach-object { Rename-Item -confirm -path $psitem -NewName "$($psitem.BaseName)$($_.Extension.Replace('.log','.txt'))" }
+
+function showRenameFiles($files){
+  $time=showFileDateTime;
+  #Use a delay-bind script-block
+  get-childitem $files|rename-item -Confirm  -NewName { $time + $psitem.fullname }
+}
+
+
+# THIS WORKS - look at single and double quotes.
 # Can this be simplified with splatting?
 $file="fred.txt"
 new-item $file
@@ -8,10 +34,14 @@ get-item fred.txt | ForEach-Object {rename-item -confirm -path $_.fullname  -New
 $splat=@{
 NewName="fred$($_.BaseName.replace('f','').replace('ed','yellow'))Ellen$($psitem.Extension)"
 }
+$file="fred.txt"
+new-item -type file -Path $file
 $splat=@{
-  Path="fred.txt"
+  Path=$file
   NewName="fred" 
   }
+Rename-item @splat
+  
 Rename-Item -path fred.txt 
 
 rename-item -Path $fred.name -NewName ($datesubstring + $fredroot + $fred.Extension)

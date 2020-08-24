@@ -5,19 +5,22 @@
 # I had a terrible time installing the packages.
 # Finally did something like this (elevated)
 
-
-
+<#
 Install-Package -Name 'MailKit' -Source Nuget -scope CurrentUser -SkipDependencies
 Install-Package -Name 'MimeKit' -Source Nuget -scope CurrentUser -SkipDependencies
 Install-Package -Name 'MimeKit' -Source Nuget -scope CurrentUser
-Install-Package -Name 'MailKit' -Source Nuget -scope CurrentUser
+Install-Package -Name 'MailKit' -Source Nuget -scope CurrentUser 
+#>
 
+Get-Package|format-list name,source
 
 # Add-Type -Path "C:\\Program Files\\PackageManagement\\NuGet\\Packages\\MailKit.2.8.0\\lib\\netstandard2.0\\MailKit.dll"
-Add-Type -Path "C:\Users\freds_000\AppData\Local\PackageManagement\NuGet\Packages\MailKit.2.8.0\lib\netstandard2.0\MailKit.dll"
+# Add-Type -Path "C:\Users\freds_000\AppData\Local\PackageManagement\NuGet\Packages\MailKit.2.8.0\lib\netstandard2.0\MailKit.dll"
+Add-Type -Path (join-path $env:LOCALAPPDATA "PackageManagement\NuGet\Packages\MailKit.2.8.0\lib\netstandard2.0\MailKit.dll")
 
 # Add-Type -Path "C:\\Program Files\\PackageManagement\\NuGet\\Packages\\MimeKit.2.9.1\\lib\\netstandard2.0\\MimeKit.dll"
-Add-Type -Path "C:\Users\freds_000\AppData\Local\PackageManagement\NuGet\Packages\MimeKit.2.9.1\lib\netstandard2.0\MimeKit.dll"
+# Add-Type -Path "C:\Users\freds_000\AppData\Local\PackageManagement\NuGet\Packages\MimeKit.2.9.1\lib\netstandard2.0\MimeKit.dll"
+Add-Type -Path (join-path $env:LOCALAPPDATA "PackageManagement\NuGet\Packages\MimeKit.2.9.1\lib\netstandard2.0\MimeKit.dll")
 
 $SMTP     = New-Object MailKit.Net.Smtp.SmtpClient
 $Message  = New-Object MimeKit.MimeMessage

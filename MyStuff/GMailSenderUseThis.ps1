@@ -1,7 +1,6 @@
 # https://adamtheautomator.com/how-to-send-email-securely-with-powershell/
 # Dependency Loop 
 # https://stackoverflow.com/questions/58351619/install-package-dependency-loop-detected-for-package-microsoft-data-sqlite
-# https://www.google.com/search?q=gmail+application+specific+password&rlz=1C1CHBD_enUS903US903&oq=gmail+ap&aqs=chrome.1.69i57j35i39j0l5j69i61.3462j0j7&sourceid=chrome&ie=UTF-8
 # I had a terrible time installing the packages.
 # Finally did something like this (elevated)
 
@@ -28,6 +27,7 @@ $TextPart = [MimeKit.TextPart]::new("plain")
 $TextPart.Text = "Holly shit this works just fine"
 $MyEmailAtGmail="fred.jacobowitz@gmail.com"
 $ToEmail="FredSwims@gmail.com"
+# https://www.google.com/search?q=gmail+application+specific+password&rlz=1C1CHBD_enUS903US903&oq=gmail+ap&aqs=chrome.1.69i57j35i39j0l5j69i61.3462j0j7&sourceid=chrome&ie=UTF-8
 $AppSpecificPassword="saapkakeagtwpnjd"
 
 $Message.From.Add($MyEmailAtGmail)

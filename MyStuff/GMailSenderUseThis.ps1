@@ -1,5 +1,6 @@
 # https://adamtheautomator.com/how-to-send-email-securely-with-powershell/
-
+# Dependency Loop 
+# https://stackoverflow.com/questions/58351619/install-package-dependency-loop-detected-for-package-microsoft-data-sqlite
 # I had a terrible time installing the packages.
 # Finally did something like this (elevated)
 

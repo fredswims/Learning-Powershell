@@ -123,10 +123,10 @@ $fred=(Get-Content -path $Dictionary).foreach({Convert-TextToNumber $psitem})
 
 # Condition to test
 $CarColor = 'Blue'
- 
+
 # Hashtable with $true & $false as the keys, and the subsequent results as the values
 @{ $true = 'The car color is blue'; $false = 'The car color is not blue'}
- 
+
 # Lookup that tests the condition, outputting the relevant value
 [$CarColor -eq 'Blue']
 $true
@@ -163,3 +163,111 @@ enum MediaTypes {
   "$Pid - $(hostname.exe)" # hostname is available on windows and unix
   $env:computername
   (Get-CIMInstance CIM_ComputerSystem).Name
+
+
+  $fred=Get-ChildItem -path Temp:
+  $fred.where({$psitem.attributes -ne "Directory"}).foreach({"{0,12:n0} {2} {1} " -f $_.length,$_.FullName,$PSItem.Attributes})
+  $fred.where({!$psitem.PSIsContainer}).foreach({"{0,12:n0} {2} {1} " -f $_.length,$_.FullName,$PSItem.Attributes})
+
+  $fred|Select-Object name,Attributes
+  gci|% -begin {$_.Directory}
+
+  # https://mcpmag.com/articles/2015/12/02/where-method-in-powershell.aspx
+  @().Where()
+#   returns
+#   MethodException: Cannot find an overload for ".Where({ expression } [, mode [, numberToReturn]])" and the argument count: "0".
+
+  @(1..10).Where({$_ -BAND 1},'Default',2)
+#   What are the values for the optional parameter MODE?
+  @(1..10).Where({$_ -BAND 1},'$null',2)
+#   Returns
+#   InvalidArgument: Cannot convert value "$null" to type "System.Management.Automation.WhereOperatorSelectionMode". Error: "Unable to match the identifier name $null to a valid enumerator name. Specify one of the following enumerator names and try again:
+# Default, First, Last, SkipUntil, Until, Split"
+  @(1..10).Where({$_ -eq 5},'Until')
+  @(1..10).Where({$_ -eq 5},'Until',2)
+
+  $Running,$Other = (Get-Service).Where({$_.Status -eq 'Running'},'Split')
+
+
+#   https://mcpmag.com/articles/2018/07/10/check-for-locked-file-using-powershell.aspx
+  Function Test-IsFileLocked {
+    [cmdletbinding()]
+    Param (
+        [parameter(Mandatory=$True,ValueFromPipeline=$True,ValueFromPipelineByPropertyName=$True)]
+        [Alias('FullName','PSPath')]
+        [string[]]$Path
+    )
+    Process {
+        ForEach ($Item in $Path) {
+            #Ensure this is a full path
+            $Item = Convert-Path $Item
+            #Verify that this is a file and not a directory
+            If ([System.IO.File]::Exists($Item)) {
+                Try {
+                    $FileStream = [System.IO.File]::Open($Item,'Open','Write')
+                    $FileStream.Close()
+                    $FileStream.Dispose()
+                    $IsLocked = $False
+                } Catch [System.UnauthorizedAccessException] {
+                    $IsLocked = 'AccessDenied'
+                } Catch {
+                    $IsLocked = $True
+                }
+                [pscustomobject]@{
+                    File = $Item
+                    IsLocked = $IsLocked
+                }
+            }
+        }
+    }
+}
+
+$alias=Get-Alias
+$alias |gm
+, $alias|gm
+
+new-item test.ps1
+$obj = ls test.ps1
+
+
+# https://stackoverflow.com/questions/37688708/iterate-over-psobject-properties-in-powershell
+# make an object from json and use 'PSObject (hidden property) enumerate methods and properties and a hash table.
+$a = '{ prop1:1, prop2:2, prop3:3 }' | convertfrom-json
+$a.PSObject.Properties | Format-Table @{ Label = 'Type'; Expression = { "[$($($_.TypeNameOfValue).Split('.')[-1])]" } }, Name, Value -AutoSize -Wrap
+$a.gettype().fullname
+$a|get-member
+$a.PSObject.Properties | select-object name, value
+$hash=@{} #make empty hash table not an array!
+$a.psobject.properties|ForEach-Object -process {$hash.add($_.name,$_.value) }
+$hash.gettype().FullName
+$hash
+$hash.keys; $hash.Values
+$hash['prop2']
+$hash.ContainsValue(1)
+
+# here is another way to do this.
+$hash=@{} #make empty hash table not an array!
+$a | Get-Member -MemberType NoteProperty| ForEach-Object -process {$hash.add($_.name,$a.($_.name)) } #look how value is formulated
+$hash
+$a|gm
+
+function Enumerate-ObjectProperties {
+    param (
+        [psobject] $Object,
+        [string] $Root
+    )
+
+    Write-Output $($Object.PSObject.Properties | Format-Table @{ Label = 'Type'; Expression = { "[$($($_.TypeNameOfValue).Split('.')[-1])]" } }, Name, Value -AutoSize -Wrap | Out-String)
+
+    foreach ($Property in $Object.PSObject.Properties) {
+        # Strings always have a single property "Length". Do not enumerate this.
+        if (($Property.TypeNameOfValue -ne 'System.String') -and ($($Object.$($Property.Name).PSObject.Properties))) {
+            $NewRoot = $($($Root + '.' + $($Property.Name)).Trim('.'))
+            Write-Output "Property: $($NewRoot)"
+            Enumerate-ObjectProperties -Object $($Object.$($Property.Name)) -Root $NewRoot
+        }
+    }
+}
+
+Enumerate-ObjectProperties $YourObject
+Enumerate-ObjectProperties $a

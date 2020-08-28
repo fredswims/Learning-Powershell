@@ -222,9 +222,7 @@ enum MediaTypes {
     }
 }
 
-$alias=Get-Alias
-$alias |gm
-, $alias|gm
+
 
 new-item test.ps1
 $obj = ls test.ps1
@@ -233,6 +231,7 @@ $obj = ls test.ps1
 # https://stackoverflow.com/questions/37688708/iterate-over-psobject-properties-in-powershell
 # make an object from json and use 'PSObject (hidden property) enumerate methods and properties and a hash table.
 $a = '{ prop1:1, prop2:2, prop3:3 }' | convertfrom-json
+# $a=get-content "C:\Users\Super Computer\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json" | convertfrom-json
 $a.PSObject.Properties | Format-Table @{ Label = 'Type'; Expression = { "[$($($_.TypeNameOfValue).Split('.')[-1])]" } }, Name, Value -AutoSize -Wrap
 $a.gettype().fullname
 $a|get-member
@@ -250,6 +249,8 @@ $hash=@{} #make empty hash table not an array!
 $a | Get-Member -MemberType NoteProperty| ForEach-Object -process {$hash.add($_.name,$a.($_.name)) } #look how value is formulated
 $hash
 $a|gm
+
+
 
 function Enumerate-ObjectProperties {
     param (

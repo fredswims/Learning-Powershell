@@ -1,4 +1,4 @@
-function ShowWhereIs ($arg) {
+function ShowWhereIsIt ($arg) {
     Write-Warning "In function $($MyInvocation.MyCommand.Name): "
     $dir=$env:Path
     $dir=$dir.split(";") | Sort-Object
@@ -16,4 +16,4 @@ function ShowWhereIs ($arg) {
     }
     #where.exe $arg | ForEach-Object  {[pscustomobject]@{Name=$arg;Path=$_}}
 }
-ShowWhereis pwsh.exe
+ShowWhereIsIt notepad.exe

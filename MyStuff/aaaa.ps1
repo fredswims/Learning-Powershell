@@ -230,7 +230,7 @@ $obj = ls test.ps1
 
 # https://stackoverflow.com/questions/37688708/iterate-over-psobject-properties-in-powershell
 # make an object from json and use 'PSObject (hidden property) enumerate methods and properties and a hash table.
-$a = '{ prop1:1, prop2:2, prop3:3 }' | convertfrom-json
+$a = '{ "prop1":[int]1, "prop2":[int]2, "prop3":[int]3 }' | convertfrom-json
 # $a=get-content "C:\Users\Super Computer\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json" | convertfrom-json
 $a.PSObject.Properties | Format-Table @{ Label = 'Type'; Expression = { "[$($($_.TypeNameOfValue).Split('.')[-1])]" } }, Name, Value -AutoSize -Wrap
 $a.gettype().fullname
@@ -241,14 +241,15 @@ $a.psobject.properties|ForEach-Object -process {$hash.add($_.name,$_.value) }
 $hash.gettype().FullName
 $hash
 $hash.keys; $hash.Values
-$hash['prop2']
-$hash.ContainsValue(1)
-
+$hash['prop2'] # return the value for a given key.
+# does an entry in the hash table contain '1' as a value.
+$hash.ContainsValue('1') 
+$hash['prop1'].gettype()
 # here is another way to do this.
 $hash=@{} #make empty hash table not an array!
 $a | Get-Member -MemberType NoteProperty| ForEach-Object -process {$hash.add($_.name,$a.($_.name)) } #look how value is formulated
 $hash
-$a|gm
+$a|Get-Member  
 
 
 
@@ -265,10 +266,14 @@ function Enumerate-ObjectProperties {
         if (($Property.TypeNameOfValue -ne 'System.String') -and ($($Object.$($Property.Name).PSObject.Properties))) {
             $NewRoot = $($($Root + '.' + $($Property.Name)).Trim('.'))
             Write-Output "Property: $($NewRoot)"
-            Enumerate-ObjectProperties -Object $($Object.$($Property.Name)) -Root $NewRoot
+            #Enumerate-ObjectProperties -Object $($Object.$($Property.Name)) -Root $NewRoot
         }
     }
 }
 
 Enumerate-ObjectProperties $YourObject
 Enumerate-ObjectProperties $a
+
+#region freds region
+gci
+#endregion fred

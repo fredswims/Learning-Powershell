@@ -16,3 +16,5 @@ $thisobject
 }
 # wrap in a foreach block
 #contrast this with speedtest.ps1
+
+makeanobject

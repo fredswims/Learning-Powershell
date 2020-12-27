@@ -10,6 +10,11 @@ new-item -ItemType file -path $path
 get-item $path | Rename-Item -Confirm -NewName {"old_" + $_.Name.Substring(0,1).ToUpper() + $_.Name.Substring(1).toLower()}
 # I like this because you can use the concatenation operator [+] to form complex strings.
 
+# But make sure all the objects are strings. For instance (get-date -Format "yyyy-MM-ddTHH-mm-ss".ToString())
+$file=New-TemporaryFile -Verbose
+#set-location Temp: -Verbose
+get-item $file -Verbose | rename-item -NewName { (get-date -Format "yyyy-MM-ddTHH-mm-ss".ToString())+$psitem.Name+".rename"} -confirm -Verbose
+remove-item $file -verbose
 #Here is a simple replace.
 Get-ChildItem *.log | Rename-Item -confirm -NewName { $_.Name -replace '.log','.txt' }
 Get-ChildItem *.log | Rename-Item -confirm -NewName { $psitem.BaseName + $_.Extension.Replace('.log','.txt') }

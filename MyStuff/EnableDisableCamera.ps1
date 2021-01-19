@@ -14,23 +14,33 @@
 
     #>
     [CmdletBinding()]
-     param (
+    param (
             [Parameter(Mandatory=$true)]
             [ValidateSet('Status', 'Enable', 'Disable')]
             $Type
      )
-    if ($Type -eq "Status") {     
+
+    function ShowStatus {
         Get-PnpDevice -FriendlyName *cam*
         write-host ""
-        Get-PnpDevice -FriendlyName *cam* -Class camera -Status OK
+        #Get-PnpDevice -FriendlyName *cam* -Class camera -Status OK
+    }
+
+    if ($Type -eq "Status") {     
+        ShowStatus
     }
     if ($Type -eq "Disable") {
+        ShowStatus
         disable-pnpdevice -InstanceId (Get-PnpDevice -FriendlyName *cam* -Class camera -Status OK).Instanceid 
-        Get-PnpDevice -FriendlyName *cam* }
+        #Get-PnpDevice -FriendlyName *cam*  
+        ShowStatus
+    }
 
     if ($Type -eq "Enable") {
-        Get-PnpDevice -FriendlyName *cam* -Class camera -Status Error
+        ShowStatus
+        #Get-PnpDevice -FriendlyName *cam* -Class camera -Status Error
         enable-pnpdevice -InstanceId (Get-PnpDevice -FriendlyName *cam* -Class camera -Status error).Instanceid
-        Get-PnpDevice -FriendlyName *cam*
+        #Get-PnpDevice -FriendlyName *cam*
+        ShowStatus
     }
 

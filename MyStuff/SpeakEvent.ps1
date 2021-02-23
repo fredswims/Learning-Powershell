@@ -105,7 +105,7 @@ function Update-SpeechCommands {
          ForEach-Object{ $choices.Add( $_.ToGrammarBuilder() ) } 
    } 
  
-   if($VerbosePreference -ne "SilentlyContinue") { $Script:SpeechModuleMacros.Keys | % { Write-Host "$Computer, $_" -Fore Cyan }} 
+   if($VerbosePreference -ne "SilentlyContinue") { $Script:SpeechModuleMacros.Keys | foreach-object { Write-Host "$Computer, $_" -Fore Cyan }} 
  
    $builder = New-Object System.Speech.Recognition.GrammarBuilder "$Computer, " 
    $builder.Append((New-Object System.Speech.Recognition.SemanticResultKey "Commands", $choices.ToGrammarBuilder())) 
@@ -114,7 +114,7 @@ function Update-SpeechCommands {
  
    ## Take note of the events, but only once (make sure to remove the old one) 
    Unregister-Event "SpeechModuleCommandRecognized" -ErrorAction SilentlyContinue 
-   $null = Register-ObjectEvent $grammar SpeechRecognized -SourceIdentifier "SpeechModuleCommandRecognized" -Action { iex $event.SourceEventArgs.Result.Semantics.Item("Commands").Value } 
+   $null = Register-ObjectEvent $grammar SpeechRecognized -SourceIdentifier "SpeechModuleCommandRecognized" -Action { Invoke-Expression $event.SourceEventArgs.Result.Semantics.Item("Commands").Value } 
     
    $Global:SpeechModuleListener.UnloadAllGrammars() 
    $Global:SpeechModuleListener.LoadGrammarAsync( $grammar ) 
@@ -202,7 +202,7 @@ Export-ModuleMember -Function * -Alias * -Variable SpeachModuleListener, SpeechM
      "What time is it?" = { Say "It is $(Get-Date -f "h:mm tt")" } 
      "What day is it?"  = { Say $(Get-Date -f "dddd, MMMM dd") } 
      "What's running?"  = { 
-        $proc = ps | sort ws -desc 
+        $proc = get-process | sort-object ws -desc 
         Say $("$($proc.Count) processes, including $($proc[0].name), which is using " + 
               "$([int]($proc[0].ws/1mb)) megabytes of memory") 
      } 

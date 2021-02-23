@@ -1,3 +1,4 @@
+# 2021-02-23 FAJ
 #https://paullimblog.wordpress.com/2017/08/08/ps-tip-parsing-html-from-a-local-file-or-a-string/
 Set-Location $env:HOMEPATH/desktop
 $path="./covid.html"

@@ -17,7 +17,7 @@ $oSynth.SelectVoice("Microsoft David Desktop")
 
 # $SayThis="hello world"
 $SayThis = Get-Clipboard
-if ($SayThis -eq $null) {$SayThis = "There is nothing on the clipboard"}
+if ($null -eq $SayThis) {$SayThis = "There is nothing on the clipboard"}
 $oSynth.Speak($SayThis)
 #$oSynth.Speak("fred-arthur jacobowitz")
 #$oSynth.Speak("goodbye $env:username")

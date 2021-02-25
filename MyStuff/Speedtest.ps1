@@ -13,7 +13,8 @@
 .NOTES
     General notes
 #>
-"Speedtest1.ps1"
+Write-Warning "In function $($MyInvocation.MyCommand.Name): "
+# "Speedtest1.ps1"
 #changed $SpeedTestObj to an object rather than an array.
 # https://www.cyberdrain.com/monitoring-with-powershell-monitoring-internet-speeds/
 ######### Absolute monitoring values ##########

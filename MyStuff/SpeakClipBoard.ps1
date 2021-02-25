@@ -19,7 +19,7 @@ Write-Warning "In function $($MyInvocation.MyCommand.Name): "
 if ($SayThis -eq "") { $SayThis = Get-Clipboard } else {
     if (Test-path $SayThis -ErrorAction SilentlyContinue) { $SayThis = Get-Content $SayThis }
 }
-"SayThis >{0}<" -f $SayThis
+# "SayThis >{0}<" -f $SayThis
 
 add-type -assemblyname system.speech
 #https://msdn.microsoft.com/en-us/library/system.speech.synthesis.speechsynthesizer(v=vs.110).aspx

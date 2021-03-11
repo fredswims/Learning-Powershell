@@ -17,9 +17,7 @@ $queue.Enqueue('c:\')
             # a classic recurse approach would have called itself right here
             # this approach instead pushes the future tasks just onto
             # the queue for later use
-            [IO.Directory]::GetDirectories($currentDirectory) | ForEach-Object {
-                $queue.Enqueue($_)
-            }
+            [IO.Directory]::GetDirectories($currentDirectory) | ForEach-Object {$queue.Enqueue($_)}
         }
         catch {}
     
@@ -35,42 +33,15 @@ $queue.Enqueue('c:\')
 
 
 
-
+# region another example 
 [System.Collections.Queue]$queue = [System.Collections.Queue]::new()
 # place the initial search path(s) into the queue
-foreach ($item in 1 .. 1010) {$queue.Enqueue($item)}
+foreach ($item in 1 .. 10) {$queue.Enqueue($item)}
 read-host "queue count $($queue.count)"
-foreach ($item in $queue) {write-host $item.Dequeue()}
-while ($queue.Count -gt 0)
-    {write-host $queue.Dequeue() }
 
-$queue.Enqueue('c:\')
-# add as many more search paths as you need
-# they will eventually all be traversed
-#$queue.Enqueue('D:\')
 
-# while there are still elements in the queue...
-    while ($queue.Count -gt 0)
-    {
-        # get one item off the queue
-        $currentDirectory = $queue.Dequeue()
-        try
-        {
-            # find all subfolders and add them to the queue
-            # a classic recurse approach would have called itself right here
-            # this approach instead pushes the future tasks just onto
-            # the queue for later use
-            [IO.Directory]::GetDirectories($currentDirectory) | ForEach-Object {
-                $queue.Enqueue($_)
-            }
-        }
-        catch {}
-    
-        try
-        {
-            # find all files in this folder with the given extensions
-            [IO.Directory]::GetFiles($currentDirectory, '*.psm1')
-            [IO.Directory]::GetFiles($currentDirectory, '*.ps1')
-        }
-        catch{}
-    }  
+while ($queue.Count -gt 0) {
+    write-host $queue.Dequeue() 
+}
+# endregion another example 
+

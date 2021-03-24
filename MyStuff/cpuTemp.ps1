@@ -1,39 +1,42 @@
 # https://social.technet.microsoft.com/Forums/lync/en-US/badf142e-2c34-4d6b-9362-d411e7f3b3a5/get-the-cpu-temperature-with-powershell?forum=ITCG
 # https://www.remkoweijnen.nl/blog/2014/07/18/get-actual-cpu-clock-speed-powershell/
+param (
+    [int32]$Sleep=60
+)
 "In script {0}" -f $MyInvocation.MyCommand.Name
+# Must be elevated
+$user = [Security.Principal.WindowsIdentity]::GetCurrent()
+if ((New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)){}
+else{"not elevated";read-host "Enter to continue";return}
+
 "Retreiving Temperature"
-function GetClockSpeed()
-{
-$freq = Get-Counter -Counter "\Processor Information(*)\Processor Frequency"
-$item = New-Object  System.Object
-foreach ($cpu in $freq.CounterSamples)
-{
-$procNum = ([RegEx]::Match($cpu.Path, '.+\((\d+,\d+)\).*')).Groups[1].Value
-if ($procNum)
-{
-$item | Add-Member -Type NoteProperty -Name $procNum -Value $cpu.CookedValue
-}
-}
-$item
+function GetClockSpeed() {
+    $freq = Get-Counter -Counter "\Processor Information(*)\Processor Frequency"
+    $freq = Get-Counter -Counter "\Processor Information(*)\Processor Frequency"
+    $item = New-Object  System.Object
+    foreach ($cpu in $freq.CounterSamples) {
+        $procNum = ([RegEx]::Match($cpu.Path, '.+\((\d+,\d+)\).*')).Groups[1].Value
+        if ($procNum) {
+            $item | Add-Member -Type NoteProperty -Name $procNum -Value $cpu.CookedValue
+        }
+    }
+    $item
 }
 $x=@{n="Temps F";e={(($_.currenttemperature /10 -273.15) *1.8 +32)}}
 do {
+    Get-Date
     "GetClockSpeed"
     GetClockSpeed |format-list *
     $MaxClockSpeed=@{n="Max Clock Speed";e={"{0} GHz" -f (1 * $_.maxclockspeed / 1000)}}
     $property = "systemname","maxclockspeed","addressWidth","numberOfCores","NumberOfLogicalProcessors"
     Get-WmiObject -class win32_processor -Property  $property | Select-Object -Property systemname,addresswidth,numberofcores, $MaxClockSpeed |format-list *
-
-
-
-
     $temps = Get-WMIObject MSAcpi_ThermalZoneTemperature -Namespace "root/wmi"
-    $temps | Select-Object -Property InstanceName,$x
+    $temps | Select-Object -Property InstanceName,$x | format-list *
 <# 
     $temps = Get-WMIObject MSAcpi_ThermalZoneTemperature -Namespace "root/wmi"
     $temps | Select-Object -Property InstanceName,@{n="Temps F";e={(($_.currenttemperature /10 -273.15) *1.8 +32)}}
      #>
-    sleep -seconds 5
+    sleep -seconds $Sleep
 } while ($true)
 
 <#

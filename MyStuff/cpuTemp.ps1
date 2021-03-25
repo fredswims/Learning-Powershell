@@ -22,20 +22,36 @@ function GetClockSpeed() {
     }
     $item
 }
-$x=@{n="Temps F";e={(($_.currenttemperature /10 -273.15) *1.8 +32)}}
+
+$Temperature=@{n="Temperature in Fahrenheit";e={(($_.currenttemperature /10 -273.15) *1.8 +32)}}
+$MaxClockSpeed=@{n="Max Clock Speed";e={"{0} GHz" -f (1 * $_.maxclockspeed / 1000)}}
+[boolean]$FirstTime=$true
 do {
     Get-Date
-    "GetClockSpeed"
+    "System information"
+    if ($FirstTime) {
+        $property = "SystemName","MaxClockSpeed","AddressWidth","NumberOfCores","NumberOfLogicalProcessors"
+        $SystemInfo=Get-WmiObject -class win32_processor -Property  $property | Select-Object -Property SystemName,AddressWidth,NumberOfCores, $MaxClockSpeed |format-list *
+        $FirstTime=$false
+    }    
+    $SystemInfo
+
+    "Clock Speed of each Core"
     GetClockSpeed |format-list *
-    $MaxClockSpeed=@{n="Max Clock Speed";e={"{0} GHz" -f (1 * $_.maxclockspeed / 1000)}}
-    $property = "systemname","maxclockspeed","addressWidth","numberOfCores","NumberOfLogicalProcessors"
-    Get-WmiObject -class win32_processor -Property  $property | Select-Object -Property systemname,addresswidth,numberofcores, $MaxClockSpeed |format-list *
-    $temps = Get-WMIObject MSAcpi_ThermalZoneTemperature -Namespace "root/wmi"
-    $temps | Select-Object -Property InstanceName,$x | format-list *
+    
+    "CPU Temperature"
+    try {
+        $TempInC = Get-WMIObject MSAcpi_ThermalZoneTemperature -Namespace "root/wmi"
+        $TempInC | Select-Object -Property InstanceName,$Temperature | format-list *
+    }
+    catch {
+        write-warning "$error"        
+    }
 <# 
     $temps = Get-WMIObject MSAcpi_ThermalZoneTemperature -Namespace "root/wmi"
     $temps | Select-Object -Property InstanceName,@{n="Temps F";e={(($_.currenttemperature /10 -273.15) *1.8 +32)}}
      #>
+     write-host "Next sample in $($sleep) seconds."
     sleep -seconds $Sleep
 } while ($true)
 

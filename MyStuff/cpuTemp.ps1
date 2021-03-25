@@ -1,15 +1,16 @@
 # https://social.technet.microsoft.com/Forums/lync/en-US/badf142e-2c34-4d6b-9362-d411e7f3b3a5/get-the-cpu-temperature-with-powershell?forum=ITCG
 # https://www.remkoweijnen.nl/blog/2014/07/18/get-actual-cpu-clock-speed-powershell/
 param (
-    [int32]$Sleep=60
+    [int32]$Sleep = 60
 )
 "In script {0}" -f $MyInvocation.MyCommand.Name
 # Must be elevated
 $user = [Security.Principal.WindowsIdentity]::GetCurrent()
-if ((New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)){}
-else{"not elevated";read-host "Enter to continue";return}
+if ((New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)) {}
+else {
+    "Process must run elevated."; read-host "Enter to terminate"; return
+}
 
-"Retreiving Temperature"
 function GetClockSpeed() {
     $freq = Get-Counter -Counter "\Processor Information(*)\Processor Frequency"
     $freq = Get-Counter -Counter "\Processor Information(*)\Processor Frequency"
@@ -23,36 +24,36 @@ function GetClockSpeed() {
     $item
 }
 
-$Temperature=@{n="Temperature in Fahrenheit";e={(($_.currenttemperature /10 -273.15) *1.8 +32)}}
-$MaxClockSpeed=@{n="Max Clock Speed";e={"{0} GHz" -f (1 * $_.maxclockspeed / 1000)}}
-[boolean]$FirstTime=$true
+$Temperature = @{n = "Temperature in Fahrenheit"; e = { (($_.currenttemperature / 10 - 273.15) * 1.8 + 32) } }
+$MaxClockSpeed = @{n = "Max Clock Speed"; e = { "{0} GHz" -f (1 * $_.maxclockspeed / 1000) } }
+[boolean]$FirstTime = $true
 do {
     Get-Date
     "System information"
     if ($FirstTime) {
-        $property = "SystemName","MaxClockSpeed","AddressWidth","NumberOfCores","NumberOfLogicalProcessors"
-        $SystemInfo=Get-WmiObject -class win32_processor -Property  $property | Select-Object -Property SystemName,AddressWidth,NumberOfCores, $MaxClockSpeed |format-list *
-        $FirstTime=$false
+        $property = "SystemName", "MaxClockSpeed", "AddressWidth", "NumberOfCores", "NumberOfLogicalProcessors"
+        $SystemInfo = Get-WmiObject -class win32_processor -Property  $property | Select-Object -Property SystemName, AddressWidth, NumberOfCores, $MaxClockSpeed | format-list *
+        $FirstTime = $false
     }    
     $SystemInfo
 
     "Clock Speed of each Core"
-    GetClockSpeed |format-list *
+    GetClockSpeed | format-list *
     
     "CPU Temperature"
     try {
         $TempInC = Get-WMIObject MSAcpi_ThermalZoneTemperature -Namespace "root/wmi"
-        $TempInC | Select-Object -Property InstanceName,$Temperature | format-list *
+        $TempInC | Select-Object -Property InstanceName, $Temperature | format-list *
     }
     catch {
         write-warning "$error"        
     }
-<# 
+    <# 
     $temps = Get-WMIObject MSAcpi_ThermalZoneTemperature -Namespace "root/wmi"
     $temps | Select-Object -Property InstanceName,@{n="Temps F";e={(($_.currenttemperature /10 -273.15) *1.8 +32)}}
      #>
-     write-host "Next sample in $($sleep) seconds."
-    sleep -seconds $Sleep
+    write-host "Next sample in $($sleep) seconds."
+    Start-Sleep -seconds $Sleep
 } while ($true)
 
 <#

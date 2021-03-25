@@ -8,7 +8,8 @@
         [ValidateRange(-10,10)]
         [Int32]$ThisRate = 2
     )
-#2021-02-23 FAJ 
+#2021-02-23 FAJ
+#20021-03-23 FAJ added SAPI.SPVoice for PWSH 
 # Param($thisrate = 2)
 Write-Warning "In function $($MyInvocation.MyCommand.Name): "
 "Path is {0}" -f (get-process -pid $pid).Path
@@ -21,19 +22,28 @@ if ($SayThis -eq "") { $SayThis = Get-Clipboard } else {
 }
 # "SayThis >{0}<" -f $SayThis
 
-add-type -assemblyname system.speech
-#https://msdn.microsoft.com/en-us/library/system.speech.synthesis.speechsynthesizer(v=vs.110).aspx
-#https://msdn.microsoft.com/en-us/library/system.speech.synthesis.speechsynthesizer_methods(v=vs.110).aspx
-$synthesizer = New-Object -TypeName System.Speech.Synthesis.SpeechSynthesizer
-#foreach ($voice in $synthesizer.GetInstalledVoices()){ $voice.voiceinfo}
-#$synthesizer.rate = 2 # range -10 to 10
-$synthesizer.rate = $thisrate
+if ($IsCoreClr ) { 
+    write-host "Running Pwsh Core using SAPI.SPVoice"
+    ${PromptTTS} = New-Object -ComObject SAPI.SPVoice
+    $promptTTs.rate = $ThisRate 
+    $promptTTs.speak($Saythis) 
 
-# if ($null -eq $SayThis){$SayThis="There is nothing on the clipboard"}
-[void]$synthesizer.Speak($SayThis) #cannot use .speakasync if script called from powershell.exe
-#synthesizer = $null
-#$synthesizez.Dispose()
+}
+else {
+    "Running Powershell using system.speech"
+    add-type -assemblyname system.speech
+    #https://msdn.microsoft.com/en-us/library/system.speech.synthesis.speechsynthesizer(v=vs.110).aspx
+    #https://msdn.microsoft.com/en-us/library/system.speech.synthesis.speechsynthesizer_methods(v=vs.110).aspx
+    $synthesizer = New-Object -TypeName System.Speech.Synthesis.SpeechSynthesizer
+    #foreach ($voice in $synthesizer.GetInstalledVoices()){ $voice.voiceinfo}
+    #$synthesizer.rate = 2 # range -10 to 10
+    $synthesizer.rate = $thisrate
 
+    # if ($null -eq $SayThis){$SayThis="There is nothing on the clipboard"}
+    [void]$synthesizer.Speak($SayThis) #cannot use .speakasync if script called from powershell.exe
+    #synthesizer = $null
+    #$synthesizez.Dispose()
+}
 Write-Warning "End function $($MyInvocation.MyCommand.Name): "
     
 

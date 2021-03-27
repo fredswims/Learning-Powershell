@@ -14,7 +14,6 @@ else {
 "Retreiving Temperature"
 function GetClockSpeed() {
     $freq = Get-Counter -Counter "\Processor Information(*)\Processor Frequency"
-    $freq = Get-Counter -Counter "\Processor Information(*)\Processor Frequency"
     $item = New-Object  System.Object
     foreach ($cpu in $freq.CounterSamples) {
         $procNum = ([RegEx]::Match($cpu.Path, '.+\((\d+,\d+)\).*')).Groups[1].Value

@@ -3,12 +3,12 @@
 # https://www.remkoweijnen.nl/blog/2014/07/18/get-actual-cpu-clock-speed-powershell/
 # https://www.thomasmaurer.ch/2020/03/whats-new-in-powershell-7-check-it-out/
 param (
-    [int32]$Sleep = 60 #seconds
+    [int32]$Sleep = 60,
+    [switch]$Pause=$false
 )
 "In script {0}" -f $MyInvocation.MyCommand.Name
 function GetClockSpeed() {
-"In function {0}" -f $MyInvocation.MyCommand.Name
-
+write-warning "In function $($MyInvocation.MyCommand.Name)"
 $freq = Get-Counter -Counter "\Processor Information(*)\Processor Frequency"
 $item = New-Object  System.Object
 foreach ($cpu in $freq.CounterSamples) {
@@ -21,16 +21,18 @@ $item
 $item=$null
 }
 Function GetCpuTemperature {
-"In function {0}" -f $MyInvocation.MyCommand.Name
-try {
+# "In function {0}" -f $MyInvocation.MyCommand.Name
+Write-warning "In function $($MyInvocation.MyCommand.Name)"
+
+try {$Temperature = @{n = "Temperature in Fahrenheit"; e = { (($_.currenttemperature / 10 - 273.15) * 1.8 + 32) } }
+
         $TempInC = Get-WMIObject MSAcpi_ThermalZoneTemperature -Namespace "root/wmi"
-        $Temperature=$TempInC | Select-Object -Property InstanceName, $Temperature | format-list *
+        $TempObj=$TempInC | Select-Object -Property InstanceName, $Temperature | format-list *
 }
 catch {
         write-warning "$error"        
 }
-$Temperature
-$Temperature=$null
+$TempObj
 }
 
 # Must be elevated
@@ -41,7 +43,7 @@ else {
 }
 
 # "First Get system information, then clock speed and then temperature"
-$Temperature = @{n = "Temperature in Fahrenheit"; e = { (($_.currenttemperature / 10 - 273.15) * 1.8 + 32) } }
+
 $MaxClockSpeed = @{n = "Max Clock Speed"; e = { "{0} GHz" -f (1 * $_.maxclockspeed / 1000) } }
 [boolean]$FirstTime = $true
 
@@ -60,7 +62,17 @@ for ($i = 1; $i -lt 5000; $i++) {
     GetClockSpeed | format-list *
     
     "Get CPU Temperature"
-    GetCpuTemperature
+    $TempObject=GetCpuTemperature
+    "returned"
+    if ($i -eq 1) {
+        $FirstTempObject = $TempObject
+        $TempObject
+    }
+    else {
+        $TempObject
+        Write-Warning "First Temperature"
+        $FirstTempObject
+    }
 
     <#      
     $objWMi = get-wmiobject -namespace root\cimv2 -computername localhost -Query "Select * from Win32_PerfFormattedData_Counters_ThermalZoneInformation WHERE Name like '%GFXZ%'"
@@ -87,5 +99,5 @@ for ($i = 1; $i -lt 5000; $i++) {
     write-host "Next sample in $($sleep) seconds."
     "Ending Loop {0}" -f $i
     Start-Sleep -seconds $Sleep
-    Read-Host "pause"
+    # if ($Pause) {Read-Host "pause"}
 }

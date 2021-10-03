@@ -1,5 +1,5 @@
 ﻿# [cmdletbinding()]
-    param (
+param (
         [Parameter(Mandatory=$false,
         ValueFromPipeline=$true)]
         [String]$SayThis="",
@@ -7,7 +7,7 @@
         [ValidateSet(-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9,10)]
         [ValidateRange(-10,10)]
         [Int32]$ThisRate = 2
-    )
+)
 #2021-02-23 FAJ
 #20021-03-23 FAJ added SAPI.SPVoice for PWSH 
 # Param($thisrate = 2)
@@ -21,8 +21,8 @@ if ($SayThis -eq "") { $SayThis = Get-Clipboard } else {
     if (Test-path $SayThis -ErrorAction SilentlyContinue) { $SayThis = Get-Content $SayThis }
 }
 # "SayThis >{0}<" -f $SayThis
-
-if ($IsCoreClr ) { 
+#< assembly system.speech is back in CORE
+if  ($IsCoreClr ) { 
     write-host "Running Pwsh Core using SAPI.SPVoice"
     ${PromptTTS} = New-Object -ComObject SAPI.SPVoice
     $promptTTs.rate = $ThisRate 
@@ -30,6 +30,7 @@ if ($IsCoreClr ) {
 
 }
 else {
+>#    
     "Running Powershell using system.speech"
     add-type -assemblyname system.speech
     #https://msdn.microsoft.com/en-us/library/system.speech.synthesis.speechsynthesizer(v=vs.110).aspx

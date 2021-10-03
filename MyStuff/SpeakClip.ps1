@@ -1,5 +1,5 @@
-﻿param ([Parameter(Mandatory = $true,
-    HelpMessage = "Enter the name of the Quicken data file; e.g., Home.qdf : ")]
+﻿param (
+    [Parameter(Mandatory = $true, HelpMessage = "Enter the name of a file to speak; e.g., SayThis.txt : ")]
     [System.IO.FileInfo]
     $FileName,
 
@@ -7,8 +7,6 @@
     [Switch]
     $Speak
 )
-
-
 
 <#
 One of my favorite custom PS functions calls the Windows Speech API. I tack that to the end of a long running script (or after the Wait-Job cmdlet) so that I don't have to monitor if the script is still running.
@@ -48,5 +46,3 @@ $oSynth.Speak($SayThis)
 $oSynth.Dispose()
 #Stop-Transcript
 Write-Warning "End function $($MyInvocation.MyCommand.Name): "
-
-

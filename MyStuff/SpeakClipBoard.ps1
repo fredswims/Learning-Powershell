@@ -20,6 +20,20 @@ Write-Warning "In function $($MyInvocation.MyCommand.Name): "
 if ($SayThis -eq "") { $SayThis = Get-Clipboard } else {
     if (Test-path $SayThis -ErrorAction SilentlyContinue) { $SayThis = Get-Content $SayThis }
 }
+
+$parameters = @{
+    ScriptBlock = { Param ($Phrase)
+        Add-Type -AssemblyName System.Speech;
+        $speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;
+        $speak.Speak($Phrase)
+         }
+    ArgumentList= $SayThis
+}
+start-job @parameters
+Write-Warning "END of function $($MyInvocation.MyCommand.Name): "
+
+exit
+
 # "SayThis >{0}<" -f $SayThis
 #< assembly system.speech is back in CORE
 if  ($IsCoreClr ) { 

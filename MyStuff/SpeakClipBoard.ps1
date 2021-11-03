@@ -12,7 +12,7 @@ param (
     [Parameter(Mandatory=$false)]
     [switch]$AsJob = $false
 )
-#2021-02-23 FAJ
+#2021-02-23 FAJ.
 #2021-03-23 FAJ added SAPI.SPVoice for PWSH 
 #2021-10-09 FAJ Core now supports Add-Type -AssemblyName System.Speech
 # https://www.pdq.com/blog/powershell-text-to-speech-examples/

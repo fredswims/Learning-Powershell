@@ -76,7 +76,7 @@ else {
     $synthesizer.rate = $thisrate
 
     # if ($null -eq $SayThis){$SayThis="There is nothing on the clipboard"}
-    [void]$synthesizer.Speak("Assemblyname system.speech") #cannot use .speakasync if script called from powershell.exe
+    # [void]$synthesizer.Speak("Assemblyname system.speech") #cannot use .speakasync if script called from powershell.exe
     [void]$synthesizer.Speak($SayThis) #cannot use .speakasync if script called from powershell.exe
     $synthesizer.Dispose()
     $synthesizer = $null

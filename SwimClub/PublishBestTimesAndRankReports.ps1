@@ -1,3 +1,7 @@
+param (
+    [Parameter(Mandatory = $true, HelpMessage = "Enter the Swim Club Year; e.g., 2021 : ")]
+    $ThisYear
+)
 <#
 2020-03-28.01
 Invoke the procedures in Excel that
@@ -39,13 +43,25 @@ V1.2.2 FAJ 2020-01-08.1
     BoysBestTimes, BoysBestTimesCompact
     The Excel procedures begin with Publish
     Replaces GenerateBestTimesAndRankReports.ps1
+v1.2.3 FAJ 2021-11-29
+    Added 'param' and $ThisYear and used it to 'set-location'
 #>
+Write-Warning "In script $($MyInvocation.MyCommand.Name):"
+# $ThisYear="2021"
+$SwimClubPath=Join-Path $env:OneDrive "swimclub"  $ThisYear
+if (-not (test-path $SwimClubPath)){
+    "Path does not exist: {0}" -f $SwimClubPath
+    "Exiting script"
+    return -1
+}
+"Publishing reports for {0}" -f $SwimClubPath
+
 $ErrorActionPreference = "Stop"
 "Shutdown Adobe Pdf reader"
 get-process AcroRd* | Sort-Object name | stop-process
 Start-Sleep -Seconds 2
 
-set-location $env:OneDrive/swimclub/2019/Reports -verbose
+set-location -verbose (join-path $SwimClubPath "Reports")
 
 "Housekeeping before creating Boys and Girls Best Times as HTML reports"
 #remove-item -verbose "*Best*.old"
@@ -75,7 +91,7 @@ $HtmlPath="GirlsRank.html"
 rename-item -force -verbose -Path $HtmlPath -NewName "$($HtmlPath).old"
 #>
 "Create the excel object"
-set-location $env:OneDrive/swimclub/2019 -verbose
+set-location -verbose $SwimClubPath
 $Dir=Get-Location
 $Xlfile="SwimRiteNow.xlsm"
 $objExcel=new-object -ComObject Excel.Application
@@ -104,7 +120,8 @@ Start-Sleep -seconds 5
 stop-process $thisTaskId
 
 "Show renamed and created files"
-push-location $env:OneDrive/swimclub/2019/Reports
+push-location -verbose (join-path $SwimClubPath "Reports")
+Get-Location -Verbose
 Get-ChildItem "*BestTimes*" |sort-object -property  LastWriteTime | format-table -property  LastWriteTime, Name -AutoSize
 Get-ChildItem "*Rank*" |sort-object -property  LastWriteTime | format-table -property  LastWriteTime, Name -AutoSize
 

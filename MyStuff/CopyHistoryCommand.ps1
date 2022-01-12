@@ -32,5 +32,3 @@ Function Copy-HistoryCommand {
     } #end
 
 } #close function
-
-Copy-HistoryCommand 

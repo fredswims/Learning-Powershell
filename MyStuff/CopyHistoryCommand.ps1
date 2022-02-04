@@ -13,7 +13,6 @@ Function Copy-HistoryCommand {
     Begin {
         Write-Verbose "[BEGIN  ] Starting: $($MyInvocation.Mycommand)"
     } #begin
-
     Process {
         Write-Verbose "[PROCESS] Getting commandline from history item: $id"
         $cmdstring = (Get-History -Id $id).CommandLine
@@ -22,7 +21,6 @@ Function Copy-HistoryCommand {
 
             If ($Passthru) {
                 #write the command to the pipeline
-                $cmdstring
             } #If passthru
         }
     } #process

@@ -38,28 +38,28 @@ $ErrorActionPreference = "Stop"
 get-process AcroRd* | Sort-Object name | stop-process
 Start-Sleep -Seconds 2
 
-set-location $env:OneDrive/swimclub/2019/Reports -verbose
+set-location $env:OneDrive/swimclub/2021/Reports -verbose
 "Housekeeping before creating Boys and Girls Best Times as HTML reports"
 remove-item -verbose "*compact*.old"
 $HtmlPath="BoysBestCompact.html"
-rename-item -force -verbose -Path $HtmlPath -NewName "$($HtmlPath).old"
+if(Test-Path $HtmlPath ) {rename-item -force -verbose -Path $HtmlPath -NewName "$($HtmlPath).old"}
 $HtmlPath="GirlsBestCompact.html"
-rename-item -force -verbose -Path $HtmlPath -NewName "$($HtmlPath).old"
+if(Test-Path $HtmlPath ) {rename-item -force -verbose -Path $HtmlPath -NewName "$($HtmlPath).old"}
 
 "Housekeeping before creating Boys and Girls Rank as PDF and HTML reports"
 remove-item -verbose "*Rank*.old"
 $PdfPath="BoysRank.pdf"
-rename-item -force -verbose -Path $PdfPath -NewName "$($PdfPath).old"
+if(Test-Path $PdfPath ) {rename-item -force -verbose -Path $PdfPath -NewName "$($PdfPath).old"}
 $PdfPath="GirlsRank.pdf"
-rename-item -force -verbose -Path $PdfPath -NewName "$($PdfPath).old"
+if(Test-Path $PdfPath ) {rename-item -force -verbose -Path $PdfPath -NewName "$($PdfPath).old"}
 
 $HtmlPath="BoysRank.html"
-rename-item -force -verbose -Path $HtmlPath -NewName "$($HtmlPath).old"
+if(Test-Path $HtmlPath ) {rename-item -force -verbose -Path $HtmlPath -NewName "$($HtmlPath).old"}
 $HtmlPath="GirlsRank.html"
-rename-item -force -verbose -Path $HtmlPath -NewName "$($HtmlPath).old"
+if(Test-Path $HtmlPath ) {rename-item -force -verbose -Path $HtmlPath -NewName "$($HtmlPath).old"}
 
 "Create the excel object"
-set-location $env:OneDrive/swimclub/2019 -verbose
+set-location $env:OneDrive/swimclub/2021 -verbose
 $Dir=Get-Location
 $Xlfile="SwimRiteNow.xlsm"
 $objExcel=new-object -ComObject Excel.Application
@@ -88,7 +88,7 @@ Start-Sleep -seconds 5
 stop-process $thisTaskId
 
 "Show renamed and created files"
-push-location $env:OneDrive/swimclub/2019/Reports
+push-location $env:OneDrive/swimclub/2021/Reports
 Get-ChildItem "*compact*" |sort-object -property  LastWriteTime | format-table -property  LastWriteTime, Name -AutoSize
 Get-ChildItem "*Rank*" |sort-object -property  LastWriteTime | format-table -property  LastWriteTime, Name -AutoSize
 

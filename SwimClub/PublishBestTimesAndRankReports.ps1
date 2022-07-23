@@ -1,6 +1,6 @@
 param (
     [Parameter(Mandatory = $true, HelpMessage = "Enter the Swim Club Year; e.g., 2021 : ")]
-    $ThisYear
+    $ThisYear=2021
 )
 <#
 2020-03-28.01

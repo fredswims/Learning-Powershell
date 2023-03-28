@@ -20,9 +20,10 @@ else {
     for ($i = 1; $true; $i++) {
         # write-warning $delay
         # write-warning "Count $($i)"
-        $Time=Get-Date -DisplayHint Time
-        $Time=get-date -UFormat %I:%M:%S-%p
-        "{3} Running Fan - Count {0}{1}{2}" -f $PSStyle.Formatting.Warning,$i,$psstyle.reset,$Time
+        & C:\Users\freds_000\OneDrive\PowershellScripts\MyStuff\GetClockSpeed.ps1
+        # $Time=Get-Date -DisplayHint Time
+        $Time=get-date -UFormat '%I:%M:%S %p'
+        "<{3}> - Running Fan - Count {0}{1}{2}" -f $PSStyle.Formatting.Warning,$i,$psstyle.reset,$Time
         # write-warning $pid
         # write-warning ' Running Fan'
         # &$exec
@@ -30,7 +31,6 @@ else {
         # start /min "C:\Program Files (x86)\Desktop Secretary"
         # start /min "C:\Program Files (x86)\Desktop Secretary"
         # cmd /c start /MIN 'C:\Program Files (x86)\Sony\VAIO System Diagnostic\CPU Fan Diagnostic\FDU.exe'
-        & C:\Users\freds_000\OneDrive\PowershellScripts\MyStuff\GetClockSpeed.ps1
         # ./getclockspeed.ps1
         Start-Sleep -seconds $delay
     }

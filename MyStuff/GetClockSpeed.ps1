@@ -1,10 +1,17 @@
 $MaxClockSpeed = (Get-CimInstance CIM_Processor).MaxClockSpeed
+$MaxClockSpeedGHz=($MaxClockSpeed / 1000)
+
 $ProcessorPerformance = (Get-Counter -Counter "\Processor Information(_Total)\% Processor Performance").CounterSamples.CookedValue
-$CurrentClockSpeed = [math]::round(($MaxClockSpeed/1000) * ($ProcessorPerformance / 100),3)
+$ProcessorPerformancePercent = [math]::round(($ProcessorPerformance / 100),3)
+
+$CurrentClockSpeedGHz = [math]::round(($MaxClockSpeed/1000) * ($ProcessorPerformance / 100),3)
 
 Write-Host "Current Processor Speed in GHz: " -ForegroundColor Yellow -NoNewLine
-Write-Host $CurrentClockSpeed -NoNewline
+Write-Host $CurrentClockSpeedGHz -NoNewline
 Write-Host "  Performance " -ForegroundColor Yellow -NoNewLine
-Write-Host " $([math]::round(($ProcessorPerformance / 100),3))" -NoNewline
+if ($ProcessorPerformancePercent -ge 1.0) { Write-Host  " $ProcessorPerformancePercent" -ForegroundColor Green -NoNewline }
+else {
+    Write-Host " $ProcessorPerformancePercent" -ForegroundColor Red -NoNewline
+}
 Write-Host "  Max Clock Speed in GHz: " -ForegroundColor Yellow -NoNewLine
-Write-Host ($MaxClockSpeed / 1000)
+Write-Host "$MaxClockSpeedGHz"

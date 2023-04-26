@@ -5,7 +5,7 @@ $ProcessorPerformance = (Get-Counter -Counter "\Processor Information(_Total)\% 
 $ProcessorPerformancePercent = [math]::round(($ProcessorPerformance / 100),3)
 
 $CurrentClockSpeedGHz = [math]::round(($MaxClockSpeed/1000) * ($ProcessorPerformance / 100),3)
-
+# Put on one line
 Write-Host "Current Processor Speed: " -ForegroundColor Yellow -NoNewLine
 Write-Host "$($CurrentClockSpeedGHz) GHz" -NoNewline
 Write-Host "  Performance: " -ForegroundColor Yellow -NoNewLine

@@ -1,3 +1,4 @@
+Write-Warning "In module $($MyInvocation.MyCommand.Name): "
 $MaxClockSpeed = (Get-CimInstance CIM_Processor).MaxClockSpeed
 $MaxClockSpeedGHz=($MaxClockSpeed / 1000)
 
@@ -6,12 +7,10 @@ $ProcessorPerformancePercent = [math]::round(($ProcessorPerformance / 100),3)
 
 $CurrentClockSpeedGHz = [math]::round(($MaxClockSpeed/1000) * ($ProcessorPerformance / 100),3)
 # Put on one line
+if ($ProcessorPerformancePercent -ge 1.0) {$color="Green"} else {$color="Red"}
 Write-Host "Current Processor Speed: " -ForegroundColor Yellow -NoNewLine
-Write-Host "$($CurrentClockSpeedGHz) GHz" -NoNewline
+Write-Host "$($CurrentClockSpeedGHz) GHz" -ForegroundColor $color -NoNewline
 Write-Host "  Performance: " -ForegroundColor Yellow -NoNewLine
-if ($ProcessorPerformancePercent -ge 1.0) { Write-Host  " $($ProcessorPerformancePercent)%" -ForegroundColor Green -NoNewline }
-else {
-    Write-Host " $($ProcessorPerformancePercent)%" -ForegroundColor Red -NoNewline
-}
+Write-Host  " $($ProcessorPerformancePercent)%" -ForegroundColor $color -NoNewline
 Write-Host "  Max Clock Speed: " -ForegroundColor Yellow -NoNewLine
 Write-Host "$($MaxClockSpeedGHz) GHz"

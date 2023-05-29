@@ -17,7 +17,7 @@ if ($Once -like 'Y') {
     &$exec # invoke fan program using call operator and return immediately.
 }
 else {
-    "Running continuously - kill process {0}" -f $pid
+    "Running on interval {1} seconds. - Kill process {0}" -f $pid, $Delay
     for ($i = 1; $true; $i++) {
         # write-warning $delay
         # write-warning "Count $($i)"

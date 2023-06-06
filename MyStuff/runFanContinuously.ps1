@@ -1,18 +1,15 @@
-# 2023-03-28
+# 2023-06-5
 # https://slai.github.io/posts/powershell-and-external-commands-done-right/
 [CmdletBinding()]
 param (
     [Parameter(ValueFromPipeline = $true)]
     [Int32]$Delay=360,
-    [Parameter(Mandatory = $false)]
-    [String]$Once = 'N',
-    [Parameter(Mandatory = $false)]
-    [switch]$AsFSInfo = $false
+    [switch]$Once = $false
 )
 Write-Warning "In module $($MyInvocation.MyCommand.Name): "
 $host.UI.RawUI.WindowTitle = "RunFan Delay {0} Id {1}" -f $Delay, $pid
 $exec = (join-path -path ${env:ProgramFiles(x86)} -ChildPath "Sony\VAIO System Diagnostic\CPU Fan Diagnostic\FDU.exe")
-if ($Once -like 'Y') { 
+if ($Once) { 
     "In run 'Once' mode"    
     &$exec # invoke fan program using call operator and return immediately.
 }

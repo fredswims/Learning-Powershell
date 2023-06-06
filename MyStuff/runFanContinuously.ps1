@@ -1,15 +1,16 @@
-# 2023-06-5
+# 2023-06-5.1
 # https://slai.github.io/posts/powershell-and-external-commands-done-right/
 [CmdletBinding()]
 param (
     [Parameter(ValueFromPipeline = $true)]
     [Int32]$Delay=360,
-    [switch]$Once = $false
+    [Parameter(Mandatory=$false)]
+    [switch]$Once
 )
 Write-Warning "In module $($MyInvocation.MyCommand.Name): "
 $host.UI.RawUI.WindowTitle = "RunFan Delay {0} Id {1}" -f $Delay, $pid
 $exec = (join-path -path ${env:ProgramFiles(x86)} -ChildPath "Sony\VAIO System Diagnostic\CPU Fan Diagnostic\FDU.exe")
-if ($Once) { 
+if ($Once.IsPresent) { 
     "In run 'Once' mode"    
     &$exec # invoke fan program using call operator and return immediately.
 }
@@ -25,7 +26,7 @@ else {
         # write-warning $pid
         # write-warning ' Running Fan'
         # &$exec
-        start-process -WindowStyle Minimized (resolve-path (join-path -path ${env:ProgramFiles(x86)} -ChildPath "Sony\VAIO System Diagnostic\CPU Fan Diagnostic\FDU.exe")).path
+        start-process -WindowStyle Minimized -FilePath (resolve-path (join-path -path ${env:ProgramFiles(x86)} -ChildPath "Sony\VAIO System Diagnostic\CPU Fan Diagnostic\FDU.exe")).path
         # start /min "C:\Program Files (x86)\Desktop Secretary"
         # start /min "C:\Program Files (x86)\Desktop Secretary"
         # cmd /c start /MIN 'C:\Program Files (x86)\Sony\VAIO System Diagnostic\CPU Fan Diagnostic\FDU.exe'

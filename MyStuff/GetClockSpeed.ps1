@@ -6,11 +6,11 @@ $ProcessorPerformance = (Get-Counter -Counter "\Processor Information(_Total)\% 
 $ProcessorPerformancePercent = [math]::round(($ProcessorPerformance / 100),3)
 
 $CurrentClockSpeedGHz = [math]::round(($MaxClockSpeed/1000) * ($ProcessorPerformance / 100),3)
-# Put on one line
-if ($ProcessorPerformancePercent -ge 1.0) {$color="Green"} else {$color="Red"}
+if ($ProcessorPerformancePercent -ge 1.0) {$color="Green";$sign="+"} else {$color="Red";$sign="-"}
 Write-Host "Current Processor Speed: " -ForegroundColor Yellow -NoNewLine
 Write-Host "$($CurrentClockSpeedGHz) GHz" -ForegroundColor $color -NoNewline
 Write-Host "  Performance: " -ForegroundColor Yellow -NoNewLine
 Write-Host  " $($ProcessorPerformancePercent)%" -ForegroundColor $color -NoNewline
 Write-Host "  Max Clock Speed: " -ForegroundColor Yellow -NoNewLine
 Write-Host "$($MaxClockSpeedGHz) GHz"
+Return "{0}{1}" -f $sign,$CurrentClockSpeedGHz

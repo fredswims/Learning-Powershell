@@ -9,6 +9,7 @@ function Is-ProcessElevated
     )
 
     begin {
+        Write-Warning "In module $($MyInvocation.MyCommand.Name): "
         $CSharpCode = @'
 namespace SecurityUtils
 {
@@ -206,3 +207,9 @@ namespace SecurityUtils
 }
 # Test
 # "[{0}]" -f $(Is-ProcessElevated -Process $(get-process -id $pid))
+<#
+foreach ($process in $(get-process *)){
+    Write-Host  "Calling Is-ProcessElevated with [$($process.processName)]"   
+    $test=Is-ProcessElevated -Process $process;"[{0}] {1} " -f $test, $process.name  
+}
+#>

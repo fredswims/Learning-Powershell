@@ -1,3 +1,4 @@
+#fred
 $data = ConvertFrom-Csv @"
 Region,Date,Fruit,Sold
 North,1/1/2017,Pears,50

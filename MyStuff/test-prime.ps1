@@ -27,6 +27,7 @@ function Test-Prime {
                 "Input is [{0}] Square root is [{1}] Index is [{2}].  " -f $number, $sqrt, $i
                 if ($number % $i -eq 0) {
                     $prime = $false
+                    # write-warning "Not Prime"
                     break
                 }
             }
@@ -35,4 +36,4 @@ function Test-Prime {
         return $prime
     }
 }
-$top=10000;$n=0;for ($i=1;$i -le $top;$i++) {$return= test-prime $i; if( $return[-1] -eq 'True'){$n++;write-warning "TRUE $($i) ::$($n)::$($top)"}}
+# $top=10000;$n=0;for ($i=1;$i -le $top;$i++) {$return= test-prime $i; if( $return[-1] -eq 'True'){$n++;write-warning "TRUE $($i) ::$($n)::$($top)"}}

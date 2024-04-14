@@ -10,7 +10,7 @@ function Prime-Numbers {
 function Test-Prime {
     param (
         [Parameter(ValueFromPipeline=$true)]
-        [int]$number
+        [int64]$number
     )
 
     Process {

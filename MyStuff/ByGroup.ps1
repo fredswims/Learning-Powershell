@@ -1,4 +1,5 @@
 # refactor faj 2024-08-09
+# used with swim club database
 Set-Location $env:onedrive
 Set-Location swimclub\2018
 $2018 = import-csv -path .\Roster.csv

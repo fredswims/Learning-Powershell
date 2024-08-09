@@ -14,7 +14,7 @@
 .NOTES
     General notes
 #>
-
+#fred was here
 param ([Parameter(Mandatory = $true,
         HelpMessage = "Enter the name of the Quicken data file; e.g., Home.qdf : ")]
     [System.IO.FileInfo]$FileName,

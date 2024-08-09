@@ -242,5 +242,12 @@ New-Object psobject -Property @{
         data2 = Get-Random -Maximum 100
     }
 }
-
+function returnObject {
+    1..5 | ForEach-Object {
+        New-Object psobject -Property @{
+            data1 = $_
+            data2 = Get-Random -Maximum 100
+        }
+    }
+}
 https://www.reddit.com/r/PowerShell/comments/46hr3a/adding_items_to_a_custom_object/

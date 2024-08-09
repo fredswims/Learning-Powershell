@@ -1,4 +1,4 @@
-﻿#Get-WmiObject Win32_Printer | where-object { $_.Name -like "HP LaserJet P1006" } | foreach-object {  $_.CancelAllJobs() }
+#Get-WmiObject Win32_Printer | where-object { $_.Name -like "HP LaserJet P1006" } | foreach-object {  $_.CancelAllJobs() }
 #$fred=Get-ComputerInfo
 
 # If that doesn't work try this
@@ -38,7 +38,7 @@
 param
 (
     [parameter(Mandatory=$true)]
-    [ValidateSet("BasementPrinter","WirelessPrinter")]
+    [ValidateSet("HP LaserJet P1006","BasementPrinter","WirelessPrinter")]
 	[ValidateNotNullOrEmpty()][string]$PrinterName="BasementPrinter"
 )
 
@@ -60,7 +60,7 @@ foreach ($File in $Files) {
 	}
 	#Add base file name to the $DeleteFiles list if the $PrinterName is in the converted string
 	If ($Output -like "*$PrinterName*") {
-		$DeleteFiles += $File.BaseName
+		$DeleteFiles += 	$File.BaseName
 	}
 }
 #Delete all files that met the searched criteria

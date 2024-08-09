@@ -1,5 +1,6 @@
 # 2023-06-8
 # https://slai.github.io/posts/powershell-and-external-commands-done-right/
+# .\runFanContinuously.ps1
 [CmdletBinding()]
 param (
     [Parameter(ValueFromPipeline = $true)]

@@ -1,6 +1,7 @@
 Function Get-SystemStartInfo()
  {
  <#
+#  https://www.verboon.info/2014/01/powershell-retrieve-system-startup-time-information/?
  .Synopsis
  Get System Boot / Wake-up Time
  .DESCRIPTION
@@ -115,4 +116,3 @@ End
 }
 }
 Get-SystemStartInfo "SuperComputer" | format-list
-Get-SystemStartInfo "Super Computer@SUPERCOMPUTER"| format-list

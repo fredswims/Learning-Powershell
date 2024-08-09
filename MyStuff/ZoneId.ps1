@@ -1,3 +1,4 @@
+# stream on file
 function stream {
     get-item  * -Stream zone.identifier -ErrorAction SilentlyContinue|`
     ForEach-Object {[pscustomobject]@{Name=$psitem.psChildname;ZONE=get-content -path $psitem.filename -Stream Zone.Identifier}}
@@ -22,7 +23,7 @@ $list|format-list
 pop-location
 function stream2 {
     $list=get-item  * -Stream zone.identifier -ErrorAction SilentlyContinue
-    
+
     foreach ($file in $list) {
         $content=get-content -path $file.FileName -Stream Zone.Identifier -TotalCount 10
         [pscustomobject]@{Name = $file.filename

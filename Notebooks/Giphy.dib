@@ -1,0 +1,18 @@
+#!markdown
+
+Here is my first .net interactive powershell notebook.
+
+#!markdown
+
+Here is my first .net interactive powershell notebook.
+
+#!pwsh
+
+# <script src="https://gist.github.com/dfinke/352654b70caee1613d30d54eccdeefc4.js"></script>
+. (Join-Path $env:OneDrive PowershellScripts MyStuff Get-Giphy.ps1)
+# . "C:\Users\freds_000\OneDrive\PowershellScripts\MyStuff\Get-Giphy.ps1"
+get-giphy swim
+
+#!pwsh
+
+"![](https://external-lga3-2.xx.fbcdn.net/safe_image.php?d=AQHDq-zMsCpurQi4&url=https%3A%2F%2Fmedia1.giphy.com%2Fmedia%2F1bQ70ZYQTyUcMbd6sE%2Fgiphy.gif%3Fcid%3D790b761160abe439f0eec5630c4c8b0fd3717ef4a9a13df5%26rid%3Dgiphy.gif%26ct%3Dg&ext=gif&ccb=3-5&_nc_hash=AQFRC9t1sKCugZVH)" | Out-Display -MimeType 'text/markdown'

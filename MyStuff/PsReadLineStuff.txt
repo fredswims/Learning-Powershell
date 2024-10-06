@@ -1,0 +1,15 @@
+https://github.com/PowerShell/PSReadLine/issues/3066
+https://www.powershellgallery.com/packages/PSReadLine/2.2.0-beta4
+https://stackoverflow.com/questions/60124810/what-is-the-difference-between-pwsh-and-powershell-integrated-console-on-vs
+
+How to install PSReadLine
+pwsh -noprofile -noninteractive -command "Install-Module -Name PSReadLine -AllowPrerelease -RequiredVersion 2.2.0-beta3 -Force -AllowClobber"
+
+pwsh -noprofile -noninteractive -command "Install-Module -Name PSReadLine -AllowPrerelease -RequiredVersion 2.2.0-beta4 -Force -AllowClobber"
+------------------------
+DESCRIPTION
+    The `Get-Module` cmdlet gets the PowerShell modules that have been imported, or that can be imported, into a
+    PowerShell session. The module object that `Get-Module` returns contains valuable information about the module.
+
+get-module PSreadline -all
+get-module psreadline -All -ListAvailable

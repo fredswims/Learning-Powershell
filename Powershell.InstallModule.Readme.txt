@@ -1,0 +1,33 @@
+
+# https://devblogs.microsoft.com/powershell/psreadline-2-2-ga/
+get-
+#    List the modules IMPORTED in the current session or that can be imported from the PSModulePath.
+get-module psreadline -all -ListAvailable
+
+#The Uninstall-Module cmdlet uninstalls a specified module from the local computer. You can't uninstall a module if it has other modules as dependencies.
+# Gets a list of modules on the computer that were installed by PowerShellGet.
+Get-InstalledModule -Name SpeculationControl | Uninstall-Module
+
+Set-PSResourceRepository -name PSGallery -Trusted
+
+# install a version
+find-module psreadline -AllowPrerelease -MinimumVersion 2.2.2 -MaximumVersion 2.2.2|install-module -force -AllowClobber
+
+find-module psreadline -RequiredVersion 2.2.2|install-module -force -AllowClobber -scope CurrentUser 
+
+# this is an alternative method.
+Install-PSResource -name psreadline -Reinstall
+Find-PSResource psreadline
+
+
+
+# Finds modules in a repository that match specified criteria.
+find-module powershellget -AllowPrerelease
+
+pwsh -noprofile -command " & {find-module powershellget -AllowPrerelease|install-module -force -AllowClobber}"
+
+# -------------
+Install-PSResource -name powershellget -Reinstall
+get-module powershellget
+      ands
+#Script     3.0.0      beta10     PowerShellGet

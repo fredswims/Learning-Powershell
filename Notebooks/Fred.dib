@@ -1,0 +1,267 @@
+#!markdown
+
+this is a .net interactive powershell notebook that ends with the extension .dib
+
+#!markdown
+
+Charts with XPlot using constructors 
+Charts can be rendered using Xplot.Plotly. We will cover some example on how to use XPlot in a notebook with .NET Interactive.
+
+NOTE: This and "Plotting with Xplot using type accelerators" produce the same output. They're just using different scripting mechanisms.
+
+#!pwsh
+
+"the current directory is {0}" -f (Get-Location).Path
+$file=get-item *
+"the file full name is {0}" -f $file.FullName
+"the file extension is {0}" -f $file.Extension
+
+#!pwsh
+
+#!csharp
+#r "nuget: XPlot.Plotly.Interactive, 4.0.2"
+
+#!markdown
+
+Rendering Scatter plots
+One of the most commonly used type of chart to explore data set. Use the type Graph.Scatter.
+
+#!pwsh
+
+$openSeries = [Graph.Scatter]::new()
+$openSeries.name = "Open"
+$openSeries.x = @(1, 2, 3, 4)
+$openSeries.y = @(10, 15, 13, 17)
+
+$closeSeries = [Graph.Scatter]::new()
+$closeSeries.name = "Close"
+$closeSeries.x = @(2, 3, 4, 5)
+$closeSeries.y = @(16, 5, 11, 9)
+
+$chart = @($openSeries, $closeSeries) | New-PlotlyChart -Title "Open vs Close"
+Out-Display $chart
+
+#!markdown
+
+Let's change it to be markers style, so more like a scatter plot.
+
+#!pwsh
+
+$openSeries.mode = "markers";
+$closeSeries.mode = "markers";
+
+$chart = @($openSeries, $closeSeries) | New-PlotlyChart -Title "Open vs Close"
+Out-Display $chart
+
+#!pwsh
+
+Scatter can also produce polar charts by setting the radial property r and angular proeprty t
+
+#!pwsh
+
+$openSeries = [Graph.Scatter]::new()
+$openSeries.name = "Open"
+$openSeries.r = @(1, 2, 3, 4)
+$openSeries.t = @(45, 100, 150, 290)
+
+$closeSeries = [Graph.Scatter]::new()
+$closeSeries.name = "Close"
+$closeSeries.r = @(2, 3, 4, 5)
+$closeSeries.t = @(16, 45, 118, 90)
+
+$layout = [Layout]::new()
+$layout.title = "Open vs Close"
+$layout.orientation = -90
+
+$chart = @($openSeries, $closeSeries) | New-PlotlyChart -Layout $layout
+$chart | Out-Display
+
+#!markdown
+
+Large scatter plots and performance
+It is not uncommon to have scatter plots with a large dataset, it is a common scenario at the beginning of a data exploration process. Using the default svg based rendering will create performace issues as the dom will become very large. We can then use web-gl support to address the problem.
+
+#!pwsh
+
+#!time
+$series = 1..10 | ForEach-Object {
+    $trace = [Graph.Scattergl]::new()
+    $trace.name = "Series $_"
+    $trace.mode = "markers"
+    $trace.x = [double[]](Get-Random -Count 100000 -Minimum -100000 -Maximum 100000)
+    $trace.y = [double[]](Get-Random -Count 100000 -Minimum -100000 -Maximum 100000)
+
+    $trace
+}
+
+New-PlotlyChart -Title "Large Dataset" -Trace $series | Out-Display
+
+#!markdown
+
+Can provide custom marker colour, size and colorscale to display even more information to the user.
+
+#!pwsh
+
+$series | ForEach-Object {
+    [int[]] $sizes = Get-Random -Count 100 -Minimum 0.0 -Maximum 1.0 |
+        ForEach-Object { $_ -lt 0.75 ? (Get-Random -Minimum 1 -Maximum 5) : (Get-Random -Minimum 10 -Maximum 15) }
+    $temperatures = $sizes | ForEach-Object { ($_ * 10) - 100 }
+
+    $_.x = [double[]](Get-Random -Count 100000 -Minimum -100000 -Maximum 100000)
+    $_.y = [double[]](Get-Random -Count 100000 -Minimum -100000 -Maximum 100000)
+    $_.marker = [XPlot.Plotly.Marker]::new()
+    $_.marker.size = $sizes
+    $_.marker.color = $temperatures
+    $_.marker.colorscale = "hot"
+}
+
+New-PlotlyChart -Title "Large Dataset" -Trace $series | Out-Display
+
+#!markdown
+
+Plotly pvoides some additional color scales to use.
+
+#!pwsh
+
+foreach ($trace in $series) {
+    $trace.marker.colorscale = "Viridis"
+}
+
+New-PlotlyChart -Title "Viridis scale" -Trace $series | Out-Display
+
+foreach ($trace in $series) {
+    $trace.marker.colorscale = "Hot"
+}
+
+New-PlotlyChart -Title "Hot scale" -Trace $series | Out-Display
+
+foreach ($trace in $series) {
+    $trace.marker.colorscale = "Jet"
+}
+
+New-PlotlyChart -Title "Jet scale" -Trace $series | Out-Display
+
+#!markdown
+
+Rendering Histograms
+Let's have a look at using histograms, the next cell sets up some generators.
+
+#!pwsh
+
+$count = 20
+[datetime[]] $dates = 1..$count | ForEach-Object { (Get-Date).AddMinutes((Get-Random -Minimum $_ -Maximum ($_+30))) }
+
+#!markdown
+
+Now let's define histogram traces:
+
+#!pwsh
+
+$openByTime = [Graph.Histogram]::new()
+$openByTime.name = "Open"
+$openByTime.x = $dates
+$openByTime.y = [double[]](Get-Random -Count $count -Minimum 0 -Maximum 200)
+
+$closeByTime = [Graph.Histogram]::new()
+$closeByTime.name = "Close"
+$closeByTime.x = $dates
+$closeByTime.y = [double[]](Get-Random -Count $count -Minimum 0 -Maximum 200)
+
+New-PlotlyChart -Trace @($openByTime, $closeByTime) | Out-Display
+
+#!markdown
+
+The Histogram generator will automatically count the number of items per bin.
+
+Setting histfunc to "sum" we can now add up all the values contained in each bin. Note that we are creatng bin using the x data point and we are using bydefault autobinx
+
+#!pwsh
+
+$openByTime.histfunc = 'sum'
+$closeByTime.histfunc = 'sum'
+
+(New-PlotlyChart -Trace @($openByTime, $closeByTime)) | Out-Display
+
+#!markdown
+
+Area chart and Polar Area chart
+By populating hte property fill of a Scatter trace the chart will render as area chart.
+
+Here is set to "tozeroy" which will create a fill zone underneath the line reachin to the 0 of the y axis.
+
+#!pwsh
+
+$openSeries = [Graph.Scatter]::new()
+$openSeries.name = "Open"
+$openSeries.x = @(1, 2, 3, 4)
+$openSeries.y = @(10, 15, 13, 17)
+$openSeries.fill = "tozeroy"
+$openSeries.mode = "lines"
+
+$closeSeries = [Graph.Scatter]::new()
+$closeSeries.name = "Close"
+$closeSeries.x = @(1, 2, 3, 4)
+$closeSeries.y = @(3, 5, 11, 9)
+$closeSeries.fill = "tozeroy"
+$closeSeries.mode = "lines"
+
+$chart = @($openSeries, $closeSeries) | New-PlotlyChart -Title "Open vs Close"
+Out-Display $chart
+
+#!markdown
+
+With one fill set to "tonexty" the cahrt will fill the aread between traces.
+
+#!pwsh
+
+$openSeries.fill = $null;
+$closeSeries.fill = "tonexty";
+
+$chart = @($openSeries, $closeSeries) | New-PlotlyChart -Title "Open vs Close"
+Out-Display $chart
+
+#!markdown
+
+Using Area traces we can generate radial area chart. In this example we are using cardinal points to xpress angular values. The array {"North", "N-E", "East", "S-E", "South", "S-W", "West", "N-W"} will be autoimatically translated to angular values.
+
+#!pwsh
+
+$areaTrace1 = [Graph.Area]::new()
+$areaTrace1.r = @(77.5, 72.5, 70.0, 45.0, 22.5, 42.5, 40.0, 62.5)
+$areaTrace1.t = @("North", "N-E", "East", "S-E", "South", "S-W", "West", "N-W")
+$areaTrace1.name = "11-14 m/s"
+$areaTrace1.marker = [XPlot.Plotly.Marker]::new()
+$areaTrace1.marker.color = "rgb(106,81,163)"
+
+$areaTrace2 = [Graph.Area]::new()
+$areaTrace2.r = @(57.49999999999999, 50.0, 45.0, 35.0, 20.0, 22.5, 37.5, 55.00000000000001)
+$areaTrace2.t = @("North", "N-E", "East", "S-E", "South", "S-W", "West", "N-W")
+$areaTrace2.name = "8-11 m/s"
+$areaTrace2.marker = [XPlot.Plotly.Marker]::new()
+$areaTrace2.marker.color = "rgb(158,154,200)"
+
+$areaTrace3 = [Graph.Area]::new()
+$areaTrace3.r = @(40.0, 30.0, 30.0, 35.0, 7.5, 7.5, 32.5, 40.0)
+$areaTrace3.t = @("North", "N-E", "East", "S-E", "South", "S-W", "West", "N-W")
+$areaTrace3.name = "5-8 m/s"
+$areaTrace3.marker = [XPlot.Plotly.Marker]::new()
+$areaTrace3.marker.color = "rgb(203,201,226)"
+
+$areaTrace4 = [Graph.Area]::new()
+$areaTrace4.r = @(20.0, 7.5, 15.0, 22.5, 2.5, 2.5, 12.5, 22.5)
+$areaTrace4.t = @("North", "N-E", "East", "S-E", "South", "S-W", "West", "N-W")
+$areaTrace4.name = "< 5 m/s"
+$areaTrace4.marker = [XPlot.Plotly.Marker]::new()
+$areaTrace4.marker.color = "rgb(242,240,247)"
+
+$areaLayout = [Layout]::new()
+$areaLayout.title = "Wind Speed Distribution in Laurel, NE"
+$areaLayout.font = [XPlot.Plotly.Font]::new()
+$areaLayout.font.size = 16
+$areaLayout.legend = [XPlot.Plotly.Legend]::new()
+$areaLayout.legend.font = [XPlot.Plotly.Font]::new()
+$areaLayout.legend.font.size = 16
+$areaLayout.radialaxis = [XPlot.Plotly.Radialaxis]::new()
+$areaLayout.radialaxis.ticksuffix = "%"
+$areaLayout.orientation = 270
+New-PlotlyChart -Layout $areaLayout -Trace @($areaTrace1, $areaTrace2, $areaTrace3, $areaTrace4) | Out-Display

@@ -41,7 +41,7 @@ Switch ($Use) {
 }
 If ($Query -NE "No Search Engine Specified") {
 	## -- Detect the Default Web Browser
-	Start $Query
+	Start-process $Query
 }
 Else {
 	Write-Host

@@ -7,7 +7,15 @@ $sourceUrl = "https://go.microsoft.com/fwlink/?LinkID=121721&arch=arm64"
 if (test-path -Verbose -Path $file) { remove-item $file -Verbose }
 # download latest virus definition file.
 # Use Start-BitsTransfer to download the file. 
-Start-BitsTransfer -Source $sourceUrl -Destination $file -DisplayName $file -Verbose
+$parameters = @{
+    Source      = $sourceUrl
+    Destination = $file
+    DisplayName = $file
+}
+$parameters
+Start-BitsTransfer @parameters -verbose
+# Start-BitsTransfer -Source $sourceUrl -Destination $file -DisplayName $file -Verbose
+
 # apply the file
 if (test-path $file) { 
     # wait for file to be applied - like invoke-command but waits for it to complete.
@@ -17,6 +25,7 @@ if (test-path $file) {
         FilePath     = "Chrome.exe"
         ArgumentList = 'https://www.microsoft.com/en-us/wdsi/definitions/antimalware-definition-release-notes'
     }
+    $parameters
     start-process @parameters -Verbose
     # start-process chrome.exe -ArgumentList 'https://www.microsoft.com/en-us/wdsi/definitions/antimalware-definition-release-notes'
 }

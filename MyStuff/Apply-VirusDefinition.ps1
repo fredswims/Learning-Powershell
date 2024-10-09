@@ -2,6 +2,10 @@ function fjApplyVirusDefinition {
     # FAJ Sept 2024 
     # File -> 'Apply-VirusDefinition.ps1'
     Write-Warning "In function $($MyInvocation.MyCommand.Name):"
+    get-host -verbose
+    "*****PSCommandPath***************" 
+    $PSCommandPath|format-list *
+    "*********************"
     $file = join-path $env:HOME "Downloads\mpam-fe.exe"
     $sourceUrl = "https://go.microsoft.com/fwlink/?LinkID=121721&arch=arm64"
     if (test-path -Verbose -Path $file) { remove-item $file -Verbose }
@@ -12,6 +16,7 @@ function fjApplyVirusDefinition {
         Destination = $file
         DisplayName = 'Threat detections for Microsoft Defender Antivirus and other Microsoft antimalware.'
     }
+    "Show Parameters"
     $parameters
     Start-BitsTransfer @parameters -verbose
     # Start-BitsTransfer -Source $sourceUrl -Destination $file -DisplayName $file -Verbose

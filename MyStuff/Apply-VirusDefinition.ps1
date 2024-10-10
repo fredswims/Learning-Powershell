@@ -1,6 +1,7 @@
 function fjApplyVirusDefinition {
     # FAJ Sept 2024 
     # File -> 'Apply-VirusDefinition.ps1'
+    # https://www.microsoft.com/en-us/wdsi/defenderupdates
     Write-Warning "In function $($MyInvocation.MyCommand.Name):"
     get-host -verbose
     "*****PSCommandPath***************" 

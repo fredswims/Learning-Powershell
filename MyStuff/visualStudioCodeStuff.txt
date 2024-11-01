@@ -3,3 +3,11 @@ https://pavolkutaj.medium.com/how-to-find-file-history-with-git-and-visual-studi
 In VS Code, run the command
 Explorer: Focus on Timeline View
 Shortcut: CTRL + SHIFT + P → Enter Timeline → Select Explorer: Focus on Timeline View
+
+Explorer: Focus on Folders View
+
+2. VS Code Open in Github Extension
+https://marketplace.visualstudio.com/items?itemName=fabiospampinato.vscode-open-in-github
+Use Open in GitHub — Visual Studio Marketplace
+Shortcut: CTRL + SHIFT + P → Enter File History → Select Open in Github: File History
+

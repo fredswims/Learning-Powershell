@@ -1,0 +1,5 @@
+https://pavolkutaj.medium.com/how-to-find-file-history-with-git-and-visual-studio-code-5d4ea0bc79c
+1. VS Code Timeline feature — easiest view of file history
+In VS Code, run the command
+Explorer: Focus on Timeline View
+Shortcut: CTRL + SHIFT + P → Enter Timeline → Select Explorer: Focus on Timeline View

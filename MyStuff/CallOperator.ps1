@@ -2,8 +2,9 @@
 $command = "Get-ChildItem"
 & $command
 
+$scriptBlock = { Get-Process | Where-Object { $_.Name -eq "notepad" } }
   & "notepad.exe"
-  $scriptBlock = { Get-Process | Where-Object { $_.Name -eq "notepad" } }
+  Start-Sleep -Seconds 2
   & $scriptBlock
 
   start-process powershell -Args " -noprofile -command & {. '$runThis' $arg -speak }"

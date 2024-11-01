@@ -9,3 +9,4 @@ $command = "Get-ChildItem"
   start-process powershell -Args " -noprofile -command & {. '$runThis' $arg -speak }"
 
 #   https://ss64.com/ps/call.html
+# 

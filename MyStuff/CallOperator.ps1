@@ -11,3 +11,4 @@ $scriptBlock = { Get-Process | Where-Object { $_.Name -eq "notepad" } }
 
 #   https://ss64.com/ps/call.html
 # 
+# fred

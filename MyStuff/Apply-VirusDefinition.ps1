@@ -37,6 +37,7 @@ function fjApplyVirusDefinition {
     }
     else { write-error ("File '$file' was not found.") }
     if (test-path $file) { remove-item $file -Verbose }
+    "begin sleep"
     Start-Sleep -Seconds 60
     Write-Warning "Leaving function $($MyInvocation.MyCommand.Name):"
 }#fjApplyVirusDefinition

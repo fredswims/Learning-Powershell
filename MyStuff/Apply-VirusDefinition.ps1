@@ -3,10 +3,16 @@ function fjApplyVirusDefinition {
     # File -> 'Apply-VirusDefinition.ps1'
     # https://www.microsoft.com/en-us/wdsi/defenderupdates
     Write-Warning "In function $($MyInvocation.MyCommand.Name):"
-    get-host -verbose
-    "*****PSCommandPath***************" 
-    $PSCommandPath|format-list *
-    "*********************"
+    
+    #diagnostic info
+        "Process [{0}] Parent [{1}]" -f `
+            (get-process -Id $pid).processname, (get-process -Id $pid).Parent.name
+        get-host -verbose
+        "*****PSCommandPath***************" 
+        $PSCommandPath|format-list *
+        "*********************"
+    #end diagnostic info
+    
     $file = join-path $env:HOME "Downloads\mpam-fe.exe"
     $sourceUrl = "https://go.microsoft.com/fwlink/?LinkID=121721&arch=arm64"
     if (test-path -Verbose -Path $file) { remove-item $file -Verbose }
@@ -37,9 +43,10 @@ function fjApplyVirusDefinition {
     }
     else { write-error ("File '$file' was not found.") }
     if (test-path $file) { remove-item $file -Verbose }
-    "begin sleep"
-    Start-Sleep -Seconds 60
+    
+    Start-Sleep -Seconds 30 -Verbose
     Write-Warning "Leaving function $($MyInvocation.MyCommand.Name):"
+    exit
 }#fjApplyVirusDefinition
 
 fjApplyVirusDefinition

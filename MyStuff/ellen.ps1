@@ -1,6 +1,7 @@
-$myInvocation.mycommand.name
-"I am here {0}" -f get-location
-
-V:
-write-host &(get-location)
-read-host "fred"
+function ellen {
+Write-Warning "In function $($MyInvocation.MyCommand.Name):"
+"I am here {0}" -f (get-location)
+write-host ($(get-location))
+get-content $MyInvocation.ScriptName
+}
+ellen

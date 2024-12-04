@@ -1,0 +1,659 @@
+Sure! Here's a PowerShell script that uses .NET to move a file to the recycle bin:
+
+```powershell
+# Load the necessary .NET assemblies
+Add-Type -AssemblyName Microsoft.VisualBasic
+
+# Define the path of the file you want to move to the recycle bin
+$filePath = "C:\path\to\your\file.txt"
+
+# Move the file to the recycle bin
+[Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile($filePath, 'OnlyErrorDialogs', 'SendToRecycleBin')
+```
+
+Just replace `"C:\path\to\your\file.txt"` with the actual path of the file you want to move. This script uses the `Microsoft.VisualBasic.FileIO.FileSystem` class to send the specified file to the recycle bin.
+
+Let me know if you need any further assistance!
+
+-------------------------------------
+
+Got it! Here's how you can move a file to the recycle bin using .NET in a PowerShell script:
+
+```powershell
+# Load the necessary .NET assembly
+Add-Type -AssemblyName System.Windows.Forms
+
+# Define the path of the file you want to move to the recycle bin
+$filePath = "C:\path\to\your\file.txt"
+
+# Move the file to the recycle bin
+$sh = New-Object -ComObject Shell.Application
+$recycleBin = $sh.Namespace(10)
+$file = $sh.NameSpace((Get-Item $filePath).Directory.FullName).ParseName((Get-Item $filePath).Name)
+$file.InvokeVerb("delete")
+```
+
+Replace `"C:\path\to\your\file.txt"` with the actual path of the file you want to move. This script uses the `Shell.Application` COM object to send the specified file to the recycle bin. 
+
+Let me know if you have any questions or need further assistance!
+
+-------------------
+To bring the PowerShell window to the foreground after a process ends, you can use a combination of PowerShell and some .NET components. Below is a script that starts a process, waits for it to finish, and then brings the PowerShell window to the foreground:
+
+```powershell
+# Start a process (example: Notepad)
+$process = Start-Process -FilePath "notepad.exe" -PassThru
+
+# Wait for the process to end
+$process.WaitForExit()
+
+# Bring PowerShell window to the foreground
+Add-Type @"
+using System;
+using System.Runtime.InteropServices;
+
+public class User32 {
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool SetForegroundWindow(IntPtr hWnd);
+}
+"@
+
+# Get the PowerShell window handle
+$handle = (Get-Process -Id $pid).MainWindowHandle
+
+# Set the PowerShell window to the foreground
+[User32]::SetForegroundWindow($handle)
+```
+
+In this script:
+1. `Start-Process` initiates a process (in this case, Notepad) and returns the process object with `-PassThru`.
+2. `$process.WaitForExit()` waits for the process to complete.
+3. The `Add-Type` cmdlet is used to add a .NET type that allows calling the `SetForegroundWindow` function from the user32.dll.
+4. `$handle = (Get-Process -Id $pid).MainWindowHandle` gets the window handle of the current PowerShell window.
+5. `[User32]::SetForegroundWindow($handle)` brings the PowerShell window to the foreground.
+
+You can replace `"notepad.exe"` with the path of the process you want to start. Let me know if you need further adjustments or have any other questions!
+
+-----------
+Version 2
+Got it. Given that `pwsh` running in OpenConsole doesn't have a valid `MainWindowHandle`, we can use a workaround to identify and bring the appropriate console window to the foreground.
+
+Here’s how you can modify the script to work in this scenario:
+
+1. First, let's identify the window title of your PowerShell console.
+2. Then, we’ll use this title to find the correct window and bring it to the foreground.
+
+Here is the updated script:
+
+```powershell
+# Define the path of the process you want to start (example: Notepad)
+$process = Start-Process -FilePath "notepad.exe" -PassThru
+
+# Wait for the process to end
+$process.WaitForExit()
+
+# Function to get the console window handle
+function Get-ConsoleWindowHandle {
+    Add-Type @"
+    using System;
+    using System.Runtime.InteropServices;
+    
+    public class User32 {
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+    }
+"@
+    $consoleTitle = $host.ui.RawUI.WindowTitle
+    $handle = [User32]::FindWindow(null, $consoleTitle)
+    return $handle
+}
+
+# Bring the PowerShell window to the foreground
+$handle = Get-ConsoleWindowHandle
+if ($handle -ne [IntPtr]::Zero) {
+    [User32]::SetForegroundWindow($handle)
+} else {
+    Write-Host "Failed to find the console window."
+}
+```
+
+In this script:
+1. `Start-Process` initiates a process (like Notepad) and waits for it to finish.
+2. The `Get-ConsoleWindowHandle` function uses the `FindWindow` method to locate the console window by its title.
+3. The console window title is retrieved using `$host.ui.RawUI.WindowTitle`.
+4. If the window handle is found, `SetForegroundWindow` brings it to the foreground; otherwise, it notifies that the window was not found.
+
+This approach should help in making the PowerShell window visible in the foreground. Let me know if you need further assistance or adjustments!
+----
+Version 3
+Got it. Given that `pwsh` running in OpenConsole doesn't have a valid `MainWindowHandle`, we can use a workaround to identify and bring the appropriate console window to the foreground.
+
+Here’s how you can modify the script to work in this scenario:
+
+1. First, let's identify the window title of your PowerShell console.
+2. Then, we’ll use this title to find the correct window and bring it to the foreground.
+
+Here is the updated script:
+
+```powershell
+# Define the path of the process you want to start (example: Notepad)
+$process = Start-Process -FilePath "notepad.exe" -PassThru
+
+# Wait for the process to end
+$process.WaitForExit()
+
+# Function to get the console window handle
+function Get-ConsoleWindowHandle {
+    Add-Type @"
+    using System;
+    using System.Runtime.InteropServices;
+    
+    public class User32 {
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+    }
+"@
+    $consoleTitle = $host.ui.RawUI.WindowTitle
+    $handle = [User32]::FindWindow(null, $consoleTitle)
+    return $handle
+}
+
+# Bring the PowerShell window to the foreground
+$handle = Get-ConsoleWindowHandle
+if ($handle -ne [IntPtr]::Zero) {
+    [User32]::SetForegroundWindow($handle)
+} else {
+    Write-Host "Failed to find the console window."
+}
+```
+
+In this script:
+1. `Start-Process` initiates a process (like Notepad) and waits for it to finish.
+2. The `Get-ConsoleWindowHandle` function uses the `FindWindow` method to locate the console window by its title.
+3. The console window title is retrieved using `$host.ui.RawUI.WindowTitle`.
+4. If the window handle is found, `SetForegroundWindow` brings it to the foreground; otherwise, it notifies that the window was not found.
+
+This approach should help in making the PowerShell window visible in the foreground. Let me know if you need further assistance or adjustments!
+
+-----
+version 4
+Thank you for pointing that out. Given that `FindWindow` returns 0, which means it couldn't find the window handle, it seems we need a different approach. Let's try using the `Set-WindowFocus` method in PowerShell to bring the console window to the foreground by leveraging a different way to identify it. 
+
+Here’s an alternative approach:
+
+1. Use `FindWindow` with a more general class name for console windows.
+2. Iterate through open windows and match them by process ID to find the right handle.
+
+```powershell
+# Load necessary .NET types
+Add-Type @"
+using System;
+using System.Runtime.InteropServices;
+
+public class User32 {
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+    [DllImport("user32.dll")]
+    public static extern int GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool IsWindowVisible(IntPtr hWnd);
+}
+"@
+
+function Get-ConsoleWindowHandle {
+    $consoleClass = "ConsoleWindowClass"
+    $allWindows = @()
+
+    function EnumWindows {
+        param (
+            [Parameter(ValueFromPipeline)]
+            [System.IntPtr]$hWnd
+        )
+        begin {
+            Add-Type @"
+                using System;
+                using System.Runtime.InteropServices;
+                public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+                public class User32 {
+                    [DllImport("user32.dll")]
+                    [return: MarshalAs(UnmanagedType.Bool)]
+                    public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
+                }
+"@
+        }
+        process {
+            $allWindows += $hWnd
+        }
+        end {
+            $proc = [User32+EnumWindowsProc]{
+                param ($hWnd, $lParam)
+                $allWindows += $hWnd
+                return $true
+            }
+            [User32]::EnumWindows($proc, [IntPtr]::Zero) | Out-Null
+        }
+    }
+
+    # Enumerate all windows
+    EnumWindows
+
+    # Get the handle for the console window by matching the process ID
+    foreach ($hWnd in $allWindows) {
+        $processId = 0
+        [User32]::GetWindowThreadProcessId($hWnd, [ref]$processId) | Out-Null
+        if ($processId -eq $pid -and [User32]::IsWindowVisible($hWnd)) {
+            return $hWnd
+        }
+    }
+
+    return [IntPtr]::Zero
+}
+
+# Start a process (example: Notepad)
+$process = Start-Process -FilePath "notepad.exe" -PassThru
+
+# Wait for the process to end
+$process.WaitForExit()
+
+# Bring the PowerShell window to the foreground
+$handle = Get-ConsoleWindowHandle
+if ($handle -ne [IntPtr]::Zero) {
+    [User32]::SetForegroundWindow($handle)
+} else {
+    Write-Host "Failed to find the console window."
+}
+```
+
+In this script:
+1. The `EnumWindows` function retrieves all open windows.
+2. The script iterates through these windows to match them by the PowerShell process ID, verifying visibility with `IsWindowVisible`.
+3. If a matching window is found, `SetForegroundWindow` brings it to the foreground.
+
+This should provide a more reliable way to bring the PowerShell window to the foreground, even when running in OpenConsole. Let me know how this works for you or if you need further adjustments!
+
+---------------
+version 5
+Ah, I see the issue. The `User32` type was already added earlier in the script, which is causing the conflict. Let's revise the script to check if the `User32` type has already been added, and only add it if necessary.
+
+Here's the updated script:
+
+```powershell
+# Check if the type 'User32' has already been added
+if (-not ([System.Management.Automation.PSTypeName]'User32').Type) {
+    Add-Type @"
+    using System;
+    using System.Runtime.InteropServices;
+
+    public class User32 {
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern int GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsWindowVisible(IntPtr hWnd);
+    }
+"@
+}
+
+function Get-ConsoleWindowHandle {
+    $consoleClass = "ConsoleWindowClass"
+    $allWindows = @()
+
+    function EnumWindows {
+        param (
+            [Parameter(ValueFromPipeline)]
+            [System.IntPtr]$hWnd
+        )
+        begin {
+            Add-Type @"
+                using System;
+                using System.Runtime.InteropServices;
+                public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+                public class User32 {
+                    [DllImport("user32.dll")]
+                    [return: MarshalAs(UnmanagedType.Bool)]
+                    public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
+                }
+"@
+        }
+        process {
+            $allWindows += $hWnd
+        }
+        end {
+            $proc = [User32+EnumWindowsProc]{
+                param ($hWnd, $lParam)
+                $allWindows += $hWnd
+                return $true
+            }
+            [User32]::EnumWindows($proc, [IntPtr]::Zero) | Out-Null
+        }
+    }
+
+    # Enumerate all windows
+    EnumWindows
+
+    # Get the handle for the console window by matching the process ID
+    foreach ($hWnd in $allWindows) {
+        $processId = 0
+        [User32]::GetWindowThreadProcessId($hWnd, [ref]$processId) | Out-Null
+        if ($processId -eq $pid -and [User32]::IsWindowVisible($hWnd)) {
+            return $hWnd
+        }
+    }
+
+    return [IntPtr]::Zero
+}
+
+# Start a process (example: Notepad)
+$process = Start-Process -FilePath "notepad.exe" -PassThru
+
+# Wait for the process to end
+$process.WaitForExit()
+
+# Bring the PowerShell window to the foreground
+$handle = Get-ConsoleWindowHandle
+if ($handle -ne [IntPtr]::Zero) {
+    [User32]::SetForegroundWindow($handle)
+} else {
+    Write-Host "Failed to find the console window."
+}
+```
+
+By checking if the `User32` type has already been defined before adding it, we avoid the error and ensure that the script runs smoothly.
+
+Give this a try and let me know if it works for you!
+
+-----------
+version  6
+
+I appreciate your patience as we work through this. Let's simplify the approach a bit and avoid re-adding the types. Instead, we will use a single `Add-Type` block and handle everything within it. This way, we avoid conflicts with previously added types.
+
+Here's the revised script:
+
+```powershell
+Add-Type @"
+using System;
+using System.Runtime.InteropServices;
+
+public class User32 {
+    [DllImport("user32.dll")]
+    public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+    [DllImport("user32.dll")]
+    public static extern int GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool IsWindowVisible(IntPtr hWnd);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
+
+    public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+}
+"@
+
+function Get-ConsoleWindowHandle {
+    $allWindows = @()
+
+    $enumWindowsCallback = {
+        param ($hWnd, $lParam)
+        $allWindows += $hWnd
+        return $true
+    }
+
+    $proc = [User32+EnumWindowsProc]$enumWindowsCallback
+    [User32]::EnumWindows($proc, [IntPtr]::Zero) | Out-Null
+
+    foreach ($hWnd in $allWindows) {
+        $processId = 0
+        [User32]::GetWindowThreadProcessId($hWnd, [ref]$processId) | Out-Null
+        if ($processId -eq $pid -and [User32]::IsWindowVisible($hWnd)) {
+            return $hWnd
+        }
+    }
+
+    return [IntPtr]::Zero
+}
+
+# Start a process (example: Notepad)
+$process = Start-Process -FilePath "notepad.exe" -PassThru
+
+# Wait for the process to end
+$process.WaitForExit()
+
+# Bring the PowerShell window to the foreground
+$handle = Get-ConsoleWindowHandle
+if ($handle -ne [IntPtr]::Zero) {
+    [User32]::SetForegroundWindow($handle)
+} else {
+    Write-Host "Failed to find the console window."
+}
+```
+
+In this script:
+- We define the necessary `User32` methods and delegate in one `Add-Type` block.
+- The `Get-ConsoleWindowHandle` function enumerates all windows, matches the process ID, and checks if the window is visible.
+- Once the process ends, we retrieve the console window handle and bring it to the foreground.
+
+This should resolve the issue with finding the correct window handle. Please give it a try and let me know how it works!
+
+------
+version 7
+
+I appreciate your patience as we work through this. Let's simplify the approach a bit and avoid re-adding the types. Instead, we will use a single `Add-Type` block and handle everything within it. This way, we avoid conflicts with previously added types.
+
+Here's the revised script:
+
+```powershell
+Add-Type @"
+using System;
+using System.Runtime.InteropServices;
+
+public class User32 {
+    [DllImport("user32.dll")]
+    public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+    [DllImport("user32.dll")]
+    public static extern int GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool IsWindowVisible(IntPtr hWnd);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
+
+    public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+}
+"@
+
+function Get-ConsoleWindowHandle {
+    $allWindows = @()
+
+    $enumWindowsCallback = {
+        param ($hWnd, $lParam)
+        $allWindows += $hWnd
+        return $true
+    }
+
+    $proc = [User32+EnumWindowsProc]$enumWindowsCallback
+    [User32]::EnumWindows($proc, [IntPtr]::Zero) | Out-Null
+
+    foreach ($hWnd in $allWindows) {
+        $processId = 0
+        [User32]::GetWindowThreadProcessId($hWnd, [ref]$processId) | Out-Null
+        if ($processId -eq $pid -and [User32]::IsWindowVisible($hWnd)) {
+            return $hWnd
+        }
+    }
+
+    return [IntPtr]::Zero
+}
+
+# Start a process (example: Notepad)
+$process = Start-Process -FilePath "notepad.exe" -PassThru
+
+# Wait for the process to end
+$process.WaitForExit()
+
+# Bring the PowerShell window to the foreground
+$handle = Get-ConsoleWindowHandle
+if ($handle -ne [IntPtr]::Zero) {
+    [User32]::SetForegroundWindow($handle)
+} else {
+    Write-Host "Failed to find the console window."
+}
+```
+
+In this script:
+- We define the necessary `User32` methods and delegate in one `Add-Type` block.
+- The `Get-ConsoleWindowHandle` function enumerates all windows, matches the process ID, and checks if the window is visible.
+- Once the process ends, we retrieve the console window handle and bring it to the foreground.
+
+This should resolve the issue with finding the correct window handle. Please give it a try and let me know how it works!
+
+-----
+version 8
+
+I'm sorry to hear that the script isn't working as expected. Let's try a more robust method using the `SetForegroundWindow` with the exact window title, leveraging PowerShell's ability to call .NET methods.
+
+Here's an alternative approach using `Get-Process` and `SetForegroundWindow`:
+
+1. Get the window handle by matching the process name.
+2. Bring the window to the foreground.
+
+```powershell
+Add-Type @"
+using System;
+using System.Runtime.InteropServices;
+
+public class User32 {
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+    [DllImport("user32.dll")]
+    public static extern int GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool IsWindowVisible(IntPtr hWnd);
+}
+"@
+
+function Get-ConsoleWindowHandle {
+    param (
+        [string]$windowTitle
+    )
+
+    $allWindows = @()
+
+    function EnumWindows {
+        param (
+            [Parameter(ValueFromPipeline)]
+            [System.IntPtr]$hWnd
+        )
+        begin {
+            Add-Type @"
+                using System;
+                using System.Runtime.InteropServices;
+                public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+                public class User32 {
+                    [DllImport("user32.dll")]
+                    [return: MarshalAs(UnmanagedType.Bool)]
+                    public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
+                }
+"@
+        }
+        process {
+            $allWindows += $hWnd
+        }
+        end {
+            $proc = [User32+EnumWindowsProc]{
+                param ($hWnd, $lParam)
+                $allWindows += $hWnd
+                return $true
+            }
+            [User32]::EnumWindows($proc, [IntPtr]::Zero) | Out-Null
+        }
+    }
+
+    # Enumerate all windows
+    EnumWindows
+
+    # Get the handle for the console window by matching the window title
+    foreach ($hWnd in $allWindows) {
+        $processId = 0
+        [User32]::GetWindowThreadProcessId($hWnd, [ref]$processId) | Out-Null
+        if ([User32]::IsWindowVisible($hWnd)) {
+            # Retrieve window title
+            $windowBuffer = New-Object char[] 256
+            [User32]::GetWindowText($hWnd, $windowBuffer, $windowBuffer.Length) | Out-Null
+            $title = -join $windowBuffer[0..($windowBuffer.IndexOf([char]0)-1)]
+            if ($title -eq $windowTitle) {
+                return $hWnd
+            }
+        }
+    }
+
+    return [IntPtr]::Zero
+}
+
+# Start a process (example: Notepad)
+$process = Start-Process -FilePath "notepad.exe" -PassThru
+
+# Wait for the process to end
+$process.WaitForExit()
+
+# Bring the PowerShell window to the foreground
+$consoleTitle = "PowerShell Console" # Replace with your exact console window title
+$handle = Get-ConsoleWindowHandle -windowTitle $consoleTitle
+if ($handle -ne [IntPtr]::Zero) {
+    [User32]::SetForegroundWindow($handle)
+} else {
+    Write-Host "Failed to find the console window."
+}
+```
+
+In this script:
+- `EnumWindows` retrieves all open windows and their titles.
+- `Get-ConsoleWindowHandle` matches the window title to find the appropriate handle.
+
+Replace `"PowerShell Console"` with the exact title of your console window. This should help ensure that the correct window is brought to the foreground. Give this a try and let me know if it works for you!

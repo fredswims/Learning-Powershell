@@ -1,0 +1,30 @@
+# Displaying the Yen Symbol from a Unicode (code point) String:
+# The Unicode 'code point' for the Yen symbol is u00A5: four hexadecimal numbers -> 0x00A5 
+# Here are four ways to display the Yen Symbol.
+    Write-Output "`u{00A5}"
+    [char]0x00A5
+    Write-Output "¥" #get the Yen character from the Character Map app or use the numeric keyboard; hold alt - 0165. This is the decimal equivalent of 0x00A5
+    
+    # Working with the Unicode code point as a string
+    $unicode="00A5"
+    # Convert the Unicode string to a character; convert the string to an integer and cast it to a character.
+    $char=([char]([convert]::ToInt32($unicode, 16))) 
+    # Output the character
+    Write-Output $char
+
+# Converting Unicode to Decimal equivalent:
+    #If you have the Unicode code point (e.g., u00A5), you can convert it to its decimal equivalent:
+    # Converting Unicode code point to Integer (hexadecimal to decimal)
+    # Unicode code point as a string
+    $unicode = "00A5"
+    # Convert the hexadecimal string to decimal
+    $decimal = [convert]::ToInt32($unicode, 16) 
+ 
+# Converting Decimal to Unicode
+    #If you have an integer (decimal) value and want to convert it back to the Unicode code point:
+    # Decimal value for the yen symbol
+    $decimal = 165
+    # Convert a decimal to a Unicode string.
+    $unicode = "{0:X4}" -f $decimal
+
+ #>

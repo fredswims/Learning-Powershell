@@ -13,6 +13,7 @@ Msg1                           The string parameter is required.
 #>
 
 $data = @"
+# The next line contains Unicode characters representing a bell emoji
 $([char]0xD83D + [char]0xDD14)
 $([System.Globalization.CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($env:USERNAME))
 here are some $($psStyle.foreground.brightred)Things$($psStyle.reset) you might want to try:

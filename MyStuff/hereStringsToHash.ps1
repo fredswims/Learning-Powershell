@@ -44,4 +44,4 @@ write-host $data
 $lines = $data -split "`n" 
 # Print the second line (index 1) 
 Write-Output $lines[1]
- #> end comment fred jacobowitz 784 oakleigh road Are errors removed when I Sync to Master?
+ #> end comment fred jacobowitz 784 oakleigh road Are errors removed when I Sync to Master? YEs

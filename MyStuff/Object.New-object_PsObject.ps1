@@ -1,3 +1,4 @@
+#using the New-Object cmdlet to create a new object and add it to an array of objects.
 $results = @()
 $Number=0 #initialize the counter
 # $file = 'C:\protected_temp\logs\intest.log'

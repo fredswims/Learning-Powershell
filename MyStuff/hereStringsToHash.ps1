@@ -39,9 +39,9 @@ test-connection 192.168.86.250 -Traceroute -ResolveDestination
 #This display all the lines in the HereString
 write-host $data
 
-<# 
+<# begin comment
 # Split the here-string into an array of lines
 $lines = $data -split "`n" 
 # Print the second line (index 1) 
 Write-Output $lines[1]
- #>
+ #> end comment

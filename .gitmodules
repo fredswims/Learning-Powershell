@@ -1,0 +1,3 @@
+[submodule "MyStuff/FredSwims.github/fredswims.github.io"]
+	path = MyStuff/FredSwims.github/fredswims.github.io
+	url = https://github.com/fredswims/fredswims.github.io.git

@@ -3,7 +3,8 @@ Msg1 = The string parameter is required.
 Msg2 = Credentials are required for this command.
 Msg3 = The specified variable does not exist.
 '@
-ConvertFrom-StringData -StringData $Here
+# ConvertFrom-StringData converts a string in the format of key=value pairs to a hashtable
+$hashTable = ConvertFrom-StringData -StringData $Here
 <# 
 Name                           Value
 ----                           -----
@@ -11,8 +12,7 @@ Msg3                           The specified variable does not exist.
 Msg2                           Credentials are required for this command.
 Msg1                           The string parameter is required. 
 #>
-
-$data = @"
+$data = @" 
 # The next line contains Unicode characters representing a bell emoji
 $([char]0xD83D + [char]0xDD14)
 $([System.Globalization.CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($env:USERNAME))

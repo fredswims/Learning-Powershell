@@ -30,7 +30,7 @@ $DownloadURL = "https://bintray.com/ookla/download/download_file?file_path=ookla
 $DownloadLocation = "$($Env:ProgramData)\SpeedtestCLI"
 try {
     $TestDownloadLocation = Test-Path $DownloadLocation
-    if (!$TestDownloadLocation) {
+    if ($TestDownloadLocation) {
         new-item $DownloadLocation -ItemType Directory -force
         Invoke-WebRequest -Uri $DownloadURL -OutFile "$($DownloadLocation)\speedtest.zip"
         Expand-Archive "$($DownloadLocation)\speedtest.zip" -DestinationPath $DownloadLocation -Force

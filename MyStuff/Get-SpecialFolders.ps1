@@ -1,8 +1,6 @@
 function Get-SpecialFolders {
     [CmdletBinding()]
-    param (
-        [string]$ComputerName = $env:COMPUTERNAME
-    )
+    param () # No parameters
     
 
     #Get the path of each special folder.

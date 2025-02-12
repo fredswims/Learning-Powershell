@@ -1,0 +1,11 @@
+# Use reflection to access the TypeAccelerators class
+$typeAcceleratorsType = [psobject].Assembly.GetType("System.Management.Automation.TypeAccelerators")
+
+# Get the Get method from TypeAccelerators class
+$getMethod = $typeAcceleratorsType.GetMethod('Get', [System.Reflection.BindingFlags]::NonPublic -bor [System.Reflection.BindingFlags]::Static)
+$typeAccelerators = $getMethod.Invoke($null, @())
+
+# Display the accelerators
+$typeAccelerators.GetEnumerator() | Sort-Object Key | ForEach-Object { 
+    Write-Output "$($_.Key) = $($_.Value.FullName)"
+}

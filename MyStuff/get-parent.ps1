@@ -5,9 +5,9 @@ param (
     [Int64]
     $Id
 )
-    $ErrorActionPreference='SilentlyContinue'
+    $ErrorActionPreference='ignore'
     $parent=$null
-    $Parent=get-process -id (get-process -ErrorAction SilentlyContinue -id $id).parent.id -ErrorAction SilentlyContinue
+    $Parent=get-process -id (get-process -ErrorAction Ignore -id $id).parent.id -ErrorAction ignore
     if ($Parent.id -gt 0) {
         'Parent ID: {0}' -f $parent.id
         '      Parent Name: {0}' -f $parent.name

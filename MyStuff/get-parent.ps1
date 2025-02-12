@@ -5,16 +5,31 @@ param (
     [Int64]
     $Id
 )
-    $ErrorActionPreference='ignore'
+    $thisErrorCount=$Error.Count
+    $thisErrorActionPreference=$ErrorActionPreference
+    $ErrorActionPreference='silentlycontinue'
     $parent=$null
-    $Parent=get-process -id (get-process -ErrorAction Ignore -id $id).parent.id -ErrorAction ignore
+    $Parent=get-process -ErrorAction SilentlyContinue -id (get-process -ErrorAction SilentlyContinue  -id $id).parent.id
     if ($Parent.id -gt 0) {
         'Parent ID: {0}' -f $parent.id
         '      Parent Name: {0}' -f $parent.name
-    GetParent $parent.Id
-    } else {"Finished"}
+        $ErrorActionPreference = $thisErrorActionPreference
+        if ($thisErrorCount -gt $error.count) {
+            $error.Clear()
+        }
+        # get the next parent
+        GetParent $parent.Id
+    }
+    else {
+        if ($thisErrorCount -gt $error.count) {
+            $error.Clear()
+        }
+        $ErrorActionPreference = $thisErrorActionPreference
+        "Finished"
+    }
+    # $error.Clear()
 }
-Clear-Host
+# Clear-Host
 'starting'
 '       ID: {0}' -f $pid
 '             Name: {0}' -f (Get-process -id $pid).name

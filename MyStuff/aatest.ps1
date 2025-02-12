@@ -3,10 +3,10 @@ Function Test-PathEnv {
     Param()
     
     $splitter = [System.IO.Path]::PathSeparator
-    
     $pathenv = [System.Environment]::GetEnvironmentVariable("PATH")
     if ($pathenv) {
-        $env:PATH -split $splitter | Foreach-Object {
+        # $env:PATH -split $splitter | Foreach-Object {
+        $pathenv -split $splitter | Foreach-Object {
             # create a custom object based on each path
             [pscustomobject]@{
                 Computername = [System.Environment]::MachineName
@@ -16,9 +16,52 @@ Function Test-PathEnv {
         } 
     }
     else {
-        Write-Warning "Failed to find an environmental path"
+        Write-error "Failed to find an environmental path"
     }
 }
+
+Function makeobject {
+    [cmdletbinding()]
+    Param(
+        [string]$Computername = [System.Environment]::MachineName,
+        [string]$Path         = (join-path -Path $env:homepath -ChildPath 'Mystuff'),
+        [string]$Filter
+    )
+    $Files = get-item -Path (Join-Path $Path $Filter)
+    foreach ($File in $Files) {
+        [pscustomobject]@{
+            PSTypeName = 'My.Object'
+            Name         = $File.Name
+            FullName      =$File.Fullname
+        }
+    }    
+}
+clear-host
+$files=makeobject -Filter "*object*.ps1"
+$files |Get-Member
+$files
+
+
+Function Test22 {
+    foreach ($Num in 1..10) {
+        [pscustomobject]@{
+            PSTypeName  = 'My.Object'
+            Number      = $Num
+        }
+    }    
+}
+Clear-Host
+$numbers=Test22
+
+foreach ($file in 1..10) {write-host $file}
+
+$a=test-pathenv
+$count=1;foreach ($path in $env:path -split($splitter = [System.IO.Path]::PathSeparator)){"{0} {1} " -f $count++,  $path}
+
+$splitter = [System.IO.Path]::PathSeparator
+$pathenv = [System.Environment]::GetEnvironmentVariable("PATH")
+$count=1
+foreach ($path in $pathenv -split($splitter)) {"{0} {1} " -f $count++,  $path}
 
 
 $missing = Test-PathEnv | Where-object {-not $_.exists}

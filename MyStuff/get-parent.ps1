@@ -2,8 +2,8 @@ function GetParent {
 [CmdletBinding()]
 param (
     [Parameter()]
-    [Int64]
-    $Id
+    [Int64]$Id,
+    [switch]$NoExit=$false
 )
     $thisErrorCount=$Error.Count
     $thisErrorActionPreference=$ErrorActionPreference
@@ -25,7 +25,8 @@ param (
             $error.Clear()
         }
         $ErrorActionPreference = $thisErrorActionPreference
-        "Finished"
+        write-host "Finished"
+        if ($noexit){Read-Host "Paused. Press Enter to exit."}
     }
     # $error.Clear()
 }

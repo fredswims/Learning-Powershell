@@ -1,8 +1,9 @@
 ﻿$PCName= $env:COMPUTERNAME
-$PClist = ("pc1   ","  pc2","VAIoFRED")
+$PClist = ("pc1   ","  pc2","VAIoFRED","BOOK4EDGE")
 foreach ($Pc in $PClist) {
 #$pc
 #$pc.ToUpper().trim()
+# $foreach
 $pc.trim().toUpper()
 #$pc.ToUpper()
 }

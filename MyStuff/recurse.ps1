@@ -31,6 +31,7 @@ function Recurse {
         return  $(recurse ($number - 1)) * $number
     }
 }    
-
+$answer=recurse 5
 $answer=recurse 150
 $answer
+recurse 5

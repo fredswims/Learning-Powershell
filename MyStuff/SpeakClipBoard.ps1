@@ -16,6 +16,7 @@ param (
     [Parameter(Mandatory=$false)]
     [switch]$AsJob = $false
 )
+#2025-03-27 FAJ - Added line to show parameter $AsJob is set to $true or $false. 
 #2025-03-14 FAJ.
 #2021-02-23 FAJ.
 # https://www.pdq.com/blog/powershell-text-to-speech-examples/
@@ -28,9 +29,10 @@ $textInfo = [System.Globalization.CultureInfo]::CurrentCulture.TextInfo
 $voice = $textInfo.ToTitleCase($voice.ToLower())
 $pcVoice="Microsoft {0} Desktop" -f $Voice
 
-'** Argument $SayThis contains [{0}]' -f $SayThis
-'** Argument $ThisRate contains [{0}]' -f $ThisRate
-'** Argument $pcVoice contains [{0}]' -f $pcVoice
+'** Parameter $SayThis contains [{0}]' -f $SayThis
+'** Parameter $ThisRate contains [{0}]' -f $ThisRate
+'** Parameter $pcVoice contains [{0}]' -f $pcVoice
+'** Parameter $AsJob contains [{0}]' -f $AsJob
 
 # Where is the string to speak? Passed as a parameter or on the clipboard or a file?
 if ([System.String]::IsNullOrEmpty($SayThis)) { $SayThis = Get-Clipboard } 

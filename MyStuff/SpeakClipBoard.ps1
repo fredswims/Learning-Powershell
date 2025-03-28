@@ -16,6 +16,7 @@ param (
     [Parameter(Mandatory=$false)]
     [switch]$AsJob = $false
 )
+#2025-03-28 FAJ - Added call to Get-Parent.ps1 to get the parent process chain.
 #2025-03-27 FAJ - Added line to show parameter $AsJob is set to $true or $false. 
 #2025-03-14 FAJ.
 #2021-02-23 FAJ.
@@ -23,6 +24,9 @@ param (
 Write-Warning "In script $($MyInvocation.MyCommand.Name): "
 write-warning "Current Location is $(get-location)"
 "Powershell is {0}" -f (get-process -pid $pid).Path
+
+$GetParent="$env:OneDrive\PowershellScripts\MyStuff\Get-Parent.ps1"
+if (Test-Path $GetParent) { . $GetParent } #. $GetParent -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden
 
 #Set $Voice to Proper Case.
 $textInfo = [System.Globalization.CultureInfo]::CurrentCulture.TextInfo

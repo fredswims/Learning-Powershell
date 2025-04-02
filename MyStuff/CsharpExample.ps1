@@ -16,7 +16,7 @@ public class ParallelExample
     {
         Parallel.For(0, 100, i =>
         {
-            Console.WriteLine($"Task {i} is running on thread {System.Threading.Thread.CurrentThread.ManagedThreadId}");
+            Console.WriteLine($"\tTask {i} is running on thread {System.Threading.Thread.CurrentThread.ManagedThreadId}");
         });
 
         Console.WriteLine("All tasks completed.");
@@ -25,7 +25,7 @@ public class ParallelExample
 "@
 
 Add-Type -TypeDefinition $source -Language CSharp
-for ($i=0; $i -lt $Count; $i++) {[ParallelExample]::Run()}
+for ($i=0; $i -lt $Count; $i++) {write-host -ForegroundColor Red ("Repetition $i" );start-sleep -Milliseconds 250;[ParallelExample]::Run()}
 # [ParallelExample]::Run()
 
 

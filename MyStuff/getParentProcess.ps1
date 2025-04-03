@@ -16,16 +16,16 @@ Begin {
     write-host -ForegroundColor Yellow 'This Process and Parents'
     # get the current process
     $ThisProcess = get-process -id $Id
-    '[{1}] [{2:d6}] [{0}] [{3}]' -f $ThisProcess.name , $ThisProcess.StartTime, $ThisProcess.id, $ThisProcess.path
+    '{4}[{5}{0}{4}]{5} [{2:d6}] [{1}] [{3}]' -f $ThisProcess.name , $ThisProcess.StartTime, $ThisProcess.id, $ThisProcess.path, $psStyle.bold, $psstyle.boldoff
     $ParentId = $(get-process -ErrorAction SilentlyContinue -id $id).parent.id
 
 }
 Process {
     while ($ParentId -gt 0) {
         $ParentProcess = get-process -id $ParentId -ErrorAction SilentlyContinue
-        '[{1}] [{2:d6}] [{0}] [{3}]' -f $ParentProcess.name , $ParentProcess.StartTime, $ParentProcess.id, $ParentProcess.path
+        '{4}[{5}{0}{4}]{5} [{2:d6}] [{1}] [{3}]' -f $ParentProcess.name , $ParentProcess.StartTime, $ParentProcess.id, $ParentProcess.path, $psStyle.bold, $psstyle.boldoff
         $Id = $ParentProcess.id
-        $ParentId = $(get-process -ErrorAction SilentlyContinue -id $Id ).parent.id
+        $ParentId = $(get-process -ErrorAction SilentlyContinue -id $Id).parent.id
     }
 }
 End {

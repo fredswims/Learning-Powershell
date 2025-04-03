@@ -1,45 +1,51 @@
 function GetParent {
-[CmdletBinding()]
-param (
-    [Parameter()]
-    [Int64]$Id,
-    [switch]$NoExit=$false
-)
+    [CmdletBinding()]
+    param (
+        [Parameter()]
+        [Int64]$Id,
+        [switch]$NoExit = $false
+    )
     # FAJ 2025-03-28
-    $thisErrorCount=$Error.Count
-    $thisErrorActionPreference=$ErrorActionPreference
-    $ErrorActionPreference='silentlycontinue'
-    $parent=$null
-    $Parent=get-process -ErrorAction SilentlyContinue -id (get-process -ErrorAction SilentlyContinue  -id $id).parent.id
-    if ($Parent.id -gt 0) {
-        # 'Parent ID: {0}' -f $parent.id
-        '[{1}] [{2:d6}] [{0}] [{3}]' -f $parent.name , $parent.StartTime, $parent.id, $parent.path
+    <# 
+    $thisErrorCount = $Error.Count
+    $thisErrorActionPreference = $ErrorActionPreference
+    $ErrorActionPreference = 'silentlycontinue' 
+    #>
+    [int64]$parentId = 0
+    
+    $parentId = $(get-process -ErrorAction SilentlyContinue -id $id).parent.id
+               
+    if ($ParentId -gt 0) {
+        $ParentProcess = get-process -id $parentId -ErrorAction SilentlyContinue
+
+        '[{1}] [{2:d6}] [{0}] [{3}]' -f $ParentProcess.name , $ParentProcess.StartTime, $ParentProcess.id, $ParentProcess.path
         # $parent|Format-Table -HideTableHeaders -AutoSize -Property  id,  starttime, name, path
-        $ErrorActionPreference = $thisErrorActionPreference
-        if ($thisErrorCount -gt $error.count) {
-            $error.Clear()
-        }
+        # $ErrorActionPreference = $thisErrorActionPreference
+        # if ($thisErrorCount -gt $error.count) {
+        # $error.Clear()
+
         # get the next parent
-        GetParent $parent.Id
+        GetParent $ParentProcess.Id
+        
     }
     else {
+        <# 
         if ($thisErrorCount -gt $error.count) {
             $error.Clear()
         }
-        $ErrorActionPreference = $thisErrorActionPreference
-        write-host "Finished Get-Parent.ps1"
-        if ($noexit){Read-Host "Paused. Press Enter to exit."}
+         #>
+        write-host "Finished Get-Parent.ps1" -ForegroundColor yellow
+        if ($noexit) { Read-Host "Paused. Press Enter to exit." }
     }
     # $error.Clear()
 } # end Function Get-Parent
 
-# Clear-Host
+#Begin
 Write-Warning "In Script $($MyInvocation.MyCommand.Name): "
 
-'This Process and Parents'
-# '       ID: {0}' -f $pid
-# '             Name: {0}' -f (Get-process -id $pid).name
-$ThisProcess=get-process -id $pid # get the current process
+write-host -ForegroundColor Yellow 'This Process and Parents'
+# get the current process
+$ThisProcess = get-process -id $pid 
 '[{1}] [{2:d6}] [{0}] [{3}]' -f $ThisProcess.name , $ThisProcess.StartTime, $ThisProcess.id, $ThisProcess.path
 
-getparent $PID
+GetParent $PID

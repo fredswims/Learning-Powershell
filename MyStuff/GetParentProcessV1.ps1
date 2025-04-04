@@ -16,7 +16,8 @@ Function PrintLine {
     # https://ss64.com/ps/syntax-dateformats.html
     # https://ss64.com/ps/syntax-f-operator.html
     param($Process)
-    "[{2,8}] {4}[{5}{0,-15}{4}]{5} [{1:yyyy-MM-dd hh:mm:ss tt}] [{3}]" `
+    # "[{2,8}] {4}[{5}{0,-15}{4}]{5} [{1:yyyy-MM-dd hh:mm:ss tt}] [{3}]" `
+    "[{2,8}] {4}[{5}{0,-15}{4}]{5} [{1:dd hh:mm:ss tt}] [{3}]" `
         -f $Process.name , $Process.StartTime, $Process.id, $Process.path, $psStyle.Formatting.Warning, $psstyle.reset
 }
 #Script Begins Here

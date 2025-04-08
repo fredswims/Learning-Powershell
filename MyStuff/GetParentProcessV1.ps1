@@ -21,7 +21,9 @@ Function PrintLine {
         -f $Process.name , $Process.StartTime, $Process.id, $Process.path, $psStyle.Formatting.Warning, $psstyle.reset
 }
 #Script Begins Here
-Write-Warning "In Script $($MyInvocation.MyCommand.Name): "
+# Write-Warning "In Script $($MyInvocation.MyCommand.Name): "
+write-host -ForegroundColor Yellow "`tExecuting:: $($MyInvocation.MyCommand.Source)"
+write-host -ForegroundColor Yellow "`t`Called by:: $($MyInvocation.ScriptName) `n`tInvoked as:: $($MyInvocation.Line)"
 
 #  Is the param $Id valid? If not print message and exit.
 if ((get-process).id -contains $id) { write-verbose "Good `$Id" } else { Write-host -ForegroundColor Red  "Enter a valid 'Id'"; return }

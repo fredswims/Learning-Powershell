@@ -42,6 +42,6 @@ While ($ParentId -gt 0) {
     $ParentId = $(get-process -ErrorAction SilentlyContinue -id $Id).parent.id
 } # end while
 
-write-host "Fini" -ForegroundColor yellow
+write-host "Finis" -ForegroundColor yellow
 if ($noexit) { Read-Host "Paused. Press Enter to exit." }
  

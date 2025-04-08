@@ -1,3 +1,11 @@
+# this file is .gitignore
+# Ignore all `.log` files
+#   *.log
+
+# Ignore the `node_modules` folder
+#   node_modules/
+
+# Ignore specific files
 MyStuff/Data/covid.xlsx
 MyStuff/Data/2020-04-04-feature-list.html
 MyStuff/Data/2020-04-06-feature-list.html
@@ -18,3 +26,5 @@ MyStuff/GPUCache/data_1
 MyStuff/GPUCache/index
 MyStuff/JNoteBooks/Notebook-0.ipynb
 MyStuff/JNoteBooks/readme.txt
+mystuff/aclfile
+desktop.ini

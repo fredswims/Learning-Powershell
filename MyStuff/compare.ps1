@@ -36,15 +36,15 @@ try {
             write-host `n`t$dir `n`t$targetFolder
             
             # rules
-                # If the folder exist AND there is/are file(s) AND the hashes are different {then copy the file.}
-                # if the folder does not exist AND there are files and the hashes are different {then copy the file.}
-                # if the folder exists and the hashes are the same {then do nothing}
+            # If the folder exist AND there is/are file(s) AND the hashes are different {then copy the file.}
+            # if the folder does not exist AND there are files and the hashes are different {then copy the file.}
+            # if the folder exists and the hashes are the same {then do nothing}
             # read-host "folders match?" 
 
             # Set some flags.
             $files = get-childitem -file -path (join-path -path $dir -childpath "*") 
-            if ($files.count -eq 0) {$FilesFlag=$false} else {$FilesFlag=$true}
-            if (test-path $targetFolder) {$TargetFolderFlag=$true} else {$TargetFolderFlag=$false}
+            if ($files.count -eq 0) { $FilesFlag = $false } else { $FilesFlag = $true }
+            if (test-path $targetFolder) { $TargetFolderFlag = $true } else { $TargetFolderFlag = $false }
             
             
             if (!(test-path $targetFolder)) { 
@@ -60,8 +60,8 @@ try {
 
                 if ($files.count -eq 0) { write-warning ("file count {0} in {1}" -f $files.count, $dir) }
                 else {
-                    $counter=0
-                    foreach($file in $files){
+                    $counter = 0
+                    foreach ($file in $files) {
                         $counter++
                         write-host "`t $counter `t $($file.name)"
                     }

@@ -94,6 +94,5 @@ catch {
     Get-Error
 }
 Finally {
-    set-location $startingDir
-    Read-Host "Finis"
+    write-Host "Finis"
 }

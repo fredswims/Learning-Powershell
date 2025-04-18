@@ -5,11 +5,11 @@ try {
     $error.clear()
     Clear-Host
     $thisHostName = [system.net.dns]::gethostname()
-    push-location $env:OneDrive
+    # push-location $env:OneDrive
 
     # Find the crazy folders (as a result of the One Drive migration) that have the HOST-Name appended to them.
     write-host "Find the Crazy Folders"
-    $CrazyFolders = Get-ChildItem -Recurse -Directory -Include "*-$($thisHostName)"  | sort-object 
+    $CrazyFolders = Get-ChildItem -Recurse -Directory -Include "*-$($thisHostName)" -path $env:onedrive | sort-object 
     if ($CrazyFolders.count -eq 0) {
         write-host "No Crazy Folder Found - Aren't You Lucky?!"
         exit 0
@@ -23,9 +23,9 @@ try {
         $StartingDir = $CrazyFolder
         $OriginalFolder = $startingdir.fullname.Replace("-$($thishostname)", "")
         # $startingDir = "C:\Users\freds\OneDrive\Private-Book4Edge".ToLower()
-        set-location $startingDir
+        # set-location $startingDir
         # find all the subfolders
-        $SubFolders = Get-ChildItem -Recurse -Directory -path $StartingDir\*  | sort-object $dir.fullname
+        $SubFolders = Get-ChildItem -Recurse -Directory -path $StartingDir  | sort-object $dir.fullname
         $Dirs = @($startingDir, $subfolders) | ForEach-Object { $_.FullName } | Sort-Object
         "The directories to check"
         $Dirs
@@ -42,7 +42,7 @@ try {
             # read-host "folders match?" 
 
             # Set some flags.
-            $files = get-childitem -path $dir\* -File
+            $files = get-childitem -file -path (join-path -path $dir -childpath "*") 
             if ($files.count -eq 0) {$FilesFlag=$false} else {$FilesFlag=$true}
             if (test-path $targetFolder) {$TargetFolderFlag=$true} else {$TargetFolderFlag=$false}
             
@@ -55,7 +55,7 @@ try {
             else {
                 Write-Host -ForegroundColor Red -Object ("Exist: Folder {0}" -f $targetfolder)
                 # read-host ("Files in folder {0}" -f $dir)
-                $files = get-childitem -path $dir\* -File
+                $files = get-childitem -File -path (join-path -Path $dir -ChildPath "*") 
                 write-host ("There are [{0}] files in folder [{1}]" -f $files.count, $dir)
 
                 if ($files.count -eq 0) { write-warning ("file count {0} in {1}" -f $files.count, $dir) }
@@ -73,7 +73,7 @@ try {
                             write-host "Copy/Move $($file.name) to $targetfolder"
                         } 
                         else {
-                            "File {0} does exist" -f (join-path $targetFolder $file.name)
+                            "File {0} does exist" -f (join-path -path $targetFolder -ChildPath $file.name)
 
                             "Now comparing File Hash"
                             if ((Get-FileHash $file).hash -eq (Get-FileHash (join-path -Path $targetFolder -ChildPath $file.name)).hash)

@@ -19,22 +19,28 @@ $fredsFile = "FredsServices.txt"
 $thisComputerMarasFileFullPath = (join-path -Path $thisComputerFolder -ChildPath $remotefile)
 $thisComputerFredsFileFullPath = (join-path -Path $thisComputerFolder -ChildPath $fredsFile)
 
-Write-Host "Get-PSSession"
 Get-PSSession | Remove-PSSession
 # Measure-Command -Expression {$session = New-PSSession -ComputerName mj}
 # Can the remote system can accept PowerShell remoting connections?
-if (Test-WsMan -ComputerName $remoteSystem) { Write-Host "The remote system $remoteSystem is Online" } 
+
+if (Test-WsMan -ComputerName $remoteSystem) {
+    Write-Host "The remote system $remoteSystem is Online" 
+} 
 else { 
     Write-Host "The remote system $remoteSystem is OffLine" 
     throw "The remote system $remoteSystem is OffLine"
 }
 
+ 
+Write-Host "Get-PSSession"
 $session = New-PSSession -ComputerName $remoteSystem
+
 Invoke-Command -session $session -scriptblock { 
     if (Test-Path $using:remoteFullPath ) {remove-item $using:remoteFullPath -Verbose}
 }
 Invoke-Command -session $session -scriptblock {
     $ServicesRemote=Get-Service -Name * 
+    # the next line can be executed locally. out-file $remoteFile
     $ServicesRemote | sort-object name | out-file $using:remoteFullPath -Verbose
 }
 Invoke-Command -session $session -scriptblock {
@@ -48,7 +54,7 @@ $Services=Get-Service -Name *
 $Services | sort-object name | out-file -FilePath $thisComputerFredsFileFullPath -verbose
 Get-ChildItem -path @($thisComputerFredsFileFullPath, $thisComputerMarasFileFullPath) | `
     format-list -Property FullName, LastWriteTime, Length
-(Exit-PSSession)
+(Get-PSSession | Remove-PSSession)
 Write-Host "Finis"
 <#
 Compare-Object `

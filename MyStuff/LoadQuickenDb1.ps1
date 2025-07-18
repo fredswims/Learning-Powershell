@@ -1,5 +1,7 @@
 <#
 .SYNOPSIS
+    2017-08-20 - Copyright 2017-2025 Fred-Arhtur Jacobowitz (FAJ)
+
     Short description of the script
 .DESCRIPTION
     Long description of the script
@@ -17,6 +19,7 @@
 <#
 Revision History
 Find this line "($ThisVersion = "2024-06-2024 FAJ")" and update it to the current version.
+2025-07-17 FAJ Sometimes when Quicken exits this process does not come to foreground. See Function Restore-FocusShellWindow
 2024-11-08 FAJ Add sleep is changing priority (probably not needed.) Added Write-Warning NOT TO CLOSE THIS WINDOWS.
 2024-07-19 FAJ
 Trying to locate .MainWindowHandle when running in Windows Terminal.
@@ -25,7 +28,7 @@ Trying to locate .MainWindowHandle when running in Windows Terminal.
 2024-02-12 FAJ
 Added Write-Warning "In module $($MyInvocation.MyCommand.Name): "
 The name of this script is "LoadQuickenDb1.ps1"
-2017-08-20 - Copyright 2017 FAJ
+2017-08-20 - Copyright 2017-2025 Fred-Arhtur Jacobowitz (FAJ)
 
 One day I should put in the standard established for Powershell Headers.
 2023-06-22 Added beep with bad tone if Quicken exits with bad status.
@@ -146,7 +149,7 @@ When Quicken exits you decide if you want to delete the copy or move it back to 
 If you delete the file it is moved to the RecycleBin.
 #>
 [CmdletBinding()]
-param ([Parameter(Mandatory = $true,
+param ([Parameter(Mandatory = $false,
         HelpMessage = "Enter the name of the Quicken data file; e.g., Home.qdf : ")]
     [System.IO.FileInfo]$FileName='Home.qdf',
 
@@ -172,6 +175,8 @@ param ([Parameter(Mandatory = $true,
     [Switch]
     $StartStop
 )
+($ThisVersion = "Revision 2024-07-19 FAJ")
+write-warning  "Copyright 2017-2025 Fred-Arhtur Jacobowitz (FAJ)"
 write-warning "Path $(Get-Location)"
 Write-Warning "In module $($MyInvocation.MyCommand.Name): "
 write-host "the value of Filename is $Filename"
@@ -188,7 +193,6 @@ Invoke like
 powershell.exe -noprofile -file NameOfThisScript  -Filename "Home.qdf" -Speak
 #>
 if ($ShowDebug) { Set-PSDebug -strict -trace 2 } # I have not tested this
-($ThisVersion = "2024-07-19 FAJ")
 $ErrorActionPreference = "Stop" #failing cmdlets will jump to the 'catch' block
 $Error.Clear()
 <#
@@ -251,46 +255,37 @@ $MyInvocation
 $MyInvocation.MyCommand.path
 #Set-PSDebug -Step
 
-
 $ToneGood = 500
 $ToneBad = 250
 $ToneDuration = 200
 
+# Calls to these libraries will be used in Function Restore-FocusShellWindow
+$signature = @"
+[DllImport("user32.dll")] 
+public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
+[DllImport("user32.dll")] 
+public static extern int SetForegroundWindow(IntPtr hwnd);
+"@
+
+$addTypeParams = @{
+    MemberDefinition = $signature
+    Name             = 'WindowAPI'
+    Namespace        = 'Win32'  #optional Defines the logical container (namespace) that wraps your C# code.
+    Language         = 'CSharp' #optional Language used in the member definition. Just keeps things explicit and reliable.
+    PassThru         = $true
+}
+
 Try {
-    $sig = '
-        [DllImport("user32.dll")] public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
-        [DllImport("user32.dll")] public static extern int SetForegroundWindow(IntPtr hwnd);
-        '
     write-host "Load the Type libraries"
     $TimeTemp = get-date
-    $type = Add-Type -MemberDefinition $sig -Name WindowAPI -PassThru
-    write-host "Load took" (New-TimeSpan -start $timetemp).totalseconds "seconds"
-    $process = Get-Process -Id $pid
-    $hwnd = $process.MainWindowHandle
-    "*** First time. [Process Id: {0}] [Name: {1}] [MainWindowHandle: {2}]" -f $process.Id, $process.name, $hwnd
+        $type = Add-Type @addTypeParams
+    write-host "Load took" (New-TimeSpan -start $TimeTemp).totalseconds "seconds"
+    
+    $process = Get-Process -Id $Pid
+    [IntPtr]$hwnd = $process.MainWindowHandle
+    "[Process Id: {0}] [Name: {1}] [MainWindowHandle: {2}]" -f $process.Id, $process.name, $hwnd
     # read-host -Prompt "pause"
-    <# working on solution to find .MainWindowHandle if Default terminal application (set in terminal) is 'let system decide' which for ARM64 is 'terminal'
-        while($hwnd -eq 0){
-            $process=$(Get-Process -Id $process.id).parent
-            $hwnd = $process.MainWindowHandle
-            "*** Process Id: {0} Name: {1} MainWindowHandle: {2}" -f $process.Id, $process.name, $hwnd
-        }
-    #>
-    <#
-    function Maximize-ThisWindow($Process) {
-        #https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-showwindow
-        $sig = '
-        [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-        [DllImport("user32.dll")] public static extern int SetForegroundWindow(IntPtr hwnd);
-        '
-        #This next line takes a long time to execute
-        $type = Add-Type -MemberDefinition $sig -Name WindowAPI -PassThru
-        $hwnd = $process.MainWindowHandle
-        $null = $type::ShowWindow($hwnd, 9) #SW_RESTORE 9 Activates and displays the window.
-        $null = $type::SetForegroundWindow($hwnd) #puts cursor in windows
-    }
-    #Maximize-ThisWindow -Process (get-process -id $pid)  #Will this work for CORE?
-#>
+
     if ($speak -and $IsCoreClr -ne $True) {
         [bool]$bSayit = $true
         #https://msdn.microsoft.com/en-us/library/system.speech.synthesis.speechsynthesizer(v=vs.110).aspx
@@ -371,25 +366,17 @@ Try {
         #$LastExitCode = 0
         if ($bSayit) { [Void]$oSynth.SpeakAsync(("{0}     you are invoking Quicken with {1}" -f $env:USERNAME, $Filename)) }
 
-        # cmd /C "$DestinationPath" #launch Quicken using file association and WAIT for it to exit.
-
+        #launch Quicken using file association and WAIT for it to exit.
         $myprocess = start-process -FilePath $DestinationPath -passthru -Verbose
         if ($Priority) {start-sleep -Milliseconds 500; $MyProcess.PriorityClass = [System.Diagnostics.ProcessPriorityClass]::AboveNormal }
         Write-Warning ("{0}{1}DO NOT CLOSE THIS WINDOW DO NOT CLOSE THIS WINDOW DO NOT CLOSE THIS WINDOW{2}" -f $PSStyle.Blink, $PSStyle.foreground.red, $psstyle.Reset)
         $Myprocess.WaitForExit()
+        # Waiting for Quicken to exit
         $exitCode = $myprocess.ExitCode
         # Read-Host -Prompt "Last Exit Code  $($ExitCode)"
 
-
-        #if invoked his way you cannot use $LastExitCode.
-        #Start-Process -wait "$DestinationPath" #launch Quicken using file association and WAIT for it to exit.
-
-        #if invoked his way you cannot use $LastExitCode.
-        #start-process -path "C:\Program Files (x86)\Quicken\qw.exe"  -Wait -ArgumentList $DestinationPath
-
-        # $ExitCode = $LastExitCode
-        # $ExitCode = $? I don't think this will return the error code from the program.
-
+        "You worked with Quicken this long."
+        New-TimeSpan -Start $myprocess.StartTime -End $myprocess.ExitTime # references $myprocess object.
         write-host "LastExitCode $ExitCode"
         if ($ExitCode -ne 0) {
             [console]::beep($ToneBad, $ToneDuration) #works for all versions
@@ -402,15 +389,50 @@ Try {
         }
     } until ($ExitCode -eq 0)
 
-    New-TimeSpan -Start $myprocess.StartTime -End $myprocess.ExitTime
     "Maximize this window and give it the focus"
-    # Originally the function was called but it was slow.
-    # Now the methods are called inline.
-    #Maximize-ThisWindow -Process (get-process -id $pid)  #Will this work for CORE?
+    function Restore-FocusShellWindow {
+        param([IntPtr]$hwnd)
+        # param($hwnd)
+        $null = $type::ShowWindowAsync($hwnd, 6) # Minimize it first so that Maximize will make Z-order top window if other windows are maximized.
+        Start-Sleep -Milliseconds 150
+        $null = $type::ShowWindowAsync($hwnd, 3) # Maximize
+        $null = $type::SetForegroundWindow($hwnd)
+    }
+    Restore-FocusShellWindow $hwnd
+ 
+<# Here is another varient to try.
+Add-Type @"
+using System;
+using System.Runtime.InteropServices;
+public class FocusHelper {
+    [DllImport("user32.dll")]
+    public static extern IntPtr GetForegroundWindow();
+    [DllImport("user32.dll")]
+    public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+    [DllImport("kernel32.dll")]
+    public static extern uint GetCurrentThreadId();
+    [DllImport("user32.dll")]
+    public static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
+    [DllImport("user32.dll")]
+    public static extern bool SetForegroundWindow(IntPtr hWnd);
+    [DllImport("user32.dll")]
+    public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
+}
+"@
 
-    $null = $type::ShowWindowAsync($hwnd, 3) #SW_RESTORE 9 Activates and displays the window.
-    $null = $type::SetForegroundWindow($hwnd) #puts cursor in windows
-    <#
+# $hwnd = ... # your PWSH window handle
+$fgThread = 0
+$fgWindow = [FocusHelper]::GetForegroundWindow()
+[FocusHelper]::GetWindowThreadProcessId($fgWindow, [ref]$fgThread)
+$curThread = [FocusHelper]::GetCurrentThreadId()
+
+[FocusHelper]::AttachThreadInput($curThread, $fgThread, $true)
+[FocusHelper]::ShowWindowAsync($hwnd, 3)
+[FocusHelper]::SetForegroundWindow($hwnd)
+[FocusHelper]::AttachThreadInput($curThread, $fgThread, $false)
+#>
+
+<#
     Alternate code to bring this windows back to the foreground.
     sleep -Seconds 2
     [void][reflection.assembly]::loadwithpartialname("system.windows.forms")

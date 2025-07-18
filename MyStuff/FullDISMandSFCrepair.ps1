@@ -27,3 +27,13 @@ sfc /scannow
 
 Write-Host "`n=== Repairs Completed ===`n" -ForegroundColor Green
 Stop-Transcript
+
+
+
+<# 
+net stop wuauserv
+net stop bits
+ren C:\Windows\SoftwareDistribution SoftwareDistribution.old
+net start wuauserv
+net start bits 
+#>

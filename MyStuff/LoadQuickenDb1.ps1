@@ -1,18 +1,25 @@
 <#
 .SYNOPSIS
-    2017-08-20 - Copyright 2017-2025 Fred-Arhtur Jacobowitz (FAJ)
+Copyright 2017-2025 Fred-Arhtur Jacobowitz (FAJ)
+Revision 2017-08-20  
 
     Short description of the script
 .DESCRIPTION
     Long description of the script
 .EXAMPLE
-    PS C:\\> Get-WhatTimeIsItNow.ps1
-    Explanation of what the example does
+    LoadQuickenDb1.ps1
+    To asynchronously with 'conhost.exe' do the following
+    $parameters = @{
+            Filepath     = "conhost.exe"
+            ArgumentList = "pwsh $($noexits) -noprofile -command `&  '$runThisScript' -Filename $arg -SourceDir $SourceDir -DestinationDir $DestinationDir -Priority"
+        }
+    start-process @parameters
 .INPUTS
     Inputs (if any)
 .OUTPUTS
     Output (if any)
-
+    Transcript (start-transcription) output file is C:\Users\freds\Documents\Quicken\Powershell.out
+    Start-Transcript -path $TranscriptFullName -IncludeInvocationHeader
 .NOTES
     General notes
 #>

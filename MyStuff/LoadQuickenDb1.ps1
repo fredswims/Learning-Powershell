@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
 Copyright 2017-2025 Fred-Arhtur Jacobowitz (FAJ)
-Revision 2017-08-20  
+Revision 2017-07-21  
 
     Short description of the script
 .DESCRIPTION
@@ -25,7 +25,8 @@ Revision 2017-08-20
 #>
 <#
 Revision History
-Find this line "($ThisVersion = "2024-06-2024 FAJ")" and update it to the current version.
+Find this line "($ThisVersion = "2017-07-21 FAJ")" and update it to the current version.
+2017-07-21 Function fjQuicken added Parameterset Names.
 2025-07-17 FAJ Sometimes when Quicken exits this process does not come to foreground. See Function Restore-FocusShellWindow
 2024-11-08 FAJ Add sleep is changing priority (probably not needed.) Added Write-Warning NOT TO CLOSE THIS WINDOWS.
 2024-07-19 FAJ
@@ -182,7 +183,7 @@ param ([Parameter(Mandatory = $false,
     [Switch]
     $StartStop
 )
-($ThisVersion = "Revision 2024-07-19 FAJ")
+($ThisVersion = "Revision 2017-07-21 FAJ")
 write-warning  "Copyright 2017-2025 Fred-Arhtur Jacobowitz (FAJ)"
 write-warning "Path $(Get-Location)"
 Write-Warning "In module $($MyInvocation.MyCommand.Name): "

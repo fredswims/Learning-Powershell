@@ -267,7 +267,7 @@ $ToneGood = 500
 $ToneBad = 250
 $ToneDuration = 200
 
-# Calls to these libraries will be used in Function Restore-FocusShellWindow
+# Function 'Restore-FocusShellWindow' references the methods in these .NET classes.
 $signature = @"
 [DllImport("user32.dll")] 
 public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
@@ -406,10 +406,11 @@ Try {
         $null = $type::ShowWindowAsync($hwnd, 3) # Maximize
         $null = $type::SetForegroundWindow($hwnd)
     }
-    Restore-FocusShellWindow $hwnd
+    # Restore-FocusShellWindow $hwnd
  
-<# Here is another varient to try.
-Add-Type @"
+    Function Restore-FocusShellWindowWithThreads {
+        param([IntPtr]$hwnd)
+        Add-Type @"
 using System;
 using System.Runtime.InteropServices;
 public class FocusHelper {
@@ -428,18 +429,19 @@ public class FocusHelper {
 }
 "@
 
-# $hwnd = ... # your PWSH window handle
-$fgThread = 0
-$fgWindow = [FocusHelper]::GetForegroundWindow()
-[FocusHelper]::GetWindowThreadProcessId($fgWindow, [ref]$fgThread)
-$curThread = [FocusHelper]::GetCurrentThreadId()
+        $fgThread = 0
+        $fgWindow = [FocusHelper]::GetForegroundWindow()
+        [FocusHelper]::GetWindowThreadProcessId($fgWindow, [ref]$fgThread)
+        $curThread = [FocusHelper]::GetCurrentThreadId()
 
-[FocusHelper]::AttachThreadInput($curThread, $fgThread, $true)
-[FocusHelper]::ShowWindowAsync($hwnd, 3)
-[FocusHelper]::SetForegroundWindow($hwnd)
-[FocusHelper]::AttachThreadInput($curThread, $fgThread, $false)
-#>
-
+        [FocusHelper]::AttachThreadInput($curThread, $fgThread, $true)
+        [FocusHelper]::ShowWindowAsync($hwnd, 6)
+        Start-Sleep -Milliseconds 150
+        [FocusHelper]::ShowWindowAsync($hwnd, 3)
+        [FocusHelper]::SetForegroundWindow($hwnd)
+        [FocusHelper]::AttachThreadInput($curThread, $fgThread, $false)
+    }
+Restore-FocusShellWindowWithThreads $hWnd
 <#
     Alternate code to bring this windows back to the foreground.
     sleep -Seconds 2

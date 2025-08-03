@@ -63,6 +63,7 @@ function PopBurntToast {
         # Silent      = $true
         Sound="default"
         ActivatedAction = { write-host "Fred was here $(get-random) $(get-date)" }
+        ExpirationTime=(get-date).AddSeconds(20) 
     }
     new-BurntToastNotification @parameters 
     # write-host $myText

@@ -72,3 +72,25 @@ function PopBurntToast {
 } #end PopBurntToast
 Clear-Host
 PopBurntToast
+
+function Add-PipelineObject {
+    [cmdletBinding()]
+    param (
+        [Parameter(Mandatory,
+                   ValueFromPipeline)]
+        [Object[]] $InputObject,
+
+        [Parameter(Mandatory)]
+        [scriptblock] $Process
+    )
+
+    Process {
+        $_
+    }
+
+    End {
+        $Process.Invoke()
+    }
+}
+$pro={$(get-date;write-host "I did that")}
+Add-PipelineObject  -Process $pro -InputObject $pro

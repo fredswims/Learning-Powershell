@@ -92,5 +92,6 @@ function Add-PipelineObject {
         $Process.Invoke()
     }
 }
-$pro={$(get-date;write-host "I did that")}
-Add-PipelineObject  -Process $pro -InputObject $pro
+<# $pro={$(get-date;write-host "I did that")}
+Add-PipelineObject  -Process $pro -InputObject $pro 
+#>

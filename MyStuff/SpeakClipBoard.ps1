@@ -74,6 +74,8 @@ else {
     $synthesizer = New-Object -TypeName System.Speech.Synthesis.SpeechSynthesizer
     
     #foreach ($voice in $synthesizer.GetInstalledVoices()){ $voice.voiceinfo}
+    $Synthesizer.GetInstalledVoices() | ForEach-Object {$_.VoiceInfo | Select-Object Name, Culture, Gender} 
+    
     $synthesizer.SelectVoice($pcVoice) # "Microsoft Zira Desktop"  
     $synthesizer.rate = $thisrate
     [void]$synthesizer.Speak($SayThis) #cannot use .speakasync if script called from powershell.exe

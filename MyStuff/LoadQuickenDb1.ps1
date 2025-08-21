@@ -370,8 +370,8 @@ Try {
     $BeginTime | format-list Fullname, CreationTime, LastWriteTime, LastAccessTime, @{ Name = 'Size in Megabytes'; Expression = { $psitem.length / (1Mb) } }
 
     Write-Warning  "Information::Launching Quicken by referencing the data file in $DestinationPath"
-    # minize the window to expidite the type-ahead buffer going to quicken.
-    $null = $type::ShowWindowAsync($hwnd, 6) # Minimize it first so that Maximize will make Z-order top window if other windows are maximized.
+    
+    $null = $type::ShowWindowAsync($hwnd, 6) # minize the window to expidite the type-ahead buffer going to quicken. 
 
     $ExitCode = 1
     do {

@@ -27,7 +27,8 @@ Revision 2017-07-21
 Revision History
 Find this line "($ThisVersion = "2017-07-21 FAJ")" and update it to the current version.
 2017-07-21 Function fjQuicken added Parameterset Names.
-2025-07-17 FAJ Sometimes when Quicken exits this process does not come to foreground. See Function Restore-FocusShellWindow
+2025-08-20 FAJ Minimize the windows to expedite the type-ahead buffer going to Quicken. 
+2025-07-17 FAJ Fixed: Sometimes when Quicken exits this process does not come to foreground. See Function Restore-FocusShellWindow
 2024-11-08 FAJ Add sleep is changing priority (probably not needed.) Added Write-Warning NOT TO CLOSE THIS WINDOWS.
 2024-07-19 FAJ
 Trying to locate .MainWindowHandle when running in Windows Terminal.
@@ -183,7 +184,7 @@ param ([Parameter(Mandatory = $false,
     [Switch]
     $StartStop
 )
-($ThisVersion = "Revision 2017-07-21 FAJ")
+($ThisVersion = "Revision 2025-08-20 FAJ")
 write-warning  "Copyright 2017-2025 Fred-Arhtur Jacobowitz (FAJ)"
 write-warning "Path $(Get-Location)"
 Write-Warning "In module $($MyInvocation.MyCommand.Name): "
@@ -267,7 +268,7 @@ $ToneGood = 500
 $ToneBad = 250
 $ToneDuration = 200
 
-# Function 'Restore-FocusShellWindow' references the methods in these .NET classes.
+# Calls to these libraries will be used in Function Restore-FocusShellWindow
 $signature = @"
 [DllImport("user32.dll")] 
 public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
@@ -369,6 +370,9 @@ Try {
     $BeginTime | format-list Fullname, CreationTime, LastWriteTime, LastAccessTime, @{ Name = 'Size in Megabytes'; Expression = { $psitem.length / (1Mb) } }
 
     Write-Warning  "Information::Launching Quicken by referencing the data file in $DestinationPath"
+    # minize the window to expidite the type-ahead buffer going to quicken.
+    $null = $type::ShowWindowAsync($hwnd, 6) # Minimize it first so that Maximize will make Z-order top window if other windows are maximized.
+
     $ExitCode = 1
     do {
         #$LastExitCode = 0
@@ -406,11 +410,10 @@ Try {
         $null = $type::ShowWindowAsync($hwnd, 3) # Maximize
         $null = $type::SetForegroundWindow($hwnd)
     }
-    # Restore-FocusShellWindow $hwnd
+    Restore-FocusShellWindow $hwnd
  
-    Function Restore-FocusShellWindowWithThreads {
-        param([IntPtr]$hwnd)
-        Add-Type @"
+<# Here is another varient to try.
+Add-Type @"
 using System;
 using System.Runtime.InteropServices;
 public class FocusHelper {
@@ -429,19 +432,18 @@ public class FocusHelper {
 }
 "@
 
-        $fgThread = 0
-        $fgWindow = [FocusHelper]::GetForegroundWindow()
-        [FocusHelper]::GetWindowThreadProcessId($fgWindow, [ref]$fgThread)
-        $curThread = [FocusHelper]::GetCurrentThreadId()
+# $hwnd = ... # your PWSH window handle
+$fgThread = 0
+$fgWindow = [FocusHelper]::GetForegroundWindow()
+[FocusHelper]::GetWindowThreadProcessId($fgWindow, [ref]$fgThread)
+$curThread = [FocusHelper]::GetCurrentThreadId()
 
-        [FocusHelper]::AttachThreadInput($curThread, $fgThread, $true)
-        [FocusHelper]::ShowWindowAsync($hwnd, 6)
-        Start-Sleep -Milliseconds 150
-        [FocusHelper]::ShowWindowAsync($hwnd, 3)
-        [FocusHelper]::SetForegroundWindow($hwnd)
-        [FocusHelper]::AttachThreadInput($curThread, $fgThread, $false)
-    }
-Restore-FocusShellWindowWithThreads $hWnd
+[FocusHelper]::AttachThreadInput($curThread, $fgThread, $true)
+[FocusHelper]::ShowWindowAsync($hwnd, 3)
+[FocusHelper]::SetForegroundWindow($hwnd)
+[FocusHelper]::AttachThreadInput($curThread, $fgThread, $false)
+#>
+
 <#
     Alternate code to bring this windows back to the foreground.
     sleep -Seconds 2

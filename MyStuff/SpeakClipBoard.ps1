@@ -10,6 +10,8 @@ param (
     [ValidateRange(-10, 10)]
     [Int32]$ThisRate = 2,
 
+    [int32]$Repeat = 1,
+
     [ValidateSet('Zira','David')]    
     [string]$voice="David",
 
@@ -78,7 +80,10 @@ else {
     
     $synthesizer.SelectVoice($pcVoice) # "Microsoft Zira Desktop"  
     $synthesizer.rate = $thisrate
-    [void]$synthesizer.Speak($SayThis) #cannot use .speakasync if script called from powershell.exe
+    for ($i=1; $i -le $Repeat; $i++) {
+        "Speak iteration {0} of {1}" -f $i, $Repeat
+        [void]$synthesizer.Speak($SayThis) #Synchronous
+    }
     $synthesizer.Dispose()
     $synthesizer = $null
     # }

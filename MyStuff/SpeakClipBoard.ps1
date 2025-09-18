@@ -82,7 +82,7 @@ else {
     $synthesizer.rate = $thisrate
     for ($i=1; $i -le $Repeat; $i++) {
         "Speak iteration {0} of {1}" -f $i, $Repeat
-        [void]$synthesizer.Speak($SayThis) #Synchronous
+        [void]$synthesizer.Speak($SayThis) #Synchronous. Cannot use .speakasync if script called from powershell.exe
     }
     $synthesizer.Dispose()
     $synthesizer = $null

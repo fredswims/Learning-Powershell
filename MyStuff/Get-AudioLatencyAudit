@@ -1,0 +1,46 @@
+function Get-AudioLatencyAudit {
+    Write-Host "`n🔍 Audio Latency Audit Report" -ForegroundColor Cyan
+
+    # Get default playback and recording devices
+    $playback = Get-CimInstance -Namespace root\cimv2 -ClassName Win32_SoundDevice | Where-Object { $_.ProductName -like "*Speakers*" }
+    $recording = Get-CimInstance -Namespace root\cimv2 -ClassName Win32_SoundDevice | Where-Object { $_.ProductName -like "*Microphone*" }
+
+    Write-Host "`n🎧 Playback Device:" -ForegroundColor Yellow
+    $playback | Select-Object Name, ProductName, Manufacturer, Status | Format-List
+
+    Write-Host "`n🎙️ Recording Device:" -ForegroundColor Yellow
+    $recording | Select-Object Name, ProductName, Manufacturer, Status | Format-List
+
+    # Check registry for "Listen to this device" flag
+    $micListenKey = "HKCU:\Software\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Capture"
+    $listenEnabled = Get-ChildItem $micListenKey -Recurse | ForEach-Object {
+        Get-ItemProperty $_.PSPath | Where-Object { $_.ValueName -eq "EnableListen" -and $_.EnableListen -eq 1 }
+    }
+
+    Write-Host "`n🔊 Mic Monitoring Enabled:" -ForegroundColor Yellow
+    if ($listenEnabled) {
+        Write-Host "✅ 'Listen to this device' is enabled." -ForegroundColor Green
+    } else {
+        Write-Host "❌ Mic monitoring is disabled." -ForegroundColor Red
+    }
+
+    # Check enhancements
+    $enhancementKey = "HKCU:\Software\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Render"
+    $enhancementsDisabled = Get-ChildItem $enhancementKey -Recurse | ForEach-Object {
+        Get-ItemProperty $_.PSPath | Where-Object { $_.ValueName -eq "FxDisabled" -and $_.FxDisabled -eq 1 }
+    }
+
+    Write-Host "`n🧪 Audio Enhancements:" -ForegroundColor Yellow
+    if ($enhancementsDisabled) {
+        Write-Host "✅ Enhancements are disabled." -ForegroundColor Green
+    } else {
+        Write-Host "⚠️ Enhancements may be active—could add latency." -ForegroundColor DarkYellow
+    }
+
+    Write-Host "`n📦 Driver Info:" -ForegroundColor Yellow
+    Get-WmiObject Win32_PnPSignedDriver | Where-Object { $_.DeviceClass -eq "MEDIA" } |
+        Select-Object DeviceName, DriverVersion, Manufacturer | Format-Table -AutoSize
+}
+
+# Run the audit
+Get-AudioLatencyAudit

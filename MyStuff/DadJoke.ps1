@@ -1,7 +1,8 @@
+<# 
 $uri="https://icanhazdadjoke.com/"
 $headers=@{Accept="text/plain"}
 Invoke-RestMethod -Uri $uri -Headers $headers
-  
+
 Invoke-RestMethod -Uri "https://icanhazdadjoke.com/" -Headers @{Accept="text/plain"}
 
 $joke = Invoke-RestMethod -Uri "https://icanhazdadjoke.com/" -Headers @{Accept="application/json"}
@@ -13,7 +14,9 @@ Add-Type -AssemblyName System.Windows.Forms
 #Install-Module -Name BurntToast
 New-BurntToastNotification -Text "Joke of the Day", $joke.joke
 
-#Place headers in a hash table.
+ #>
+ 
+ #Place headers in a hash table.
 $headers = @{
     Accept="application/json"
     UserAgent="Fred's PowerShell JokeBot"

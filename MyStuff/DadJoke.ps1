@@ -1,3 +1,7 @@
+$uri="https://icanhazdadjoke.com/"
+$headers=@{Accept="text/plain"}
+Invoke-RestMethod -Uri $uri -Headers $headers
+  
 Invoke-RestMethod -Uri "https://icanhazdadjoke.com/" -Headers @{Accept="text/plain"}
 
 $joke = Invoke-RestMethod -Uri "https://icanhazdadjoke.com/" -Headers @{Accept="application/json"}

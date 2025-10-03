@@ -7,6 +7,8 @@ param (
 # https://community.idera.com/database-tools/powershell/powertips/b/tips/posts/identifying-unknown-network-listeners
 # Who is communitcating with my computer?
 # Invoke-RestMethod -Uri 'http://ipinfo.io/51.107.59.180/json'
+Write-Warning "In script $($MyInvocation.MyCommand.Name): "
+
 $Process = @{
     Name       = 'Process'
     Expression = {

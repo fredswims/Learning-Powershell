@@ -97,12 +97,13 @@ Is there a way to have Windows 11 actually shut down?. https://learn.microsoft.c
 #>
 [CmdletBinding()]
 param (
+    [ArgumentCompleter({
+        'FullShutdown', 'Restart', 'ReportBootType'
+    })]
     [ValidateSet("FullShutdown", "Restart", "ReportBootType")]
     [string]$Action = "ReportBootType",
     [switch]$AllEvents = $false    
 )
-# $All=$AllEvents.IsPresent
-if ($AllEvents.IsPresent) { $all=100 } else { $all=1 }
 switch ($Action) {
     "FullShutdown" {
         Write-Host "Initiating full shutdown..."
@@ -114,13 +115,15 @@ switch ($Action) {
     }
     "ReportBootType" {
         Write-Host "Reporting last boot type..."
+        if ($AllEvents.IsPresent) { $all=100 } else { $all=1 }
         $bootEvents = Get-WinEvent -ProviderName Microsoft-Windows-Kernel-Boot -MaxEvents 100 | Where-Object { $_.Id -eq 27 } |select-Object -First $all
         # $bootevents | Format-List -Property name, timecreated, id, message
         foreach ($bootEvent in $bootEvents) {
-            Write-Host "Event Time: $($bootEvent.TimeCreated) - Event ID: $($bootEvent.Id)"
+            Write-Host -NoNewline "[Event Time: $($bootEvent.TimeCreated)] [Event ID: $($bootEvent.Id)] "
             if ($bootEvent) {
+                # $bootType.message is a string that ends with a period.
                 $bootType = ($bootEvent.Message -split "boot type was ")[1]
-                Write-Host "The last boot type was: $bootType"
+                Write-Host -NoNewline "[The last boot type was: $bootType] "
                 switch ($bootType.Trim(".")) {
                     "0x0" { Write-Host "Meaning: Cold boot (full shutdown)" }
                     "0x1" { Write-Host "Meaning: Fast startup (hybrid boot)" }

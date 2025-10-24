@@ -17,10 +17,19 @@ Function PrintLine {
     # https://ss64.com/ps/syntax-f-operator.html
     param($Process)
     # "[{2,8}] {4}[{5}{0,-15}{4}]{5} [{1:yyyy-MM-dd hh:mm:ss tt}] [{3}]"
-    "[{2,5}] {4}[{5}{0,-15}{4}]{5} [{1:dd hh:mm:ss tt}] [{3}]" `
+    $string="[{2,5}] {4}[{5}{0,-15}{4}]{5} [{1:dd hh:mm:ss tt}] [{3}]" `
         -f $Process.name , $Process.StartTime, $Process.id, $Process.path, $psStyle.Formatting.Warning, $psstyle.reset
+    write-host $string
+        # create a custom object
+             $oProcess=       [pscustomobject]@{
+                        # PSTypeName  = 'System.Diagnostics.Process'
+                        Process = $Process
+                        # ProfilePath = $PSCommandPath
+                    }
+            $oProcess
 }
-#Script Begins Here
+
+# Script Begins Here
 # Write-Warning "In Script $($MyInvocation.MyCommand.Name): "
 write-host -ForegroundColor Yellow "`tExecuting:: $($MyInvocation.MyCommand.Source)"
 write-host -ForegroundColor Yellow "`t`Called by:: $($MyInvocation.ScriptName) `n`tInvoked as:: $($MyInvocation.Line)"
@@ -31,10 +40,10 @@ if ((get-process).id -contains $id) { write-verbose "Good `$Id" } else { Write-h
 write-host -ForegroundColor Yellow 'Process and Parents'
 $ThisProcess = get-process -id $Id
 Printline $ThisProcess 
+
     
 # Find the first Potential parent Id.
 $ParentId = $(get-process -ErrorAction SilentlyContinue -id $id).parent.id
-
 #Loop thru all parents. Stop if Potential parent Id is invalid.
 While ($ParentId -gt 0) {
     $ParentProcess = get-process -id $ParentId -ErrorAction SilentlyContinue

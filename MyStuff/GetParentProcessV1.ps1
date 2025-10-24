@@ -21,13 +21,12 @@ Function PrintLine {
         -f $Process.name , $Process.StartTime, $Process.id, $Process.path, $psStyle.Formatting.Warning, $psstyle.reset
     write-host $string
         # create a custom object
-             $oProcess=       [pscustomobject]@{
-                        # PSTypeName  = 'System.Diagnostics.Process'
-                        Process = $Process
-                        # ProfilePath = $PSCommandPath
-                    }
-            $oProcess
-}
+        $oProcess =       [pscustomobject]@{
+                   # PSTypeName  = 'System.Diagnostics.Process'
+                   Process = $Process
+                   # ProfilePath = $PSCommandPath
+        }
+} # end function PrintLine
 
 # Script Begins Here
 # Write-Warning "In Script $($MyInvocation.MyCommand.Name): "
@@ -36,12 +35,12 @@ write-host -ForegroundColor Yellow "`t`Called by:: $($MyInvocation.ScriptName) `
 
 #  Is the param $Id valid? If not print message and exit.
 if ((get-process).id -contains $id) { write-verbose "Good `$Id" } else { Write-host -ForegroundColor Red  "Enter a valid 'Id'"; return }
-    
+
 write-host -ForegroundColor Yellow 'Process and Parents'
 $ThisProcess = get-process -id $Id
 Printline $ThisProcess 
 
-    
+
 # Find the first Potential parent Id.
 $ParentId = $(get-process -ErrorAction SilentlyContinue -id $id).parent.id
 #Loop thru all parents. Stop if Potential parent Id is invalid.
@@ -55,4 +54,11 @@ While ($ParentId -gt 0) {
 
 write-host "Finis" -ForegroundColor yellow
 if ($noexit) { Read-Host "Paused. Press Enter to exit." }
- 
+
+# output the object to the pipeline.
+$oProcess.Process
+
+# usage examples:
+# $Ogpp=.\GetParentProcessV1.ps1 
+# .\GetParentProcessV1.ps1
+# .\GetParentProcessV1.ps1 -Id $PID -NoExit

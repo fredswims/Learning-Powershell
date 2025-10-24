@@ -20,11 +20,11 @@ Function PrintLine {
     $string="[{2,5}] {4}[{5}{0,-15}{4}]{5} [{1:dd hh:mm:ss tt}] [{3}]" `
         -f $Process.name , $Process.StartTime, $Process.id, $Process.path, $psStyle.Formatting.Warning, $psstyle.reset
     write-host $string
-        # create a custom object
-        $oProcess =       [pscustomobject]@{
-                   # PSTypeName  = 'System.Diagnostics.Process'
-                   Process = $Process
-                   # ProfilePath = $PSCommandPath
+    # create a custom object
+    $oProcess = [pscustomobject]@{
+        # PSTypeName  = 'System.Diagnostics.Process'
+        Process = $Process
+        # ProfilePath = $PSCommandPath
         }
 } # end function PrintLine
 
@@ -56,8 +56,8 @@ write-host "Finis" -ForegroundColor yellow
 if ($noexit) { Read-Host "Paused. Press Enter to exit." }
 
 # output the object to the pipeline.
-$oProcess.Process
-
+# $oProcess.Process
+return $oProcess.Process
 # usage examples:
 # $Ogpp=.\GetParentProcessV1.ps1 
 # .\GetParentProcessV1.ps1

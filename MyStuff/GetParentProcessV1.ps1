@@ -7,7 +7,9 @@ param (
     # [Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
     [ValidateRange(0, [Int64]::MaxValue)]
-    # [ValidateScript({if ((get-process).id -contains $_) {return $true}else {throw "Id $($_) is not valid"}})]
+    [ValidateScript({
+    if (Get-Process -Id $_ -ErrorAction SilentlyContinue) {return $true} else {throw "Id $_ is not valid"}})
+    ]
     [Int64]$Id = $PID,
     [switch]$NoExit = $false
 )
@@ -36,12 +38,10 @@ write-host -ForegroundColor Yellow "`tExecuting:: $($PSCommandPath)"
 write-host -ForegroundColor Yellow "`t`Called by:: $($MyInvocation.ScriptName) `n`tInvoked as:: $($MyInvocation.Line)"
 $script:ProcessResults = @()
 
-# Is the param $Id valid? If not print message and exit.
-$IsValidId=get-process -ErrorAction SilentlyContinue -id $id
-if ($Null -ne $IsValidId) { write-host "Good `$Id" } 
-else {
-    throw "Id $($id) is not valid" 
-}
+# Is the param $Id valid? If not THROW an exception.
+# Don't need this because of ValidateScript on param $Id
+# if (!(Get-Process -Id $id -ErrorAction SilentlyContinue))  {throw "Id $($id) is not valid"}
+
 write-host -ForegroundColor Yellow 'Process and Parents'
 $ThisProcess = get-process -id $Id
 Printline $ThisProcess 

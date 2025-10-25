@@ -13,13 +13,13 @@ param (
     # [Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
     [ValidateRange(0, [Int64]::MaxValue)]
-    # [ValidateScript({if ((get-process).id -contains $_) {return $true}else {throw "Id $($_) is not valid"}})]
+    [ValidateScript({
+    if (Get-Process -Id $_ -ErrorAction SilentlyContinue) {return $true} else {throw "Id $_ is not valid"}})
+    ]
     [Int64]$Id=$PID,
     [switch]$NoExit = $false
 )
 Begin {
-    # [int64]$parentId = 0
-    if ((get-process).id -contains $id) { "Good Id" } else { Write-host -ForegroundColor Red  "Enter a valid 'Id'"; return }
     Write-Warning "In Script $($MyInvocation.MyCommand.Name): "
     write-host -ForegroundColor Yellow 'This Process and Parents'
     # get the current process

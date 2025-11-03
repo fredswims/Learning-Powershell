@@ -25,6 +25,8 @@ function ShowStatus {
     write-host ""
     #Get-PnpDevice -FriendlyName *cam* -Class camera -Status OK
 }
+Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+$PSCommandPath
 
 if ($Type -eq "Status") {
     ShowStatus

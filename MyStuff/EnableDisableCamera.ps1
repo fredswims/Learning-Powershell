@@ -1,24 +1,11 @@
-<#
-    How to enable and disable the builtin camera or for that matter any pnp device
-    https://www.dynamsoft.com/codepool/powershell-disable-enable-webcam-windows.html
-    $thisScript = $(join-path $env:onedrive PowershellScripts\MyStuff EnableDisableCamera.ps1 -Resolve)
-    # splat the arguments to start-process and use 'Argumentlist' parameters as array to avoid quoting issues.
-    $splat = @{
-        FilePath     = "pwsh"
-        Verb         = "RunAs"
-        ArgumentList = @(
-            "-NoProfile",
-            "-NoExit",
-            "-File", $thisScript,
-            "-type", $Action
-        )
-    }
-    $json = $splat | ConvertTo-Json -Depth 3
-    Write-Output $json
+    <#
+    .SYNOPSIS
+    Enables, disables, or checks the status of the camera.
 
-    Start-Process @splat
-    Remove-Variable thisScript
+    .PARAMETER Type
+    Specifies the action to take. Must be one of: Status, Enable, Disable.
     #>
+
 [CmdletBinding()]
 param (
         [ArgumentCompleter({
@@ -58,3 +45,25 @@ if ($Action -eq "Enable") {
     # enable-pnpdevice -InstanceId (Get-PnpDevice -FriendlyName *cam* -Class camera -Status error).Instanceid
     ShowStatus
 }
+
+<#
+    How to enable and disable the builtin camera or for that matter any pnp device
+    https://www.dynamsoft.com/codepool/powershell-disable-enable-webcam-windows.html
+    $thisScript = $(join-path $env:onedrive PowershellScripts\MyStuff EnableDisableCamera.ps1 -Resolve)
+    # splat the arguments to start-process and use 'Argumentlist' parameters as array to avoid quoting issues.
+    $splat = @{
+        FilePath     = "pwsh"
+        Verb         = "RunAs"
+        ArgumentList = @(
+            "-NoProfile",
+            "-NoExit",
+            "-File", $thisScript,
+            "-type", $Action
+        )
+    }
+    $json = $splat | ConvertTo-Json -Depth 3
+    Write-Output $json
+
+    Start-Process @splat
+    Remove-Variable thisScript
+    #>

@@ -21,33 +21,40 @@
     #>
 [CmdletBinding()]
 param (
-    [Parameter(Mandatory = $true)]
-    [ValidateSet('Status', 'Enable', 'Disable')]
-    $Type
-)
+        [ArgumentCompleter({
+            param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+            'Status','Enable','Disable'
+        })]
+        [string]$Action = 'Status'
+    )
+
+write-host ( $(get-date -format "dddd yyyy-MM-dd' 'HH:mm:ss K" ) )
+write-host -ForegroundColor Yellow "`tExecuting::`t $($PSCommandPath)"
+write-host -ForegroundColor Yellow "`tCalled by::`t $($MyInvocation.ScriptName)"
+write-host -foregroundcolor yellow "`tInvoked as::`t $($MyInvocation.Line)"
 
 function ShowStatus {
     Get-PnpDevice -FriendlyName *cam*
     write-host ""
     #Get-PnpDevice -FriendlyName *cam* -Class camera -Status OK
 }
-write-host ( $(get-date -format yyyy-MM-dd' 'HH:mm:ss) )
-$PSCommandPath
 
-if ($Type -eq "Status") {
+if ($Action -eq "Status") {
     ShowStatus
 }
-if ($Type -eq "Disable") {
-    ShowStatus
-    disable-pnpdevice -InstanceId (Get-PnpDevice -FriendlyName *cam* -Class camera -Status OK).Instanceid 
-    #Get-PnpDevice -FriendlyName *cam*  
-    ShowStatus
+else {
+    Write-host -ForegroundColor RED "Other actions disabled for safety. Edit script to enable."
+    return -1
 }
 
-if ($Type -eq "Enable") {
+
+if ($Action -eq "Disable") {
     ShowStatus
-    #Get-PnpDevice -FriendlyName *cam* -Class camera -Status Error
-    enable-pnpdevice -InstanceId (Get-PnpDevice -FriendlyName *cam* -Class camera -Status error).Instanceid
-    #Get-PnpDevice -FriendlyName *cam*
+    # disable-pnpdevice -InstanceId (Get-PnpDevice -FriendlyName *cam* -Class camera -Status OK).Instanceid 
+    ShowStatus
+}
+if ($Action -eq "Enable") {
+    ShowStatus
+    # enable-pnpdevice -InstanceId (Get-PnpDevice -FriendlyName *cam* -Class camera -Status error).Instanceid
     ShowStatus
 }

@@ -32,16 +32,11 @@ Function PrintHeader {
 }   
 # ==========Script Begins Here==========
 
-write-host -ForegroundColor Yellow "`tExecuting:: $($PSCommandPath)"
-write-host -ForegroundColor Yellow "`t`Called by:: $($MyInvocation.ScriptName)"
-write-host -foregroundcolor yellow "`tInvoked as:: $($MyInvocation.Line)"
+write-host -ForegroundColor Yellow "`tExecuting::`t $($PSCommandPath)"
+write-host -ForegroundColor Yellow "`tCalled by::`t $($MyInvocation.ScriptName)"
+write-host -foregroundcolor yellow "`tInvoked as::`t $($MyInvocation.Line)"
 
-<#
-write-host  "`tExecuting:: $($PSCommandPath)"
-write-verbose  "`t`Called by:: $($MyInvocation.ScriptName)"
-write-verbose  "`tInvoked as:: $($MyInvocation.Line)"
- #>
-$results=@()
+$results=@() # Array to hold results from Get-Process.
 
 # Is the param $Id valid? If not THROW an exception.
 # Don't need this because of ValidateScript on param $Id
@@ -69,8 +64,10 @@ While ($null -ne $ParentId) {
 if ($noexit) { Read-Host "Paused. Press Enter to exit." }
 write-host "Finis" -ForegroundColor yellow
 return $results
-
-# usage examples:
-# $Ogpp=.\GetParentProcessV1.ps1 
-# .\GetParentProcessV1.ps1
-# .\GetParentProcessV1.ps1 -Id $PID -NoExit
+<#
+    Examples:
+    $Ogpp=.\GetParentProcessV2.ps1 
+    $Ogpp=.\GetParentProcessV2.ps1 -noReport
+    .\GetParentProcessV2.ps1 -noReport
+    .\GetParentProcessV2.ps1 -Id $PID -NoExit
+#>

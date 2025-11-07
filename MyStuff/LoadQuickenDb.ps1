@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
-Copyright 2017-2025 Fred-Arhtur Jacobowitz (FAJ)
-Revision 2017-07-21  
+Copyright 2017-2025 Fred-Arthur Jacobowitz (FAJ)
+($ThisVersion = "Revision 2025-11-06 FAJ") # Refactoring for readability.
 
     Short description of the script
 .DESCRIPTION
@@ -156,7 +156,7 @@ If it already is on the desktop you can overwrite it or use the existing file on
 
 When Quicken exits you decide if you want to delete the copy or move it back to the repository. Moving to back to the repository OVERWRITES the original file.
 If you delete the file it is moved to the RecycleBin.
-#>
+#> #end revision-history
 [CmdletBinding()]
 param ([Parameter(Mandatory = $false,
         HelpMessage = "Enter the name of the Quicken data file; e.g., Home.qdf : ")]
@@ -166,7 +166,7 @@ param ([Parameter(Mandatory = $false,
     [System.IO.FileInfo]$SourceDir = (Join-Path -Path $env:Dropbox -ChildPath 'Private\Q'),
     
     [Parameter(Mandatory = $false)]
-    [System.IO.FileInfo]$DestinationDir = (Join-Path -path $env:HOME -ChildPath 'Documents\Quicken'),
+    [System.IO.FileInfo]$DestinationDir = (Join-Path -path $env:UserProfile -ChildPath 'Documents\Quicken'),
 
     [Parameter(Mandatory = $false)]
     [Switch]
@@ -182,12 +182,59 @@ param ([Parameter(Mandatory = $false,
 
     [Parameter(Mandatory = $false)]
     [Switch]
-    $StartStop
+    $StartStop,
+
+    [Parameter(Mandatory = $false)]
+    [Switch]
+    $Pause
 )
-($ThisVersion = "Revision 2025-08-20 FAJ")
-write-warning  "Copyright 2017-2025 Fred-Arhtur Jacobowitz (FAJ)"
-write-warning "Path $(Get-Location)"
-Write-Warning "In module $($MyInvocation.MyCommand.Name): "
+Function StartTranscript{ [CmdletBinding()] param (
+    [Parameter(Mandatory)]
+    [System.IO.FileInfo]$SourceDir,
+    [Parameter(Mandatory = $false)]
+    [Switch]$Pause
+)
+write-warning "Setting up Transcript file."
+$TranscriptName ="QuickenTranscript.out"
+$TranscriptNameOld = $TranscriptName + ".old"
+
+$TranscriptFolder = $SourceDir #You need change only this line to change the location of the Transcript file.
+
+# set the full path to the Transcript files.
+$TranscriptFullName = Join-path -Resolve $TranscriptFolder $TranscriptName
+$TranscriptFullNameOld = Join-path -Resolve $TranscriptFolder $TranscriptNameOld
+
+Write-verbose "TranscriptFullName is [$TranscriptFullName]"
+Write-verbose "TranscriptFullNameOld is [$TranscriptFullNameOld]"
+
+# If the old transcript exists remove it.
+if (test-path $TranscriptFullNameOld) { remove-item -Verbose $TranscriptFullNameOld }
+# If the current transcript exists rename it to old.
+if (test-path $TranscriptFullName) { rename-item -verbose -path $TranscriptFullName -newname $TranscriptFullNameOld }
+
+write-host "Call [Start-Transcript] with path `n`t[$TranscriptFullName]"
+if ($Pause) {Read-Host -Prompt "Press 'Enter' to start Transcript"} # for examining this process
+Start-Transcript -path $TranscriptFullName -IncludeInvocationHeader
+Write-host "=== Transcript Preamble Complete ===" -ForegroundColor "Yellow"
+write-host $(Get-Date -Format "dddd yyyy-MM-dd HH:mm:ss K")
+} # end function StartTranscript
+function ShowTestAdministrator {
+    Write-Warning "In function $($MyInvocation.MyCommand.Name):2020-11-13 "
+    $user = [Security.Principal.WindowsIdentity]::GetCurrent()
+    (New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+}
+
+# Main Script begins here
+if (! (Test-Path $SourceDir)) { read-host "The path to the Repository Workspace $SourceDir is incorrect"; exit }
+StartTranscript -SourceDir $SourceDir -Pause:$Pause
+
+($ThisVersion = "Revision 2025-11-06 FAJ") # Refactoring for readability.
+Write-Host "Copyright 2017-2025 Fred-Arthur Jacobowitz (FAJ)"
+# Write-Warning "In module `n`t[$($MyInvocation.MyCommand.Name)] $(Get-Date -format "dddd yyyy-MM-dd HH:mm:ss K")"
+Write-Warning "In module `n`t[$($PSCommandPath)] `n`t$(Get-Date -format "dddd yyyy-MM-dd HH:mm:ss K")"
+write-warning "Current Path `n`t[$(Get-Location)]"
+
+Write-host "=== Invoked with Parameters ==="
 write-host "the value of Filename is $Filename"
 write-host "the value of SourceDir is $Sourcedir"
 write-host "the value of DestinationDir is $Destinationdir"
@@ -195,73 +242,73 @@ write-host "the value of Speak is $Speak"
 write-host "the value of Priority is $Priority"
 write-host "the value of ShowDebug is $ShowDebug"
 write-host "the value of StartStop is $StartStop"
+write-host "the value of Pause is $Pause"
 
 if ($StartStop) { Read-host "Terminating"; exit } #Just want to see how the function is invoked.
 <#
-Invoke like
+This must be updated to reflect the current way to start the script.
+Invoke like this:
 powershell.exe -noprofile -file NameOfThisScript  -Filename "Home.qdf" -Speak
 #>
 if ($ShowDebug) { Set-PSDebug -strict -trace 2 } # I have not tested this
 $ErrorActionPreference = "Stop" #failing cmdlets will jump to the 'catch' block
 $Error.Clear()
-<#
-#>
 
-# Begin
 #Before starting the Transcript we need to know where the run-time workspace is located.
-Write-Host "**************Beginning Script" -ForegroundColor "Yellow"
+Write-host "=== Beginning Script ===" -ForegroundColor "Yellow"
 Set-StrictMode -Version latest #Be careful. I don't know all the implications of this setting!
 
+# Set Window Title
 $host.UI.RawUI.WindowTitle = 'DoNotCloseThisWindow'
-#Find the run-time workspace.
-#$DestinationDir = Join-Path $env:HOMEDRIVE$env:HOMEPATH "Documents\Quicken" #This is where Quicken likes the run-time file to be.
-write-host "Does destination folder exist?"
 if (test-path $DestinationDir) {
-    #it exists
-    write-host "Destination folder $DestinationDir exists"
+    write-host "Destination folder [$DestinationDir] exists"
 }
 else {
     #destination folder does not exist
     #it may be better to exit the program then to create this Folder.
-    Read-host "the destination folder $DestinationDir does not exist;'Enter' will create it. Otherwise control-C to quit."
+    Read-host "the destination folder [$DestinationDir] does NOT exist.`n`t'Enter' will create it. Use control-C to quit."
     write-host "creating destination folder"
     new-item -verbose -path $DestinationDir -itemtype directory # was it created?
 }
-write-host "setting up Transcript log"
-$TranscriptName = "Powershell.out"
-$TranscriptFullName = Join-path $DestinationDir $TranscriptName
-$TranscriptNameOld = $TranscriptName + ".old"
-$TranscriptFullNameOld = Join-path $DestinationDir $TranscriptNameOld
-if (test-path $TranscriptFullNameOld) { remove-item -Verbose $TranscriptFullNameOld }
-if (test-path $TranscriptFullName) { rename-item -verbose -path $TranscriptFullName -newname $TranscriptFullNameOld }
-write-host "about to call Start-Transacript"
-Start-Transcript -path $TranscriptFullName -IncludeInvocationHeader
 
-Write-Host "**************Beginning Transcript**************" -ForegroundColor yellow
-"The current directory is {0}" -f (get-location)
-"Setting location to {0}" -f $DestinationDir
+write-host "The current directory is `n`t[$(get-location)]" 
+write-host "Setting location to `n`t[$DestinationDir]" #no compelling reason to change directory.
 (set-location $DestinationDir -Verbose)
-"Directory changed to {0}" -f (get-location)
+write-host "Directory changed to `n`t[$(get-location)]"
 
-
-function ShowTestAdministrator {
-    Write-Warning "In function $($MyInvocation.MyCommand.Name):2020-11-13 "
-    $user = [Security.Principal.WindowsIdentity]::GetCurrent()
-    (New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+if (ShowTestAdministrator) { write-warning "*** Process is Elevated ***" } else { write-warning "Process not Elevated" }
+write-warning ("Base Priority is [{0}]" -f (get-process -id $pid).BasePriority) 
+Write-host "====== [Enumerating `$PSVerstionTable] Begins ======" -ForegroundColor "Yellow"
+foreach ($entry in $PSVersionTable.GetEnumerator()) {
+    "{0,-30}: {1}" -f $entry.Key, $entry.Value
 }
-if (ShowTestAdministrator) { write-warning "*** Running as Administrator ***" } else { write-warning "NOT Running as Administrator" }
+Write-host "====== [Enumerating `$PSVerstionTable] Ends ======" -ForegroundColor "Yellow"
 
-"Location of Powershell is {0}" -f $PSHome
-write-host (get-process -id $pid).processname
+# $PSVersionTable | ConvertTo-Json -Depth 3
+
+write-host "`$Host.Name is `n`t[$($host.Name)] and `$Host.Version is Version [$($host.Version)]"
+write-host "Process is `n`t[$((get-process -id $pid).path)]" #like $PSHome 
+write-host "[`$psversiontable.GitCommitId] is [$($($psversiontable).GitCommitId)]"
+write-host "[`$PSCommandPath] is `n`t[$($PSCommandPath)]"
+write-host "`[[System.Environment]::commandline] is `n`t[$([System.Environment]::commandline)]"
+
+Write-host "=== [get-process -id `$pid | format-list -property *] Begins ===" -ForegroundColor "Yellow"
 get-process -id $pid | format-list -property *
-write-host $(Get-Date)
-write-host -foregroundColor yellow "Version:$ThisVersion"
-"The current directory is {0}" -f (get-location)
-"The Process Id is {0}" -f $pid
-"MyInvocation follows"
+Write-host "=== [get-process -id `$pid | format-list -property *] Ends ===" -ForegroundColor "Yellow"
+
+write-host -foregroundColor yellow "Version of script:$ThisVersion"
+
+"The current directory is [$(get-location)]"
+"The Process Id is [$pid]"
+
+Write-host "=== [`$MyInvocation] Begins ===" -ForegroundColor "Yellow"
 $MyInvocation
-"MyInvocation.MyCommand.path follows"
-$MyInvocation.MyCommand.path
+Write-host "=== [`$MyInvocation]Ends ===" -ForegroundColor "Yellow"
+
+Write-host "=== [`$MyInvocation.MyCommand.Path] Begins ===" -ForegroundColor "Yellow"
+$MyInvocation.MyCommand.path # eqiuvalent to $PSCommandPath
+Write-host "=== [`$MyInvocation.MyCommand.Path] Ends ===" -ForegroundColor "Yellow"
+
 #Set-PSDebug -Step
 
 $ToneGood = 500
@@ -370,21 +417,34 @@ Try {
     $BeginTime | format-list Fullname, CreationTime, LastWriteTime, LastAccessTime, @{ Name = 'Size in Megabytes'; Expression = { $psitem.length / (1Mb) } }
 
     Write-Warning  "Information::Launching Quicken by referencing the data file in $DestinationPath"
-    
-    $null = $type::ShowWindowAsync($hwnd, 6) # minize the window to expidite the type-ahead buffer going to quicken. 
+    # minize the window to expidite the type-ahead buffer going to quicken.
+    $null = $type::ShowWindowAsync($hwnd, 6) # Minimize it first so that Maximize will make Z-order top window if other windows are maximized.
 
     $ExitCode = 1
     do {
         #$LastExitCode = 0
         if ($bSayit) { [Void]$oSynth.SpeakAsync(("{0}     you are invoking Quicken with {1}" -f $env:USERNAME, $Filename)) }
 
-        #launch Quicken using file association and WAIT for it to exit.
-        $myprocess = start-process -FilePath $DestinationPath -passthru -Verbose
-        if ($Priority) {start-sleep -Milliseconds 500; $MyProcess.PriorityClass = [System.Diagnostics.ProcessPriorityClass]::AboveNormal }
+        # Launch Quicken using file association and WAIT for it to exit.
+        $MyProcess = start-process -FilePath $DestinationPath -passthru -Verbose
+        if ($Priority) {
+            write-host "PriorityClass: [$($MyProcess.PriorityClass)]"
+            write-host "BasePriority:  [$($MyProcess.BasePriority)]"
+            write-warning "Setting Quicken Process Priority to AboveNormal"
+            start-sleep -Milliseconds 1000; 
+            $MyProcess.PriorityClass = [System.Diagnostics.ProcessPriorityClass]::AboveNormal
+        }
+        start-sleep -Milliseconds 2000 
+        "PriorityClass: $($MyProcess.PriorityClass)"
+        "BasePriority:  $($MyProcess.BasePriority)"
+        $procDotNet = [System.Diagnostics.Process]::GetProcessById($MyProcess.Id)
+        $procDotNet.PriorityClass
+        $procDotNet.BasePriority
+
         Write-Warning ("{0}{1}DO NOT CLOSE THIS WINDOW DO NOT CLOSE THIS WINDOW DO NOT CLOSE THIS WINDOW{2}" -f $PSStyle.Blink, $PSStyle.foreground.red, $psstyle.Reset)
-        $Myprocess.WaitForExit()
+        $MyProcess.WaitForExit()
         # Waiting for Quicken to exit
-        $exitCode = $myprocess.ExitCode
+        $exitCode = $MyProcess.ExitCode
         # Read-Host -Prompt "Last Exit Code  $($ExitCode)"
 
         "You worked with Quicken this long."
@@ -465,7 +525,7 @@ $curThread = [FocusHelper]::GetCurrentThreadId()
     if (TEST-PATH VARIABLE:\PSSTYLE) { "{0}We are back{0}" -f $psstyle.BlinkOff, $psstyle.Blink }
     if ($bSayit) { [void]$oSynth.SpeakAsync($SayIt) }
     Do { $MyResponse = Read-host "$SayIt [Y] Yes  [N]  No" }
-    until ( ($MyResponse -like "y*" ) -or ($MyResponse -like "n*") )
+    until ( ($MyResponse -eq "yes" ) -or ($MyResponse -like "n*") )
 
     if ($MyResponse -like "y*") {
         $Sayit = "Moving '$Filename' to the repository "
@@ -488,7 +548,7 @@ $curThread = [FocusHelper]::GetCurrentThreadId()
         $SayIt = "Do you want to move $($Filename) to the recycle-bin?"
         if ($bSayit) { [Void]$oSynth.SpeakAsync($SayIt) }
         Do { $MyResponse = Read-host "$($SayIt) [Y] Yes  [N]  No" }
-        until ( ($MyResponse -like "y*" ) -or ($MyResponse -like "n*") )
+        until ( ($MyResponse -eq "yes" ) -or ($MyResponse -like "n*") )
         if ($MyResponse -like "y*") {
             $SayIt = "MOVING $($Filename) to the recycle-bin  "
             write-host  -foregroundColor Yellow "$SayIt at $(Get-Date) " # "V2.15.3"

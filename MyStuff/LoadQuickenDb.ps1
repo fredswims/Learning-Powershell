@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
 Copyright 2017-2025 Fred-Arthur Jacobowitz (FAJ)
-($ThisVersion = "Revision 2025-11-06 FAJ") # Refactoring for readability.
+($ThisVersion = "Revision 2025-11-07 FAJ") # Refactoring for readability.
 
     Short description of the script
 .DESCRIPTION
@@ -201,8 +201,8 @@ $TranscriptNameOld = $TranscriptName + ".old"
 $TranscriptFolder = $SourceDir #You need change only this line to change the location of the Transcript file.
 
 # set the full path to the Transcript files.
-$TranscriptFullName = Join-path -Resolve $TranscriptFolder $TranscriptName
-$TranscriptFullNameOld = Join-path -Resolve $TranscriptFolder $TranscriptNameOld
+($TranscriptFullName = Join-path $TranscriptFolder $TranscriptName)
+($TranscriptFullNameOld = Join-path $TranscriptFolder $TranscriptNameOld)
 
 Write-verbose "TranscriptFullName is [$TranscriptFullName]"
 Write-verbose "TranscriptFullNameOld is [$TranscriptFullNameOld]"
@@ -228,7 +228,7 @@ function ShowTestAdministrator {
 if (! (Test-Path $SourceDir)) { read-host "The path to the Repository Workspace $SourceDir is incorrect"; exit }
 StartTranscript -SourceDir $SourceDir -Pause:$Pause
 
-($ThisVersion = "Revision 2025-11-06 FAJ") # Refactoring for readability.
+($ThisVersion = "Revision 2025-11-07 FAJ") # Refactoring for readability.
 Write-Host "Copyright 2017-2025 Fred-Arthur Jacobowitz (FAJ)"
 # Write-Warning "In module `n`t[$($MyInvocation.MyCommand.Name)] $(Get-Date -format "dddd yyyy-MM-dd HH:mm:ss K")"
 Write-Warning "In module `n`t[$($PSCommandPath)] `n`t$(Get-Date -format "dddd yyyy-MM-dd HH:mm:ss K")"
@@ -286,9 +286,9 @@ Write-host "====== [Enumerating `$PSVerstionTable] Ends ======" -ForegroundColor
 
 # $PSVersionTable | ConvertTo-Json -Depth 3
 
-write-host "`$Host.Name is `n`t[$($host.Name)] and `$Host.Version is Version [$($host.Version)]"
+write-host "`$Host.Name is `n`t[$($host.Name)] and `$Host.Version is Version [$($host.Version)]" #does't show preview number
 write-host "Process is `n`t[$((get-process -id $pid).path)]" #like $PSHome 
-write-host "[`$psversiontable.GitCommitId] is [$($($psversiontable).GitCommitId)]"
+write-host "[`$psversiontable.GitCommitId] is [$($($psversiontable).GitCommitId)]" # best way to get PWSH Version.
 write-host "[`$PSCommandPath] is `n`t[$($PSCommandPath)]"
 write-host "`[[System.Environment]::commandline] is `n`t[$([System.Environment]::commandline)]"
 
@@ -308,6 +308,8 @@ Write-host "=== [`$MyInvocation]Ends ===" -ForegroundColor "Yellow"
 Write-host "=== [`$MyInvocation.MyCommand.Path] Begins ===" -ForegroundColor "Yellow"
 $MyInvocation.MyCommand.path # eqiuvalent to $PSCommandPath
 Write-host "=== [`$MyInvocation.MyCommand.Path] Ends ===" -ForegroundColor "Yellow"
+# Is this equivalent
+Write-host "=== [`$MyInvocation.InvocationName] `n`t[$MyInvocation.InvocationName] ===" -ForegroundColor "Yellow"
 
 #Set-PSDebug -Step
 

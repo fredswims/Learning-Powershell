@@ -89,3 +89,29 @@ $procDotNet = [System.Diagnostics.Process]::GetProcessById($myProcess.Id)
         $procDotNet = [System.Diagnostics.Process]::GetProcessById($MyProcess.Id)
         $procDotNet.PriorityClass
         $procDotNet.BasePriority
+
+# splatting and Convert-ToJson
+        $parametersSplat = @{
+            FilePath     = "conhost.exe"
+            ArgumentList = @(
+                "pwsh",
+                $noExitsw,
+                "-noProfile",
+                "-File", $ThisScript,
+                "-Filename", $Filename,
+                "-SourceDir", $SourceDir,
+                "-DestinationDir", $DestinationDir,
+                "-Priority", $speakSw, $PauseSw
+            )
+        }
+        write-host "alternate method to launch"
+        # $parametersSplat | format-list *
+        $logParams = $parametersSplat.Clone()
+        $logParams.ArgumentList = $logParams.ArgumentList | ForEach-Object {
+            if ($_ -is [System.IO.FileSystemInfo]) { $_.FullName }
+            else { $_ }
+        }
+        $logParams | ConvertTo-Json -Depth 2
+
+        start-process @parametersSplat
+

@@ -22,141 +22,15 @@ Copyright 2017-2025 Fred-Arthur Jacobowitz (FAJ)
     Start-Transcript -path $TranscriptFullName -IncludeInvocationHeader
 .NOTES
     General notes
-#>
-<#
 Revision History
 Find this line "($ThisVersion = "2017-07-21 FAJ")" and update it to the current version.
 2017-07-21 Function fjQuicken added Parameterset Names.
-2025-08-20 FAJ Minimize the windows to expedite the type-ahead buffer going to Quicken. 
-2025-07-17 FAJ Fixed: Sometimes when Quicken exits this process does not come to foreground. See Function Restore-FocusShellWindow
-2024-11-08 FAJ Add sleep is changing priority (probably not needed.) Added Write-Warning NOT TO CLOSE THIS WINDOWS.
-2024-07-19 FAJ
-Trying to locate .MainWindowHandle when running in Windows Terminal.
-2024-06-? FAJ
-    set-location $DestinationDir
-2024-02-12 FAJ
-Added Write-Warning "In module $($MyInvocation.MyCommand.Name): "
-The name of this script is "LoadQuickenDb1.ps1"
-2017-08-20 - Copyright 2017-2025 Fred-Arhtur Jacobowitz (FAJ)
-
-One day I should put in the standard established for Powershell Headers.
-2023-06-22 Added beep with bad tone if Quicken exits with bad status.
-Mod 2017-10-15 - Push *.dat files to the dat subfolder.
-Mod 2017-11-19 - When Quicken exits bring this window to the foreground.
-Added function 'Maximize-ThisWindow($Process, [Switch]$Maximize)'
-Mod 2018-05-24 'Loop on Read-Host
-2019-02-19 FAJ
-    Changed launch of Powershell using an Alias in profile.ps1 as
-      #function fQuickenHome {$command='C:\Users\Super` Computer\Dropbox\Private\Q\LoadQuickenDb.ps1 home.qdf -Speak';start-process powershell -argumentlist $command;remove-variable command}
-      function fQuickn ($arg="home") {$command=join-path $env:HOMEPATH -ChildPath \Dropbox\Private\Q\LoadQuickenDb.ps1; `
-      start-process powershell -Args "-noprofile -command & {. '$($command)' $arg.qdf -speak }";remove-variable command}
-      set-alias -name Quickn -value fQuickn -Option Readonly -passthru | format-list
-      or from a shortcut as C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe "& 'C:\Users\Super Computer\Dropbox\Private\Q\LoadQuickenDb.ps1'  home.qdf -Speak"
-    Added tracing of arguments
-2019-02-23 FAJ
-    If file already in destination folder show dates
-    Added comment lines so they show in log.
-2019-02-24 FAJ
-    $SourceDir is now based on "$MyInvocation.MyCommand.Path". Assumption is the script and the files reside in the Repository Workspace.
-2019-04-09 FAJ V2.15
-    Are we running CORE?
-    using if ($psversiontable.psedition -ne "CORE") but this may change in the future when Powershell is renamed.
-    Perhaps the executable name should be tested.
-    Then
-        Cannot set $bSayit to $true
-        Cannot load [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile($DestinationPath, 'OnlyErrorDialogs', 'SendToRecycleBin')
-
-2019-05-31 FAJ V3.0.0
-    Added params to this script.
-    It should be called like this
-    powershell.exe -noprofile -file $FullPathToScriptFile -Filename DataFileLikeHOME.QDF [-Speak] [-DebugMessages]
-    *** We assume the DataFile is in the folder (the REPOSITORY) where the script resides.
-
-2019-06-05 FAJ V3.0.1
-    Set the proper console display for "read-response" to  [Y] Yes  [N]  No"
-    and if reponse was improper added Do-While loop where previously left out.
-    Changed some instances of write-host to write-warning.
-    Cast to [Void] calls to $oSynth.SpeakAsync($SayIt) ([Void]$oSynth.SpeakAsync($SayIt))
-    to eliminate the appearance of "Compeleted" on the console
-
-2019-06-08 FAJ V3.0.5
-    Experimenting with allowing responses to be "y" or "yes", etc..
-    The alias for quickn is invoking LoadQuickenDb1.ps1.
-    Becareful what is commited to github.
-
-2019-06-08 FAJ V3.0.6
-    Added StartStop param. When set the function prints the params and exits.
-
-2019-06-15 FAJ V3.0.7 and V3.0.8
-    Modified responses to Read-Host.
-
-2019-06-28 FAJ V3.0.9
-    $SayIt="Do you want to replace the file in the repository?"
-
-2019-07-09 FAJ V3.0.10
-    The reverting the message to somewhat like the original.
-    $Sayit="Do you want to move this file to the repository?"
-    Prior to moving the file;
-    #in the repository,
-    make a backup of the file in the repository
-    but first remove the prevous one.
-        <remove-item home.qdf.old>
-        <rename-item home.qdf -> home.qdf.old>
-
-2020-01-03 FAJ V4.0.0
-        Improvements in error handling.
-        Use of -Verbose and $ErrorActionPreference = "Stop"
-        Try,Catch,Finish embelishments for Powershell Preview 7
-2020-01-04 FAJ V4.0.1
-        Minor changes - eliminating audit information made redundant by -verbose.
-2020-01-04 FAJ V4.0.2
-        Added Parameter $DestinationDir
-2020-01-10 FAJ V4.0.3
-        Streamlined the function Maximize-ThisWindow and removed 2nd parameter.
-2020-01-18 FAJ V4.1.0.1
-        If the file is already in the working directory and you don't want to use it
-        rename it (append the date and time to the basename) before copying the file from the repository.
-2020-01-20 FAJ V4.1.0.2
-        $SoureDir is now an input parameter that defaults to the foler where this command resides; $SourceDir =  (Split-Path -Parent -Path "$PSCommandPath"),
-2020-03-11 FAJ V4.1.1
-        Load assemblies at the start of the Try block.
-        Show final prompt only if errors occurred.
-        <#
-2020-03-15 FAJ V4.1.2
-        Move file to recycle bin works with Powershell 7.
-        Replaced ($psversiontable.psedition -ne "CORE") with ($IsCoreClr -ne $true)
-2020-03-15 FAJ V4.1.3
-        replaced three lines of [console]::beep(n,m) with single line 'For"
-2020-05-25 FAJ V4.1.4
-        Fixed spelling, added pause to if file in repository is correct.
-2020-12-18 FAJ V4.1.5
-        Make string in 'read-host' blink; used $PsStyle
-2021-06-11 FAJ V4.1.6
-        Added [console]::beep($ToneGood, $ToneDuration) when we return from quicken
-2023-06-05
         Oh my, its been two years since last modification. Redo launching quicken and retrieving $lasterrorcode.
-General Notes Begin Here
-        This script invokes Quicken and requires 2 arguments on the command line invoking it.
-The first argument is the name of a Quicken data file.
-The second argument is the a string with indicates if you want to enable text-to-speech prompts; Speak | NoSpeak
-Here is an example of the Target property in a SHORTCUT on my Desktop;
-C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe "& C:\Users\Super` Computer\Documents\Dropbox\Private\Q\LoadQuickenDb.ps1 home.qdf -Speak"
-Notice
-1)the &
-2)the escape after the word 'Super' as there is a space in the path.
-
-
-This script invokes Quicken with a COPY of your data file. I refer to this file as $FileName
-
-I keep my data file(s) in a folder called Dropbox\Private\Q\. I refer to this folder and file as the repository workspace- $SourceDir and $SourcePath
-The copy is placed in the run-time workspace. This workspace is on the local machine and is not in a path that uses any cloud services.
-Quicken uses $env:homepath/Documents/Quicken as the run-time workspace.
-I refer to this folder and file as $DestinationDir and $DestinationPath
-If it already is on the desktop you can overwrite it or use the existing file on the desktop.
-
-When Quicken exits you decide if you want to delete the copy or move it back to the repository. Moving to back to the repository OVERWRITES the original file.
-If you delete the file it is moved to the RecycleBin.
-#> #end revision-history
+    2021-06-11 FAJ V4.1.6
+    2024-11-08 FAJ Add sleep is changing priority (probably not needed.) Added Write-Warning NOT TO CLOSE THIS WINDOWS.
+    2025-07-17 FAJ Fixed: Sometimes when Quicken exits this process does not come to foreground. See Function Restore-FocusShellWindow
+    2025-08-20 FAJ Minimize the windows to expedite the type-ahead buffer going to Quicken. 
+    #>
 [CmdletBinding()]
 param ([Parameter(Mandatory = $false,
         HelpMessage = "Enter the name of the Quicken data file; e.g., Home.qdf : ")]
@@ -169,24 +43,19 @@ param ([Parameter(Mandatory = $false,
     [System.IO.FileInfo]$DestinationDir = (Join-Path -path $env:UserProfile -ChildPath 'Documents\Quicken'),
 
     [Parameter(Mandatory = $false)]
-    [Switch]
-    $Speak,
+    [Switch]$Speak,
 
     [Parameter(Mandatory = $false)]
-    [Switch]
-    $Priority = $false,
+    [Switch]$Priority = $false,
 
     [Parameter(Mandatory = $false)]
-    [Switch]
-    $ShowDebug,
+    [Switch]$ShowDebug,
 
     [Parameter(Mandatory = $false)]
-    [Switch]
-    $StartStop,
+    [Switch]$StartStop,
 
     [Parameter(Mandatory = $false)]
-    [Switch]
-    $Pause
+    [Switch]$Pause
 )
 Function StartTranscript{ [CmdletBinding()] param (
     [Parameter(Mandatory)]
@@ -308,10 +177,6 @@ Write-host "=== [`$MyInvocation]Ends ===" -ForegroundColor "Yellow"
 Write-host "=== [`$MyInvocation.MyCommand.Path] Begins ===" -ForegroundColor "Yellow"
 $MyInvocation.MyCommand.path # eqiuvalent to $PSCommandPath
 Write-host "=== [`$MyInvocation.MyCommand.Path] Ends ===" -ForegroundColor "Yellow"
-# Is this equivalent
-Write-host "=== [`$MyInvocation.InvocationName] `n`t[$MyInvocation.InvocationName] ===" -ForegroundColor "Yellow"
-
-#Set-PSDebug -Step
 
 $ToneGood = 500
 $ToneBad = 250
@@ -397,11 +262,16 @@ Try {
 
         if ( $MyResponse.tolower() -like "n*") {
             # Rename existing file (file.ext -> file-2020-01-18T14:20:22.ext) and
-            # Use a copy of the file that is in the repository.
-            $Sayit = "Renaming the file in the working directory and using a copy of the file that is in the repository."
+            # Get a copy of the file that is in the repository.
+            $Sayit = "Renaming the file in the working directory and replacing it with a copy in the repository."
             if ($bSayit) { [Void]$oSynth.SpeakAsync($Sayit) }
             Write-Warning  $SayIt
-            Rename-Item -Verbose $DestinationPath -NewName "$($DestinationPath.basename)-$(get-date -format "yyyy-MM-ddTHH-mm-ss")$($DestinationPath.extension)"
+            
+            # append the date and time to the current file.S
+            $tempTime=$(get-date -format "yyyy-MM-ddTHH-mm-ss")
+            Rename-Item -force -verbose `
+                -path $DestinationPath `
+                -NewName "$($DestinationPath.basename)-$tempTime$($DestinationPath.extension)"
             Copy-Item -verbose $SourcePath $DestinationDir
         }
         else {
@@ -474,45 +344,6 @@ Try {
     }
     Restore-FocusShellWindow $hwnd
  
-<# Here is another varient to try.
-Add-Type @"
-using System;
-using System.Runtime.InteropServices;
-public class FocusHelper {
-    [DllImport("user32.dll")]
-    public static extern IntPtr GetForegroundWindow();
-    [DllImport("user32.dll")]
-    public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
-    [DllImport("kernel32.dll")]
-    public static extern uint GetCurrentThreadId();
-    [DllImport("user32.dll")]
-    public static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
-    [DllImport("user32.dll")]
-    public static extern bool SetForegroundWindow(IntPtr hWnd);
-    [DllImport("user32.dll")]
-    public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
-}
-"@
-
-# $hwnd = ... # your PWSH window handle
-$fgThread = 0
-$fgWindow = [FocusHelper]::GetForegroundWindow()
-[FocusHelper]::GetWindowThreadProcessId($fgWindow, [ref]$fgThread)
-$curThread = [FocusHelper]::GetCurrentThreadId()
-
-[FocusHelper]::AttachThreadInput($curThread, $fgThread, $true)
-[FocusHelper]::ShowWindowAsync($hwnd, 3)
-[FocusHelper]::SetForegroundWindow($hwnd)
-[FocusHelper]::AttachThreadInput($curThread, $fgThread, $false)
-#>
-
-<#
-    Alternate code to bring this windows back to the foreground.
-    sleep -Seconds 2
-    [void][reflection.assembly]::loadwithpartialname("system.windows.forms")
-    $altkeys = @(0xA4, 0x09)
-    [system.windows.forms.sendkeys]::sendwait('%{TAB}')
- #>
     #At this point Quicken has exited. Now decide what to do with the data file we where working with.
     [console]::beep($ToneGood, $ToneDuration) #works for all versions
     write-warning "INFORMATION::The file in the runtime workspace is $DestinationPath"

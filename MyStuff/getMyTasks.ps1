@@ -4,6 +4,9 @@ function Get-MyTasks {
     Write-Warning "In script [$($PSCommandPath)]: [$(get-date -Format "dddd yyyy-MM-dd hh:mm:ss K")]"
     Write-Warning "In function [$($MyInvocation.MyCommand.Name)]: [$(get-date -Format "dddd yyyy-MM-dd hh:mm:ss K")]"
     Write-host "Getting current user identity..."
+
+    $faults = 0 # usually from Get-CimInstance
+    $processed = 0
     $identity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
     $domain, $user = $identity.Name -split '\\'
 
@@ -24,13 +27,19 @@ function Get-MyTasks {
                     Name      = $proc.Name
                     User      = "$($owner.Domain)\$($owner.User)"
                 }
+                $processed++
             }
-        } catch {
+        }
+        catch {
             Write-host "In Catch Block `n`tSkipped $($proc.Name) (PID $($proc.ProcessId)): $_"
+            $faults++
             continue
         }
-    }
-
+    } # end foreach
+    
+    write-host "Number of Faults [$faults]"
+    write-host "Number of tasks [$Processed]"
+    Write-Warning "Leaving script [$($PSCommandPath)]: [$(get-date -Format "dddd yyyy-MM-dd hh:mm:ss K")]"
     return $results
 }
 Get-MyTasks

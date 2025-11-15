@@ -14,9 +14,7 @@ function Get-MyTasks {
 
     foreach ($proc in $processes) {
         try {
-            $owner=$null
             $owner = Invoke-CimMethod -InputObject $proc -MethodName GetOwner -ErrorAction Stop
-            if ($null -eq $owner){throw "`$owner is null"}
             if ($owner.ReturnValue -eq 0 -and
                 $owner.User -eq $user -and
                 $owner.Domain -eq $domain) {

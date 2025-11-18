@@ -19,6 +19,7 @@ Function PrintLine {
     # https://ss64.com/ps/syntax-dateformats.html
     # https://ss64.com/ps/syntax-f-operator.html
     param($Process)
+     Write-Verbose "`n`tIn function [$($MyInvocation.MyCommand.Name)]: " 
     # "[{2,8}] {4}[{5}{0,-15}{4}]{5} [{1:yyyy-MM-dd hh:mm:ss tt}] [{3}]"
     $string="[{2,5}] {4}[{5}{0,-15}{4}]{5} [{1:dd hh:mm:ss tt}] [{3}]" `
         -f $Process.name , $Process.StartTime, $Process.id, $Process.path, $psStyle.Formatting.Warning, $psstyle.reset
@@ -26,6 +27,8 @@ Function PrintLine {
 } # end function PrintLine
 
 Function PrintHeader {
+     Write-Verbose "`n`tIn function [$($MyInvocation.MyCommand.Name)]: " 
+
     write-host "==============================" -ForegroundColor Cyan
     write-host "   Process and Parent List   " -ForegroundColor Cyan
     write-host "==============================" -ForegroundColor Cyan
@@ -35,6 +38,15 @@ Function PrintHeader {
 write-host -ForegroundColor Yellow "`tExecuting::`t $($PSCommandPath)"
 write-host -ForegroundColor Yellow "`tCalled by::`t $($MyInvocation.ScriptName)"
 write-host -foregroundcolor yellow "`tInvoked as::`t $($MyInvocation.Line)"
+
+#region Who Am I
+Write-Warning (
+    "`n`t[$(Get-Date -Format 'dddd MM/dd/yyyy HH:mm:ss K')]"+
+    "`n`tIn function [$($MyInvocation.MyCommand.Name)]: Displaying process and parent information" + # functiion name
+    "`n`tIn script   [$PSCommandPath]: Displaying process and parent information" +
+    "`n`tInvoked as  [$($MyInvocation.Line)] from [$([System.Environment]::commandline)]"
+)
+#endregion
 
 $results=@() # Array to hold results from Get-Process.
 

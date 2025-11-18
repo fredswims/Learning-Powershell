@@ -7,8 +7,14 @@ param (
 # https://community.idera.com/database-tools/powershell/powertips/b/tips/posts/identifying-unknown-network-listeners
 # Who is communitcating with my computer?
 # Invoke-RestMethod -Uri 'http://ipinfo.io/51.107.59.180/json'
-Write-Warning "In script $($MyInvocation.MyCommand.Name): "
-
+write-warning ("[$(Get-Date -Format "dddd MM/dd/yyyy HH:mm:ss K")]`n`t [$PSCommandPath]")
+#region Who Am I
+Write-Warning (
+    "`n`t[$(Get-Date -Format 'dddd MM/dd/yyyy HH:mm:ss K')]"+
+    "`n`tIn function [$($MyInvocation.MyCommand.Name)]: Show Internet Traffic on port 443 " +
+    "`n`tIn script   [$PSCommandPath]" 
+)
+#endregion
 $Process = @{
     Name       = 'Process'
     Expression = {
@@ -18,14 +24,28 @@ $Process = @{
     }
 }
 
+$ProcessSplat = @{
+    Name       = 'Process'
+    Expression = {
+        # return process path
+        # (Get-Process -Id $_.OwningProcess -ErrorAction SilentlyContinue).Path
+        $path = ""
+        $path=(Get-Process -Id $_.OwningProcess -ErrorAction SilentlyContinue).Path
+        if($path) {$path} else {"PID: $($_.OwningProcess)"}
+
+    }
+}
+
 $IpOwner = @{
     Name       = 'RemoteAuthority'
     Expression = {
-        $ip = $_.RemoteAddress
+        ($ip = $_.RemoteAddress)
         $info = Invoke-RestMethod -Uri "http://ipinfo.io/$ip/json"
         '{0} ({1})' -f $info.Org, $info.City
     }
 }
+
+
 
 # get all connections to port 443 (HTTPS)
 Get-NetTCPConnection -RemotePort 443 -State Established | 

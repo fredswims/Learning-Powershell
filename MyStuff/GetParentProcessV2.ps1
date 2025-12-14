@@ -27,25 +27,32 @@ Function PrintLine {
 } # end function PrintLine
 
 Function PrintHeader {
-     Write-Verbose "`n`tIn function [$($MyInvocation.MyCommand.Name)]: " 
+    Write-Verbose "`n`tIn function [$($MyInvocation.MyCommand.Name)]: " 
+    $callStack = Get-PSCallStack
+    $caller=$callstack[1]
+    write-verbose "`n`tCalled by [$($caller.FunctionName)]"
 
+    write-host -ForegroundColor Yellow "`tCaller`t[$($MyInvocation.ScriptName)]"
     write-host "==============================" -ForegroundColor Cyan
     write-host "   Process and Parent List   " -ForegroundColor Cyan
     write-host "==============================" -ForegroundColor Cyan
 }   
 # ==========Script Begins Here==========
-
-write-host -ForegroundColor Yellow "`tExecuting::`t $($PSCommandPath)"
-write-host -ForegroundColor Yellow "`tCalled by::`t $($MyInvocation.ScriptName)"
-write-host -foregroundcolor yellow "`tInvoked as::`t $($MyInvocation.Line)"
-
+write-host -ForegroundColor Yellow "`tCall To`t[$($MyInvocation.MyCommand.Name)]: Get process and parents. [$(Get-Date -Format 'dddd MM/dd/yyyy HH:mm:ss K')]"
+write-host -ForegroundColor Yellow "`tPath`t[$($PSCommandPath)]" 
+write-host -ForegroundColor Yellow "`tCaller`t[$($MyInvocation.ScriptName)]"
+write-host -foregroundcolor yellow "`t>>`t[$([System.Environment]::commandline.tostring())]"
+write-host -foregroundcolor yellow "`tCmdLine`t[$($MyInvocation.Line.ToString().ReplaceLineEndings($null))]"
 #region Who Am I
+<# 
 Write-Warning (
     "`n`t[$(Get-Date -Format 'dddd MM/dd/yyyy HH:mm:ss K')]"+
-    "`n`tIn function [$($MyInvocation.MyCommand.Name)]: Displaying process and parent information" + # functiion name
-    "`n`tIn script   [$PSCommandPath]: Displaying process and parent information" +
-    "`n`tInvoked as  [$($MyInvocation.Line)] from [$([System.Environment]::commandline)]"
+    "`n`tIn function [$($MyInvocation.MyCommand.Name)]: Get process and parents" +
+    "`n`tIn script   [$PSCommandPath]: " +
+    "`n`tInvoked as  [$($MyInvocation.Line)]" +
+    "`n`tEnvironment [$([System.Environment]::commandline)]"
 )
+ #>
 #endregion
 
 $results=@() # Array to hold results from Get-Process.
@@ -70,11 +77,13 @@ While ($null -ne $ParentId) {
     # PrintLine $ParentProcess
     $Id = $ParentProcess.id
     #  Next potential parent Id.
-    $ParentId = $(get-process -ErrorAction SilentlyContinue -id $Id).parent.id
+    # $null=$ParentId
+    # Use the null‑conditional operator (?.) when [set-strickmode -level lastest] is used.
+
+    $ParentId = $(get-process -ErrorAction SilentlyContinue -id $Id)?.parent?.id
 } # end while
 
 if ($noexit) { Read-Host "Paused. Press Enter to exit." }
-write-host "Finis" -ForegroundColor yellow
 return $results
 <#
     Examples:

@@ -1,15 +1,45 @@
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
-
+    Write-Warning "In Script [$($PSCommandPath)]: [$([datetime]::now)]"
+    # Read-Host "pause"
 # This is an example profile for PSReadLine.
 #
 # This is roughly what I use so there is some emphasis on emacs bindings,
 # but most of these bindings make sense in Windows mode as well.
 
-# Import-Module PSReadLine
-
-# Set-PSReadLineOption -EditMode Emacs
-Set-PSReadLineOption -EditMode windows
+try
+{
+    # Don't Import if running in VS Code.
+    $thisHost=$host.name.tostring().trim()
+    if($thisHost -eq "Visual Studio Code Host") {
+        write-host "Don't Import PSReadline in [$thisHost]. Returning to caller"
+        Return 
+    }    
+    write-host "Importing module PSReadline into [$thisHost]" -ForegroundColor Green
+    # Ensure the latest PSReadLine is always loaded
+    $latest = Get-Module -ListAvailable PSReadLine |
+    Sort-Object -Property Version -Descending | Select-Object -First 1
+    
+    if ($latest) {
+        # Remove any already-loaded older version
+        Remove-Module PSReadLine -ErrorAction SilentlyContinue
+        # Import the newest one explicitly
+        Import-Module $latest -Force -verbose
+        Write-Host "Imported PSReadLine Version $($latest.Version) into $thisHost" -ForegroundColor Green
+    }
+}
+catch 
+{
+    <#Do this if a terminating exception happens#>
+    Write-Host "PSReadLine was not imported for $($host.name.trim())" -ForegroundColor Red
+    return $false
+}
+#region FAJ
+Write-Host "Setting up LineOptions and KeyLineHandlers"
+Set-PSReadLineOption -EditMode Emacs
+Set-PSReadLineOption -EditMode Windows
+Set-PSReadLineOption -PredictionViewStyle ListView # toggle with F2
+#endregion FAJ
 
 # Searching for commands with up/down arrow is really handy.  The
 # option "moves to end" is useful if you want the cursor at the end
@@ -20,7 +50,6 @@ Set-PSReadLineOption -EditMode windows
 Set-PSReadLineOption -HistorySearchCursorMovesToEnd
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
-Set-PSReadLineOption -PredictionViewStyle ListView #toggle with F2
 
 # This key handler shows the entire or filtered history using Out-GridView. The
 # typed text is used as the substring pattern for filtering. A selected command
@@ -81,7 +110,7 @@ Set-PSReadLineKeyHandler -Key F7 `
         [Microsoft.PowerShell.PSConsoleReadLine]::Insert(($command -join "`n"))
     }
 }
-<# comment out faj
+
 # This is an example of a macro that you might use to execute a command.
 # This will add the command to history.
 Set-PSReadLineKeyHandler -Key Ctrl+b `
@@ -97,7 +126,7 @@ Set-PSReadLineKeyHandler -Key Ctrl+b `
 # is still useful sometimes, so bind some keys so we can do both
 Set-PSReadLineKeyHandler -Key Ctrl+q -Function TabCompleteNext
 Set-PSReadLineKeyHandler -Key Ctrl+Q -Function TabCompletePrevious
- #>
+
 # Clipboard interaction is bound by default in Windows mode, but not Emacs mode.
 Set-PSReadLineKeyHandler -Key Ctrl+C -Function Copy
 Set-PSReadLineKeyHandler -Key Ctrl+v -Function Paste
@@ -331,7 +360,9 @@ Set-PSReadLineKeyHandler -Key Alt+w `
 }
 
 # Insert text from the clipboard as a here string
-Set-PSReadLineKeyHandler -Key Ctrl+V `
+# Set-PSReadLineKeyHandler -Key Ctrl+V `
+#FAJ change to this -Key
+Set-PSReadLineKeyHandler -Key Alt+W `
                          -BriefDescription PasteAsHereString `
                          -LongDescription "Paste the clipboard text as a here string" `
                          -ScriptBlock {
@@ -524,7 +555,7 @@ Set-PSReadLineKeyHandler -Key F1 `
 
 #
 # Ctrl+Shift+j then type a key to mark the current directory.
-# Ctrj+j then the same key will change back to that directory without
+# Ctrl+j then the same key will change back to that directory without
 # needing to type cd and won't change the command line.
 
 #
@@ -694,10 +725,32 @@ Set-PSReadLineKeyHandler -Chord 'Alt+x' `
     [Microsoft.PowerShell.PSConsoleReadLine]::Delete($cursor - 4, 4)
     [Microsoft.PowerShell.PSConsoleReadLine]::Insert($unicode)
 }
+#region FAJ
 <# 
+function Toggle-PSReadLineEditMode {
+    $currentMode = (Get-PSReadLineOption).EditMode
+    if ($currentMode -eq 'Windows') {
+        Set-PSReadLineOption -EditMode Emacs
+        Write-Host "Switched to Emacs mode"
+    } else {
+        Set-PSReadLineOption -EditMode Windows
+        Write-Host "Switched to Windows mode"
+    }
+}
+Set-PSReadLineKeyHandler -Chord Ctrl+e -ScriptBlock { Toggle-PSReadLineEditMode }
+#>
+#endregion FAJ
+
+#region FAJ
+<# 
+Playground
+PSReadLine\Get-PSReadLineKeyHandler # to see all the key definitions
+	implemented as alt+ctrl+?
+
 get-psreadlineoption | Format-List *
 set-psreadLineOption -DingTone 1000
-get-psreadlineoption | Format-List *
 [Microsoft.PowerShell.PSConsoleReadLine]::ding()
 [Microsoft.PowerShell.PSConsoleReadLine]|get-member -static
  #>
+ Write-Host -ForegroundColor Green "[$psCommandPath] completed."
+ 

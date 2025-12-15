@@ -9,29 +9,53 @@ using namespace System.Management.Automation.Language
 
 try
 {
+    $ReferencModule="PSReadLine"
     # Don't Import if running in VS Code.
     $thisHost=$host.name.tostring().trim()
     if($thisHost -eq "Visual Studio Code Host") {
-        write-host "Don't Import PSReadline in [$thisHost]. Returning to caller"
+        write-host "Don't Import [$ReferencModule] in [$thisHost]. Returning to caller"
         Return 
     }    
-    write-host "Importing module PSReadline into [$thisHost]" -ForegroundColor Green
-    # Ensure the latest PSReadLine is always loaded
-    $latest = Get-Module -ListAvailable PSReadLine |
-    Sort-Object -Property Version -Descending | Select-Object -First 1
+    write-host "Importing module $ReferencModule into [$thisHost]" -ForegroundColor Green
+    # Goal is to Install the last version that was aquired.
+    # It should be the one with the highest version number.
+    $thisModule = Get-Module -ListAvailable $ReferencModule |
+    Sort-Object -Property Version -Descending | Select-Object -First 1 
     
-    if ($latest) {
-        # Remove any already-loaded older version
-        Remove-Module PSReadLine -ErrorAction SilentlyContinue
+    if ($thisModule) {
+        #region curious
+        write-host "What is Installed?"
+        $oInstalledModule=$null
+        $oInstalledModule=Get-InstalledPSResource -name $ReferencModule
+        foreach ($module in $oInstalledModule) {
+            write-warning "$ReferencModule Version $($psstyle.foreground.red) [$($module.version.ToString()))] $($psstyle.reset)"
+        } 
+        #endregion
+        
+        # Remove all installed versions
+        # this may not work if other instances of PWSH are running.
+        # perhaps we have to rethink this whole thing. But this should continue so definitons below can be changed.
+        Remove-Module -name $ReferencModule  -ErrorAction SilentlyContinue # this may not work if other instances of PWSH are running.
+
+        #region curious
+        write-host "What is Installed after Remove-Module?"
+        $oInstalledModule=$null
+        $oInstalledModule=Get-InstalledPSResource -name $ReferencModule
+        foreach ($module in $oInstalledModule) {
+            write-warning "$ReferencModule Version $($psstyle.foreground.red) [$($module.version.ToString()))] $($psstyle.reset)"
+        } 
+        #endregion 
+
         # Import the newest one explicitly
-        Import-Module $latest -Force -verbose
-        Write-Host "Imported PSReadLine Version $($latest.Version) into $thisHost" -ForegroundColor Green
+        Import-Module $thisModule -Force -verbose
+        Write-Host "Imported $ReferencModule Version $($thisModule.Version) into $thisHost" -ForegroundColor Green
     }
 }
 catch 
 {
     <#Do this if a terminating exception happens#>
-    Write-Host "PSReadLine was not imported for $($host.name.trim())" -ForegroundColor Red
+    Write-Host "$ReferencModule Import did not complete for [$thisHost]" -ForegroundColor Red
+    Write-Host "Aborting [$($PSCommandPath)]" -ForegroundColor Red
     return $false
 }
 #region FAJ
@@ -752,5 +776,5 @@ set-psreadLineOption -DingTone 1000
 [Microsoft.PowerShell.PSConsoleReadLine]::ding()
 [Microsoft.PowerShell.PSConsoleReadLine]|get-member -static
  #>
- Write-Host -ForegroundColor Green "[$psCommandPath] completed."
+ Write-Host -ForegroundColor Green "Sourcing Completed for [$psCommandPath]."
  

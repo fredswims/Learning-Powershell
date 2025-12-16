@@ -28,7 +28,7 @@ try
         $oInstalledModule=$null
         $oInstalledModule=Get-InstalledPSResource -name $ReferencModule
         foreach ($module in $oInstalledModule) {
-            write-warning "$ReferencModule Version $($psstyle.foreground.red) [$($module.version.ToString()))] $($psstyle.reset)"
+            write-warning "$ReferencModule Version $($psstyle.foreground.red) [$($module.version.ToString())] $($psstyle.reset)"
         } 
         #endregion
         
@@ -42,7 +42,7 @@ try
         $oInstalledModule=$null
         $oInstalledModule=Get-InstalledPSResource -name $ReferencModule
         foreach ($module in $oInstalledModule) {
-            write-warning "$ReferencModule Version $($psstyle.foreground.red) [$($module.version.ToString()))] $($psstyle.reset)"
+            write-warning "$ReferencModule Version $($psstyle.foreground.red) [$($module.version.ToString())] $($psstyle.reset)"
         } 
         #endregion 
 

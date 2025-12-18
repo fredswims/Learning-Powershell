@@ -1,70 +1,20 @@
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
-    Write-Warning "In Script [$($PSCommandPath)]: [$([datetime]::now)]"
-    # Read-Host "pause"
+# FAJ 2025-10-12
+# SamplePSReadLineProfile.ps1 from PSReadline Version 2.4.5 
+        Write-Warning "In Script [$($PSCommandPath)]: [$([datetime]::now)]"
+        # Read-Host "pause"
 # This is an example profile for PSReadLine.
 #
 # This is roughly what I use so there is some emphasis on emacs bindings,
 # but most of these bindings make sense in Windows mode as well.
 
-try
-{
-    $ReferencModule="PSReadLine"
-    # Don't Import if running in VS Code.
-    $thisHost=$host.name.tostring().trim()
-    if($thisHost -eq "Visual Studio Code Host1") {
-        write-host "Don't Import [$ReferencModule] in [$thisHost]. Returning to caller"
-        Return 
-    }    
-    write-host "Importing module $ReferencModule into [$thisHost]" -ForegroundColor Green
-    # Goal is to Install the last version that was aquired.
-    # It should be the one with the highest version number.
-    $thisModule = Get-Module -ListAvailable $ReferencModule |
-    Sort-Object -Property Version -Descending | Select-Object -First 1 
-    
-    if ($thisModule) {
-        #region curious
-        write-host "What is Installed?"
-        $oInstalledModule=$null
-        $oInstalledModule=Get-InstalledPSResource -name $ReferencModule
-        foreach ($module in $oInstalledModule) {
-            write-warning "$ReferencModule Version $($psstyle.foreground.red) [$($module.version.ToString())] $($psstyle.reset)"
-        } 
-        #endregion
-        
-        # Remove all installed versions
-        # this may not work if other instances of PWSH are running.
-        # perhaps we have to rethink this whole thing. But this should continue so definitons below can be changed.
-        Remove-Module -name $ReferencModule  -ErrorAction SilentlyContinue # this may not work if other instances of PWSH are running.
+Import-Module PSReadLine -Force
 
-        #region curious
-        write-host "What is Installed after Remove-Module?"
-        $oInstalledModule=$null
-        $oInstalledModule=Get-InstalledPSResource -name $ReferencModule
-        foreach ($module in $oInstalledModule) {
-            write-warning "$ReferencModule Version $($psstyle.foreground.red) [$($module.version.ToString())] $($psstyle.reset)"
-        } 
-        #endregion 
-
-        # Import the newest one explicitly
-        Import-Module $thisModule -Force -verbose
-        Write-Host "Imported $ReferencModule Version $($thisModule.Version) into $thisHost" -ForegroundColor Green
-    }
-}
-catch 
-{
-    <#Do this if a terminating exception happens#>
-    Write-Host "$ReferencModule Import did not complete for [$thisHost]" -ForegroundColor Red
-    Write-Host "Aborting [$($PSCommandPath)]" -ForegroundColor Red
-    return $false
-}
-#region FAJ
-Write-Host "Setting up LineOptions and KeyLineHandlers"
 Set-PSReadLineOption -EditMode Emacs
-Set-PSReadLineOption -EditMode Windows
+Set-PSReadLineOption -EditMode windows
 Set-PSReadLineOption -PredictionViewStyle ListView # toggle with F2
-#endregion FAJ
-
+# FAJ
 # Searching for commands with up/down arrow is really handy.  The
 # option "moves to end" is useful if you want the cursor at the end
 # of the line while cycling through history like it does w/o searching,
@@ -384,9 +334,8 @@ Set-PSReadLineKeyHandler -Key Alt+w `
 }
 
 # Insert text from the clipboard as a here string
-# Set-PSReadLineKeyHandler -Key Ctrl+V `
-#FAJ change to this -Key
-Set-PSReadLineKeyHandler -Key Alt+W `
+# Set-PSReadLineKeyHandler -Key Alt+W `
+Set-PSReadLineKeyHandler -Key Ctrl+V `
                          -BriefDescription PasteAsHereString `
                          -LongDescription "Paste the clipboard text as a here string" `
                          -ScriptBlock {
@@ -605,7 +554,7 @@ Set-PSReadLineKeyHandler -Key Ctrl+j `
     $dir = $global:PSReadLineMarks[$key.KeyChar]
     if ($dir)
     {
-        Set-Location $dir
+        cd $dir
         [Microsoft.PowerShell.PSConsoleReadLine]::InvokePrompt()
     }
 }
@@ -616,7 +565,7 @@ Set-PSReadLineKeyHandler -Key Alt+j `
                          -ScriptBlock {
     param($key, $arg)
 
-    $global:PSReadLineMarks.GetEnumerator() | ForEach-Object {
+    $global:PSReadLineMarks.GetEnumerator() | % {
         [PSCustomObject]@{Key = $_.Key; Dir = $_.Value} } |
         Format-Table -AutoSize | Out-Host
 
@@ -749,32 +698,3 @@ Set-PSReadLineKeyHandler -Chord 'Alt+x' `
     [Microsoft.PowerShell.PSConsoleReadLine]::Delete($cursor - 4, 4)
     [Microsoft.PowerShell.PSConsoleReadLine]::Insert($unicode)
 }
-#region FAJ
-<# 
-function Toggle-PSReadLineEditMode {
-    $currentMode = (Get-PSReadLineOption).EditMode
-    if ($currentMode -eq 'Windows') {
-        Set-PSReadLineOption -EditMode Emacs
-        Write-Host "Switched to Emacs mode"
-    } else {
-        Set-PSReadLineOption -EditMode Windows
-        Write-Host "Switched to Windows mode"
-    }
-}
-Set-PSReadLineKeyHandler -Chord Ctrl+e -ScriptBlock { Toggle-PSReadLineEditMode }
-#>
-#endregion FAJ
-
-#region FAJ
-<# 
-Playground
-PSReadLine\Get-PSReadLineKeyHandler # to see all the key definitions
-	implemented as alt+ctrl+?
-
-get-psreadlineoption | Format-List *
-set-psreadLineOption -DingTone 1000
-[Microsoft.PowerShell.PSConsoleReadLine]::ding()
-[Microsoft.PowerShell.PSConsoleReadLine]|get-member -static
- #>
- Write-Host -ForegroundColor Green "Sourcing Completed for [$psCommandPath]."
- 

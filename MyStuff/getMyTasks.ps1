@@ -3,6 +3,13 @@ function Get-MyTasks {
     param ()
     Write-Warning "In script [$($PSCommandPath)]: [$(get-date -Format "dddd yyyy-MM-dd hh:mm:ss K")]"
     Write-Warning "In function [$($MyInvocation.MyCommand.Name)]: [$(get-date -Format "dddd yyyy-MM-dd hh:mm:ss K")]"
+    #region Who Am I
+    Write-Warning (
+        "`n`t[$(Get-Date -Format 'dddd MM/dd/yyyy HH:mm:ss K')]"+
+        "`n`tIn function [$($MyInvocation.MyCommand.Name)]: Get all my processess." +
+        "`n`tIn script   [$PSCommandPath]" 
+    )
+    #endregion
     Write-host "Getting current user identity..."
 
     $faults = 0 # usually from Get-CimInstance

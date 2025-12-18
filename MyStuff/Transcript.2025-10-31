@@ -1,0 +1,2564 @@
+**********************
+PowerShell transcript start
+Start time: 20251031184258
+Username: BOOK4EDGE\fred
+RunAs User: BOOK4EDGE\fred
+Configuration Name: 
+Machine: BOOK4EDGE (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Program Files\PowerShell\7-preview\pwsh.dll
+Process ID: 18308
+PSVersion: 7.6.0-preview.5
+PSEdition: Core
+GitCommitId: 7.6.0-preview.5
+OS: Microsoft Windows 10.0.26200
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+Transcript started, output file is C:\Users\freds\mystuff\Transcript.2025-10-31
+fred@BOOK4EDGE  ~ [140G[18:42]
+❯ ]2;C:\Users\freds]9;9;"C:\Users\freds"
+PS>[System.Environment]::OSVersion
+
+Platform ServicePack Version      VersionString
+-------- ----------- -------      -------------
+ Win32NT             10.0.26200.0 Microsoft Windows NT 10.0.26200.0
+
+fred@BOOK4EDGE  ~ [140G[18:43]
+❯ ]2;C:\Users\freds]9;9;"C:\Users\freds"
+PS>[System.Environment]::OSVersion.tostring()
+Microsoft Windows NT 10.0.26200.0
+fred@BOOK4EDGE  ~ [140G[18:43]
+❯ ]2;C:\Users\freds]9;9;"C:\Users\freds"
+PS>[System.Environment]::CommandLine
+"C:\Program Files\PowerShell\7-preview\pwsh.dll"
+fred@BOOK4EDGE  ~ [140G[18:43]
+❯ ]2;C:\Users\freds]9;9;"C:\Users\freds"
+PS>System.Environment] | Get-Member -Static
+System.Environment]: The term 'System.Environment]' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+System.Environment]: The term 'System.Environment]' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+⨯ fred@BOOK4EDGE  ~ [140G[18:43]
+❯ ]2;C:\Users\freds]9;9;"C:\Users\freds"
+PS>[System.Environment] | Get-Member -Static
+
+   TypeName: System.Environment
+
+Name                       MemberType Definition
+----                       ---------- ----------
+Equals                     Method     static bool Equals(System.Object objA, System.Object objB)
+Exit                       Method     static void Exit(int exitCode)
+ExpandEnvironmentVariables Method     static string ExpandEnvironmentVariables(string name)
+FailFast                   Method     static void FailFast(string message), static void FailFast(string message, System.Exception exception)
+GetCommandLineArgs         Method     static string[] GetCommandLineArgs()
+GetEnvironmentVariable     Method     static string GetEnvironmentVariable(string variable), static string GetEnvironmentVariable(string variable,…
+GetEnvironmentVariables    Method     static System.Collections.IDictionary GetEnvironmentVariables(System.EnvironmentVariableTarget target), stat…
+GetFolderPath              Method     static string GetFolderPath(System.Environment+SpecialFolder folder), static string GetFolderPath(System.Env…
+GetLogicalDrives           Method     static string[] GetLogicalDrives()
+ReferenceEquals            Method     static bool ReferenceEquals(System.Object objA, System.Object objB)
+SetEnvironmentVariable     Method     static void SetEnvironmentVariable(string variable, string value), static void SetEnvironmentVariable(string…
+CommandLine                Property   static string CommandLine {get;}
+CpuUsage                   Property   static System.Environment+ProcessCpuUsage CpuUsage {get;}
+CurrentDirectory           Property   static string CurrentDirectory {get;set;}
+CurrentManagedThreadId     Property   static int CurrentManagedThreadId {get;}
+ExitCode                   Property   static int ExitCode {get;set;}
+HasShutdownStarted         Property   static bool HasShutdownStarted {get;}
+Is64BitOperatingSystem     Property   static bool Is64BitOperatingSystem {get;}
+Is64BitProcess             Property   static bool Is64BitProcess {get;}
+IsPrivilegedProcess        Property   static bool IsPrivilegedProcess {get;}
+MachineName                Property   static string MachineName {get;}
+NewLine                    Property   static string NewLine {get;}
+OSVersion                  Property   static System.OperatingSystem OSVersion {get;}
+ProcessId                  Property   static int ProcessId {get;}
+ProcessorCount             Property   static int ProcessorCount {get;}
+ProcessPath                Property   static string ProcessPath {get;}
+StackTrace                 Property   static string StackTrace {get;}
+SystemDirectory            Property   static string SystemDirectory {get;}
+SystemPageSize             Property   static int SystemPageSize {get;}
+TickCount                  Property   static int TickCount {get;}
+TickCount64                Property   static long TickCount64 {get;}
+UserDomainName             Property   static string UserDomainName {get;}
+UserInteractive            Property   static bool UserInteractive {get;}
+UserName                   Property   static string UserName {get;}
+Version                    Property   static version Version {get;}
+WorkingSet                 Property   static long WorkingSet {get;}
+
+fred@BOOK4EDGE  ~ [140G[18:44]
+❯ ]2;C:\Users\freds]9;9;"C:\Users\freds"
+PS># Using static classes and methods
+fred@BOOK4EDGE  ~ [64G[18:48]
+❯ ]2;C:\Users\freds]9;9;"C:\Users\freds"
+PS># https://learn.microsoft.com/en-us/powershell/scripting/samples/using-static-classes-and-methods?view=powershell-7.5
+fred@BOOK4EDGE  ~ [64G[18:49]
+❯ ]2;C:\Users\freds]9;9;"C:\Users\freds"
+PS>cdmystuff
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [64G[18:49]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>lwt
+
+    Directory: C:\Users\freds\OneDrive\PowershellScripts\MyStuff
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+la---          04/01/2025 11:00 PM           1625 BlackJackPlayer.ps1
+la---          04/01/2025 11:00 PM           3609 CompareDirectoriesRem
+                                                  oveItems.ps1
+la---          04/01/2025 11:00 PM            146 anothertest.ps1
+la---          04/01/2025 11:00 PM            151 AppendaBlankLineAndDa
+                                                  teToAFile.ps1
+la---          04/01/2025 11:00 PM           2172 Apply-VirusDefinition
+                                                  .ps1
+la---          04/01/2025 11:00 PM           1131 ArchiveBitFlip.ps1
+la---          04/01/2025 11:00 PM             58 args.ps1
+la---          04/01/2025 11:00 PM           1551 ArrayTesting.ps1
+la---          04/01/2025 11:00 PM            522 Automatic_Variables.p
+                                                  s1
+la---          04/01/2025 11:00 PM          17258 BackItUp copy.ps1
+la---          04/01/2025 11:00 PM          17225 BackItUp.ps1
+la---          04/01/2025 11:00 PM           (21) bea.text
+la---          04/01/2025 11:00 PM           6683 BlackJackDealer.ps1
+la---          04/01/2025 11:00 PM        (13354) BurntToast-Logo.png
+la---          04/01/2025 11:00 PM       (108743) BurntToast.png
+la---          04/01/2025 11:00 PM           2165 All26LettersInThisPhr
+                                                  ase.ps1
+la---          04/01/2025 11:00 PM           2725 BurntToastPreview.ps1
+la---          04/01/2025 11:00 PM            806 ByGroup.ps1
+la---          04/01/2025 11:00 PM           1472 Calculate Total 
+                                                  Folder Size.ps1
+la---          04/01/2025 11:00 PM            690 CalculatedProperty.ps
+                                                  1
+la---          04/01/2025 11:00 PM            362 CallOperator.ps1
+la---          04/01/2025 11:00 PM              0 cards.ps1
+la---          04/01/2025 11:00 PM            679 Casting Convert 
+                                                  Method.ps1
+la---          04/01/2025 11:00 PM            454 Change-ConsoleTitle.p
+                                                  s1
+la---          04/01/2025 11:00 PM            492 ClassDefinition.ps1
+la---          04/01/2025 11:00 PM           1956 CleanPath.ps1
+la---          04/01/2025 11:00 PM            856 cleanup-installedmodu
+                                                  les.ps1
+la---          04/01/2025 11:00 PM           3322 ClearPrintSpooler.ps1
+la---          04/01/2025 11:00 PM            (7) cmdTest.cmd
+la---          04/01/2025 11:00 PM           2108 compareDirectories.ps
+                                                  1
+la---          04/01/2025 11:00 PM           1463 CompareDirectoriesGoo
+                                                  gle.ps1
+la---          04/01/2025 11:00 PM            431 busyStuff.ps1
+la---          04/01/2025 11:00 PM           1754 adoNetSwimV2.ps1
+la---          04/01/2025 11:00 PM          (313) ammonia.pdb
+la---          04/01/2025 11:00 PM            977 add-extension.ps1
+la---          04/01/2025 11:00 PM            (0) _SyncLog.dat
+la---          04/01/2025 11:00 PM           1505 adoNetSwim.ps1
+la---          04/01/2025 11:00 PM          81799 a.ps1
+la---          04/01/2025 11:00 PM           9919 aaaa.ps1
+la---          04/01/2025 11:00 PM           2974 aatest.ps1
+la---          04/01/2025 11:00 PM          (624) aaVScodeStuff.txt
+la---          04/01/2025 11:00 PM           1756 Accelerators - 
+                                                  Copy.ps1
+la---          04/01/2025 11:00 PM           3974 Accelerators.ps1
+la---          04/01/2025 11:00 PM             27 a.Notebook.ps1
+la---          04/01/2025 11:00 PM          13353 AccessChampsEligible 
+                                                  - Copy.ps1
+la---          04/01/2025 11:00 PM          10747 AccessChampsEligible.
+                                                  ps1
+la---          04/01/2025 11:00 PM          14871 AccessChampsEligibleV
+                                                  2.ps1
+la---          04/01/2025 11:00 PM          15161 AccessChampsEligibleV
+                                                  2019-2020.ps1
+la---          04/01/2025 11:00 PM            539 acl.ps1
+la---          04/01/2025 11:00 PM            958 AdapterPatterns.ps1
+la---          04/01/2025 11:00 PM           7675 Access.ps1
+la---          04/01/2025 11:00 PM           2598 DeleteFileToRecycleBi
+                                                  n2.ps1
+la---          04/01/2025 11:00 PM         (1380) DisplayUnicodeCodePoi
+                                                  nts.pl1
+la---          04/01/2025 11:00 PM        (14858) ErrorFromWindowsAdmin
+                                                  .PNG
+la---          04/01/2025 11:00 PM           1053 error-handling.ps1
+la---          04/01/2025 11:00 PM           2711 dmrStuff.ps1
+la---          04/01/2025 11:00 PM            408 enumValues.ps1
+la---          04/01/2025 11:00 PM           3584 DonJohnson.ps1
+la---          04/01/2025 11:00 PM            647 DoQuicken.ps1
+la---          04/01/2025 11:00 PM            217 DougFinkRead-CSV.ps1
+la---          04/01/2025 11:00 PM         (4096) EchoArgs.exe
+la---          04/01/2025 11:00 PM           1451 DrSlonimsNewEmailAddr
+                                                  ess.ps1
+la---          04/01/2025 11:00 PM            793 DrSlonimsNewEmailAddr
+                                                  ess1.ps1
+la---          04/01/2025 11:00 PM           2342 ecobee.ps1
+la---          04/01/2025 11:00 PM            191 ellen.ps1
+la---          04/01/2025 11:00 PM           3694 emojiForBell.ps1
+la---          04/01/2025 11:00 PM           1702 EnableDisableCamera.p
+                                                  s1
+la---          04/01/2025 11:00 PM            917 Enumerate-ObjectPrope
+                                                  rties.ps1
+la---          04/01/2025 11:00 PM           3404 Encrypting.ps1
+la---          04/01/2025 11:00 PM           1876 Enable-PowershellFile
+                                                  Preview.ps1
+la---          04/01/2025 11:00 PM            372 DrivingMeCrazy.ps1
+la---          04/01/2025 11:00 PM           1666 EventLog.ps1
+la---          04/01/2025 11:00 PM            566 EnableScriptBlockLogg
+                                                  ing.ps1
+la---          04/01/2025 11:00 PM            126 example-DoLoop.ps1
+la---          04/01/2025 11:00 PM            655 fredgrapth.ps1
+la---          04/01/2025 11:00 PM            201 fred.ps1
+la---          04/01/2025 11:00 PM            625 Formatting XML 
+                                                  Files.ps1
+la---          04/01/2025 11:00 PM            837 FormatAStringExpressi
+                                                  onMakeMultipleDirecto
+                                                  ries.ps1
+la---          04/01/2025 11:00 PM           1405 ForeGroundBringTo.ps1
+la---          04/01/2025 11:00 PM           1154 Foreground.ps1
+la---          04/01/2025 11:00 PM            386 ForeachObject.ps1
+la---          04/01/2025 11:00 PM            272 ForEachExample.ps1
+la---          04/01/2025 11:00 PM            939 ForEachAgain.ps1
+la---          04/01/2025 11:00 PM           6462 FocusAssistOff.ps1
+la---          04/01/2025 11:00 PM            547 FindingsLinks.ps1
+la---          04/01/2025 11:00 PM            627 findingPowershellName
+                                                  sPipes.ps1
+la---          04/01/2025 11:00 PM            141 FindFilesWithSearchSt
+                                                  ring.ps1
+la---          04/01/2025 11:00 PM            176 FibonacciSequence.ps1
+la---          04/01/2025 11:00 PM           2683 ExportExcelLightningT
+                                                  alkDougFink.ps1
+la---          04/01/2025 11:00 PM            179 DeleteFileToRecycleBi
+                                                  n.ps1
+la---          04/01/2025 11:00 PM            530 Export-excel-Stuff.ps
+                                                  1
+la---          04/01/2025 11:00 PM           1762 Expand-ShortURL.ps1
+la---          04/01/2025 11:00 PM         (2224) Example01_Simple.pdf
+la---          04/01/2025 11:00 PM        (30839) EventMaker.bas
+la---          04/01/2025 11:00 PM            616 DebugThis.ps1
+la---          04/01/2025 11:00 PM           1087 CopyHistoryCommand.ps
+                                                  1
+la---          04/01/2025 11:00 PM           1375 Debugging.ps1
+la---          04/01/2025 11:00 PM            455 ConvertAsciiStringToH
+                                                  ex.ps1
+la---          04/01/2025 11:00 PM        (55500) Comparitech-Powershel
+                                                  l-cheatsheet.pdf
+la---          04/01/2025 11:00 PM           2922 ConvertObjectToHashTa
+                                                  ble.ps1
+la---          04/01/2025 11:00 PM           1203 convertOldDocToNew.ps
+                                                  1
+la---          04/01/2025 11:00 PM            955 CompareQuickenFilesDa
+                                                  tes.ps1
+la---          04/01/2025 11:00 PM            547 CountToInfinity.ps1
+la---          04/01/2025 11:00 PM           4173 cpuTemp.ps1
+la---          04/01/2025 11:00 PM           1495 compareQuickenFiles.p
+                                                  s1
+la---          04/01/2025 11:00 PM            313 Convert-UTCtoLocal.ps
+                                                  1
+la---          04/01/2025 11:00 PM           1026 CreateAPowerShellObje
+                                                  ct.ps1
+la---          04/01/2025 11:00 PM            240 CreateStringArrayWith
+                                                  outQuotes.ps1
+la---          04/01/2025 11:00 PM            869 CsharpExample.ps1
+la---          04/01/2025 11:00 PM             82 debugTest.ps1
+la---          04/01/2025 11:00 PM           1574 DataCrunching.ps1
+la---          04/01/2025 11:00 PM           1750 DataCrunching1.ps1
+la---          04/01/2025 11:00 PM           1741 DataCrunching2.ps1
+la---          04/01/2025 11:00 PM           5108 Dates.ps1
+la---          04/01/2025 11:00 PM         (7027) CreateAPowershellObje
+                                                  ct1.ps
+la---          04/01/2025 11:00 PM           3214 convert-objectToClass
+                                                  .ps1
+la---          04/01/2025 11:00 PM            810 GetHibernationTime.ps
+                                                  1
+la---          04/01/2025 11:00 PM           1816 GmailEmail.ps1
+la---          04/01/2025 11:00 PM           1576 GetWinEvent.ps1
+la---          04/01/2025 11:00 PM           1035 GetClockSpeed.ps1
+la---          04/01/2025 11:00 PM           2222 GMailSenderUseThis.ps
+                                                  1
+la---          04/01/2025 11:00 PM            405 GoodEmailAddress.ps1
+la---          04/01/2025 11:00 PM           1633 justTesting.ps1
+la---          04/01/2025 11:00 PM            148 GetItemLastWriteTime.
+                                                  ps1
+la---          04/01/2025 11:00 PM            709 GetChildItemX.ps1
+la---          04/01/2025 11:00 PM           4757 Get-SpecialFolders.ps
+                                                  1
+la---          04/01/2025 11:00 PM            579 Get-WindowsDriver1.ps
+                                                  1
+la---          04/01/2025 11:00 PM           1560 Get-Weather.ps1
+la---          04/01/2025 11:00 PM            891 Get-Top100Songs.ps1
+la---          04/01/2025 11:00 PM           5263 Get-SystemStartInfo.p
+                                                  s1
+la---          04/01/2025 11:00 PM            880 iTunes.ps1
+la---          04/01/2025 11:00 PM            421 Get-SecondToken.ps1
+la---          04/01/2025 11:00 PM            776 Get-RuntimeInformatio
+                                                  n.ps1
+la---          04/01/2025 11:00 PM           2513 Get-MP3Metadata.ps1
+la---          04/01/2025 11:00 PM             59 Get-module.ps1
+la---          04/01/2025 11:00 PM           5095 Get-InstalledSoftware
+                                                  .ps1
+la---          04/01/2025 11:00 PM            355 Get-WindowsOptionalFe
+                                                  ature.ps1
+la---          04/01/2025 11:00 PM           8175 Is-ProcessElevated.ps
+                                                  1
+la---          04/01/2025 11:00 PM           1714 HowToFindThings.ps1
+la---          04/01/2025 11:00 PM           1877 InvokeChromeWithSearc
+                                                  hString.ps1
+la---          04/01/2025 11:00 PM            545 Handle64.ps1
+la---          04/01/2025 11:00 PM            728 harrietrename.ps1
+la---          04/01/2025 11:00 PM            728 harrietrename1.ps1
+la---          04/01/2025 11:00 PM            425 Get-Giphy.ps1
+la---          04/01/2025 11:00 PM           3917 GuiForPowershell.ps1
+la---          04/01/2025 11:00 PM             29 Hell There.ps1
+la---          04/01/2025 11:00 PM            230 Hello.ps1
+la---          04/01/2025 11:00 PM        (67536) help.txt
+la---          04/01/2025 11:00 PM            508 Groups.ps1
+la---          04/01/2025 11:00 PM            178 ipconfig.ps1
+la---          04/01/2025 11:00 PM            976 HelpComments.ps1
+la---          04/01/2025 11:00 PM        (64218) HighLitePivotTable.ba
+                                                  s
+la---          04/01/2025 11:00 PM            262 HostUiPrompt.ps1
+la---          04/01/2025 11:00 PM            360 hplus.ps1
+la---          04/01/2025 11:00 PM            112 Import-html.ps1
+la---          04/01/2025 11:00 PM           1610 ImportExcel.ps1
+la---          04/01/2025 11:00 PM           1925 ImportExcelPivotTable
+                                                  s.ps1
+la---          04/01/2025 11:00 PM           5108 IndexSearch.ps1
+la---          04/01/2025 11:00 PM            216 InstallFeedbackHubApp
+                                                  .ps1
+la---          04/01/2025 11:00 PM           5016 Invoke-MSTerminalGif.
+                                                  ps1
+la---          04/01/2025 11:00 PM           2040 hereStringsToHash.ps1
+la---          04/01/2025 11:00 PM           1777 Get-Geo.ps1
+la---          04/01/2025 11:00 PM            556 GetRecycleBin.ps1
+la---          04/01/2025 11:00 PM           8872 Get-FileInformation.p
+                                                  s1
+la---          04/01/2025 11:00 PM           1036 functionVariables.ps1
+la---          04/01/2025 11:00 PM            562 get-activePowerPlanSe
+                                                  ttingsPwrCfg.ps1
+la---          04/01/2025 11:00 PM           3751 Get-AgeAndGender.ps1
+la---          04/01/2025 11:00 PM            280 get-args.ps1
+la---          04/01/2025 11:00 PM           1842 Get-FolderSize.ps1
+la---          04/01/2025 11:00 PM           5455 Get-Constructor.ps1
+la---          04/01/2025 11:00 PM            985 Get-DesktopShortcuts.
+                                                  ps1
+la---          04/01/2025 11:00 PM           2326 Get-Direction.ps1
+la---          04/01/2025 11:00 PM            792 Get-ComputerInfo.ps1
+la---          04/01/2025 11:00 PM           3099 Get-DiskUsage.ps1
+la---          04/01/2025 11:00 PM           5256 Get-Emotion.ps1
+la---          04/01/2025 11:00 PM            273 Get-ErrorPlay.ps1
+la---          04/01/2025 11:00 PM           4940 Get-EventLog.ps1
+la---          04/01/2025 11:00 PM            700 Get-DirectoryFileSize
+                                                  .ps1
+la---          04/01/2025 11:00 PM            466 FredsStuff.psm1
+la---          04/01/2025 11:00 PM           1158 port-scan.ps1
+la---          04/01/2025 11:00 PM           1978 play-Piano.ps1
+la---          04/01/2025 11:00 PM        (12657) PivotObjectText.txt
+la---          04/01/2025 11:00 PM            773 PivotObject.ps1
+la---          04/01/2025 11:00 PM           1529 Playground.ps1
+la---          04/01/2025 11:00 PM           (43) MyStuff.code-workspac
+                                                  e
+la---          04/01/2025 11:00 PM            345 MyInvocationAlternati
+                                                  ves.ps1
+la---          04/01/2025 11:00 PM           3585 playground1.ps1
+la---          04/01/2025 11:00 PM          (138) pingme.txt
+la---          04/01/2025 11:00 PM            366 PlayTime.ps1
+la---          04/01/2025 11:00 PM            (0) MsAccess
+la---          04/01/2025 11:00 PM            344 MultipleFiles.ps1
+la---          04/01/2025 11:00 PM      (4219076) powershell_for_newbie
+                                                  s_getting_started_pow
+                                                  ershell4.pdf
+la---          04/01/2025 11:00 PM           1361 powershell5.7Performa
+                                                  nce.ps1
+la---          04/01/2025 11:00 PM           1105 PesterStuffDougFink.p
+                                                  s1
+la---          04/01/2025 11:00 PM           2064 MoveFileToRecycleBinX
+                                                  .ps1
+la---          04/01/2025 11:00 PM          (678) Module1.bas
+la---          04/01/2025 11:00 PM            337 MicrosoftUpdate.ps1
+la---          04/01/2025 11:00 PM           1332 MicrosoftSpectrePatch
+                                                  Compatibility.ps1
+la---          04/01/2025 11:00 PM           1069 Menu.ps1
+la---          04/01/2025 11:00 PM           1095 MeltdownSpectre.ps1
+la---          04/01/2025 11:00 PM             80 Powercfg.ps1
+la---          04/01/2025 11:00 PM           1309 PesterStuff.Tests.ps1
+la---          04/01/2025 11:00 PM            359 OutlookGetSenderEmail
+                                                  Addresses.ps1
+la---          04/01/2025 11:00 PM           2040 PathRemoveDupfromPATH
+                                                  .ps1
+la---          04/01/2025 11:00 PM            733 Object.New-object_PsO
+                                                  bject.ps1
+la---          04/01/2025 11:00 PM            408 newProcess.ps1
+la---          04/01/2025 11:00 PM            475 NewObjectCreatingColl
+                                                  ection.ps1
+la---          04/01/2025 11:00 PM           7027 ObjectCreatingCustomO
+                                                  bject.ps1
+la---          04/01/2025 11:00 PM           1469 ObjectCreatingCustomO
+                                                  bjectA.ps1
+la---          04/01/2025 11:00 PM            767 NewObject.ps1
+la---          04/01/2025 11:00 PM        (21481) New-WPFMessageBox.txt
+la---          04/01/2025 11:00 PM          25394 New-WPFMessageBox.ps1
+la---          04/01/2025 11:00 PM            360 NetworkAdaptersActive
+                                                  .ps1
+la---          04/01/2025 11:00 PM           2164 ObjectCreatingCustomO
+                                                  bjectB.ps1
+la---          04/01/2025 11:00 PM           1194 PesterStuff.ps1
+la---          04/01/2025 11:00 PM           2318 ObjectMagic.ps1
+la---          04/01/2025 11:00 PM            724 ObjectObject.ps1
+la---          04/01/2025 11:00 PM            196 MD380.ps1
+la---          04/01/2025 11:00 PM           3631 OneDrive.ps1
+la---          04/01/2025 11:00 PM            465 OneLiner.ps1
+la---          04/01/2025 11:00 PM            381 OpenAiStuffDougFink.p
+                                                  s1
+la---          04/01/2025 11:00 PM            556 param.ps1
+la---          04/01/2025 11:00 PM            455 Parameters.ps1
+la---          04/01/2025 11:00 PM            624 ParameterSwitch.ps1
+la---          04/01/2025 11:00 PM            828 NameItScript.ps1
+la---          04/01/2025 11:00 PM            314 parsing text based 
+                                                  log files.ps1
+la---          04/01/2025 11:00 PM            320 netStatStuff.ps1
+la---          04/01/2025 11:00 PM          15529 ManagementTools.psm1
+la---          04/01/2025 11:00 PM       (263807) keyboard-shortcuts-wi
+                                                  ndows.pdf
+la---          04/01/2025 11:00 PM           1818 MakeQuickenDeltaZip.p
+                                                  s1
+la---          04/01/2025 11:00 PM            218 ListOutlooksFolders.p
+                                                  s1
+la---          04/01/2025 11:00 PM           1840 Logger.ps1
+la---          04/01/2025 11:00 PM           2330 MakeXmalForm.ps1
+la---          04/01/2025 11:00 PM           3667 MagicOracle.ps1
+la---          04/01/2025 11:00 PM           1187 MakeAsHortCut.ps1
+la---          04/01/2025 11:00 PM           1724 logging.ps1
+la---          04/01/2025 11:00 PM           4523 RenameFiles.ps1
+la---          04/01/2025 11:00 PM           1235 Remove-PSReadLineHist
+                                                  oryEntry.ps1
+la---          04/01/2025 11:00 PM           1732 remote.ps1
+la---          04/01/2025 11:00 PM           2501 regexStuff.ps1
+la---          04/01/2025 11:00 PM           1978 regex.ps1
+la---          04/01/2025 11:00 PM            411 RecycleBinStuff.ps1
+la---          04/01/2025 11:00 PM            867 recurse.ps1
+la---          04/01/2025 11:00 PM           2727 RebootDetection.ps1
+la---          04/01/2025 11:00 PM           (54) ReadmeVisualStudioCod
+                                                  e.txt
+la---          04/01/2025 11:00 PM         (2435) ReadmeNOTES.txt
+la---          04/01/2025 11:00 PM           (19) ReadMe2.txt
+la---          04/01/2025 11:00 PM           (23) ReadMe.txt
+la---          04/01/2025 11:00 PM            409 resolveError.ps1
+la---          04/01/2025 11:00 PM           1504 PSWritePDF-examples.p
+                                                  s1
+la---          04/01/2025 11:00 PM            368 psReadmeFix.ps1
+la---          04/01/2025 11:00 PM          (901) PsReadLineStuff.txt
+la---          04/01/2025 11:00 PM            519 PSModulePath.ps1
+la---          04/01/2025 11:00 PM             72 PSDefaultParameterVal
+                                                  ues.ps1
+la---          04/01/2025 11:00 PM           1404 PS_SearchNet.ps1
+la---          04/01/2025 11:00 PM             66 prompt.ps1
+la---          04/01/2025 11:00 PM           1152 ProfileVariableInHash
+                                                  Table.ps1
+la---          04/01/2025 11:00 PM           1879 ProfileThings.ps1
+la---          04/01/2025 11:00 PM           1509 QueueRecursion.ps1
+la---          04/01/2025 11:00 PM            802 restorelog.ps1
+la---          04/01/2025 11:00 PM           2009 runFanContinuously.ps
+                                                  1
+la---          04/01/2025 11:00 PM            639 ReverseAfile.ps1
+la---          04/01/2025 11:00 PM       (262914) snake.six
+la---          04/01/2025 11:00 PM            533 showMap.ps1
+la---          04/01/2025 11:00 PM            289 showdeletetempfiles.p
+                                                  s1
+la---          04/01/2025 11:00 PM           9714 show-object.ps1
+la---          04/01/2025 11:00 PM           4191 Show-Graph.ps1
+la---          04/01/2025 11:00 PM           1953 SendMorse.ps1
+la---          04/01/2025 11:00 PM            645 SendMailViaGmail.ps1
+la---          04/01/2025 11:00 PM            118 Send-WebContent.ps1
+la---          04/01/2025 11:00 PM           1665 Send-SimpleNotificati
+                                                  on.ps1
+la---          04/01/2025 11:00 PM           1327 send-mail1.ps1
+la---          04/01/2025 11:00 PM          21604 send-mail.ps1
+la---          04/01/2025 11:00 PM            357 Security.ps1
+la---          04/01/2025 11:00 PM            285 SearchNetExample.ps1
+la---          04/01/2025 11:00 PM           6261 Search-EventLog1.ps1
+la---          04/01/2025 11:00 PM           6380 Search-EventLog.ps1
+la---          04/01/2025 11:00 PM           5947 scrapeJohnHopkins.ps1
+la---          04/01/2025 11:00 PM           1914 scrapeFacebookSussex.
+                                                  ps1
+la---          04/01/2025 11:00 PM           1913 scrapeArrow.ps1
+la---          04/01/2025 11:00 PM            810 ScanOpenPorts.ps1
+la---          04/01/2025 11:00 PM          26204 SamplePSReadLineProfi
+                                                  leOriginal.ps1
+la---          04/01/2025 11:00 PM          27263 SamplePSReadLineProfi
+                                                  le.ps1
+la---          04/01/2025 11:00 PM            943 runFanContinuouslyB.p
+                                                  s1
+la---          04/01/2025 11:00 PM          13381 profilehold.ps1
+la---          04/01/2025 11:00 PM           1385 RestWebServices.ps1
+la---          04/01/2025 11:00 PM          13371 Profile.ps1
+la---          04/01/2025 11:00 PM            290 QIF.ps1
+la---          04/01/2025 11:00 PM           1357 ProcessorArchitecture
+                                                  .ps1
+la---          04/01/2025 11:00 PM            935 PresidentsOfTheUS.ps1
+la---          04/01/2025 11:00 PM            935 PresidentsOfTheUS 
+                                                  copy.ps1
+la---          04/01/2025 11:00 PM           1935 powershellThings.ps1
+la---          04/01/2025 11:00 PM            604 PowershellForSpeed.ps
+                                                  1
+la---          04/01/2025 11:00 PM          (163) test.cs
+la---          04/01/2025 11:00 PM          (163) test.css
+la---          04/01/2025 11:00 PM            478 test.ps1
+la---          04/01/2025 11:00 PM           4490 Suspend-Process.ps1
+la---          04/01/2025 11:00 PM           1555 sussexZoom.ps1
+la---          04/01/2025 11:00 PM            137 SwimClub.ps1
+la---          04/01/2025 11:00 PM        (20786) test.txt
+la---          04/01/2025 11:00 PM            866 TestConnection.ps1
+la---          04/01/2025 11:00 PM           1661 sqlSample.ps1
+la---          04/01/2025 11:00 PM            315 test-terminal.ps1
+la---          04/01/2025 11:00 PM             41 TestMe.ps1
+la---          04/01/2025 11:00 PM          13894 test-connection1.ps1
+la---          04/01/2025 11:00 PM            947 TestScript.ps1
+la---          04/01/2025 11:00 PM           1181 testtest.ps1
+la---          04/01/2025 11:00 PM           2518 testtesttest.ps1
+la---          04/01/2025 11:00 PM           (61) test1.txt
+la---          04/01/2025 11:00 PM            659 Strings.ps1
+la---          04/01/2025 11:00 PM           5783 StockQuote.ps1
+la---          04/01/2025 11:00 PM           2508 Stockquote2.ps1
+la---          04/01/2025 11:00 PM           1001 sqliteDemo.ps1
+la---          04/01/2025 11:00 PM            252 SplatStuff.ps1
+la---          04/01/2025 11:00 PM           1694 SplatAboutSplatting.p
+                                                  s1
+la---          04/01/2025 11:00 PM           3594 SpeedtestDeprecated.p
+                                                  s1
+la---          04/01/2025 11:00 PM           4078 speedtest.ps1
+la---          04/01/2025 11:00 PM            404 SpeakTest.ps1
+la---          04/01/2025 11:00 PM            861 SpeakNew.ps1
+la---          04/01/2025 11:00 PM             63 streamreader.ps1
+la---          04/01/2025 11:00 PM          10163 SpeakEvent.ps1
+la---          04/01/2025 11:00 PM            445 startTransactionTest.
+                                                  ps1
+la---          04/01/2025 11:00 PM           1442 SpeakClip1.ps1
+la---          04/01/2025 11:00 PM          (539) speakclip.txt
+la---          04/01/2025 11:00 PM           1719 SpeakClip.ps1
+la---          04/01/2025 11:00 PM        (16959) SomeRangeThings.xlsm
+la---          04/01/2025 11:00 PM           1258 test-prime.ps1
+la---          04/01/2025 11:00 PM            184 test-conn.ps1
+la---          04/01/2025 11:00 PM            957 SpeakClipBoard1.ps1
+la---          04/01/2025 11:00 PM             60 testtoday.ps1
+la---          04/01/2025 11:00 PM            160 TestWithVisualStudioC
+                                                  ode.ps1
+la---          04/01/2025 11:00 PM           3080 temp.ps1
+la---          04/01/2025 11:00 PM            439 TemporaryFileName.ps1
+la---          04/01/2025 11:00 PM           1944 TeeGridView.ps1
+la---          04/01/2025 11:00 PM           2416 TAXfiles1.ps1
+la---          04/01/2025 11:00 PM           2391 TAXfiles.ps1
+la---          04/01/2025 11:00 PM            205 TestWithC.ps1
+la---          04/01/2025 11:00 PM            258 SymbolicLinks.ps1
+la---          04/01/2025 11:00 PM           1866 SwitchSessionEvent.ps
+                                                  1
+la---          04/01/2025 11:00 PM           1535 SwitchBatch.ps1
+la---          04/01/2025 11:00 PM            609 Untitled2.ps1
+la---          04/01/2025 11:00 PM            134 start-log.ps1
+la---          04/01/2025 11:00 PM            365 Untitled1.ps1
+la---          04/01/2025 11:00 PM           2859 Things.ps1
+la---          04/01/2025 11:00 PM            333 Untitled.ps1
+la---          04/01/2025 11:00 PM           1872 Tempx.ps1
+la---          04/01/2025 11:00 PM            625 Untitled-1.ps1
+la---          04/01/2025 11:00 PM           1878 TryCatchStuff.ps1
+la---          04/01/2025 11:00 PM           1509 TryCatch.ps1
+la---          04/01/2025 11:00 PM            299 TranscriptTest.ps1
+la---          04/01/2025 11:00 PM            303 Switch.ps1
+la---          04/01/2025 11:00 PM           3239 top.ps1
+la---          04/01/2025 11:00 PM              0 wt.ps1
+la---          04/01/2025 11:00 PM            351 WriteProgress.ps1
+la---          04/01/2025 11:00 PM           2353 write-pixel.ps1
+la---          04/01/2025 11:00 PM          14337 WPF-ControlExplorer.p
+                                                  s1
+la---          04/01/2025 11:00 PM            275 WordAutomation.ps1
+la---          04/01/2025 11:00 PM           3373 WindowsSearch.ps1
+la---          04/01/2025 11:00 PM            697 whereis.ps1
+la---          04/01/2025 11:00 PM          11999 WIndows10Notification
+                                                  s.ps1
+la---          04/01/2025 11:00 PM            645 Win32_powerplan.ps1
+la---          04/01/2025 11:00 PM          (303) WhatDidIWorkOnThisWee
+                                                  k.txt
+la---          04/01/2025 11:00 PM          (153) WebStuff.Txt
+la---          04/01/2025 11:00 PM           1019 WaitAndFocus.ps1
+la---          04/01/2025 11:00 PM           2353 VolumeControl.ps1
+la---          04/01/2025 11:00 PM           3112 VisualBasicPrompts.ps
+                                                  1
+la---          04/01/2025 11:00 PM          (561) Use reflection to
+                                                  access the Type.txt
+la---          04/01/2025 11:00 PM           3148 WIndowsForms.ps1
+la---          04/01/2025 11:00 PM            113 VSCodeTest.ps1
+la---          04/01/2025 11:00 PM           1593 ZoneId.ps1
+la---          04/01/2025 11:00 PM            232 xStart-transcript.ps1
+lar--          04/01/2025 11:01 PM                .vscodeHold
+lar--          04/01/2025 11:01 PM                TestFolder
+lar--          04/01/2025 11:01 PM                PStest
+lar--          04/01/2025 11:01 PM                Inet
+lar--          04/01/2025 11:01 PM                Config
+lar--          04/01/2025 11:01 PM                speedtest
+la---          04/02/2025 11:00 PM            897 ExampleBeginBblock.ps
+                                                  1
+la---          04/02/2025 11:57 PM           1669 get-parent.ps1
+la---          04/08/2025  3:58 AM         (8646) AclFile
+la---          04/18/2025  2:02 AM           4732 compare.ps1
+lar--          05/03/2025  6:04 PM                .vscode copy
+lar--          05/03/2025  6:04 PM                CoPilotDialogs
+lar--          05/03/2025  6:04 PM                Data
+lar--          05/03/2025  6:04 PM                GPUCache
+lar--          05/03/2025  6:04 PM                JNoteBooks
+lar--          05/03/2025  6:04 PM                MarkDown
+la---          05/06/2025 12:00 PM            772 cveDetection.ps1
+la---          05/17/2025  2:36 AM         (6175) UsingAppxPackageToRem
+                                                  oveInstallSnippingToo
+                                                  l.txt
+lar--          05/24/2025  8:41 PM                packages
+la---          05/24/2025  9:41 PM           1655 showNotification1.ps1
+la---          05/24/2025  9:50 PM           4154 showNotification.ps1
+la---          05/24/2025 10:51 PM           2128 showNotification2.ps1
+la---          06/14/2025  1:59 PM        (35918) servicesmj1.txt
+la---          06/14/2025  1:59 PM        (35918) services.txt
+la---          06/14/2025  1:59 PM        (35918) servicesmj.txt
+la---          06/16/2025  1:16 AM           2160 ReadyForRecall.ps1
+la---          06/18/2025 12:17 AM           3391 remoteMJ.ps1
+la---          06/18/2025  1:07 AM          (642) ToastNotification
+la---          07/02/2025  8:44 PM            421 WinUI3.demo.ps1
+la---          07/04/2025 12:23 PM           3092 WinUiShell.ps1
+la---          07/04/2025  5:09 PM            950 procmon.ps1
+la---          07/08/2025  8:28 PM           3318 register-wmiEvent.ps1
+la---          07/18/2025 12:10 AM           1028 FullDISMandSFCrepair.
+                                                  ps1
+la---          07/24/2025 11:28 PM           3007 Helper.ps1
+la---          07/25/2025 10:49 PM           4091 registry.ps1
+la---          08/05/2025  2:51 AM           4078 BurntToast1.ps1
+la---          08/05/2025  1:04 PM           1182 quickenUIautomation.p
+                                                  s1
+la---          08/08/2025  3:01 AM           6756 IsAppNative.ps1
+la---          08/08/2025 11:50 PM           1103 normalize-BackupNames
+                                                  .ps1
+la---          08/19/2025 12:37 AM            506 recallMess.ps1
+la---          08/21/2025 12:29 PM          25843 LoadQuickenDb.ps1
+la---          08/22/2025 12:02 AM           1520 GPUaudit.ps1
+la---          08/29/2025  9:48 PM            263 FredTest.ps1
+la---          09/17/2025 11:31 PM           4051 SpeakClipBoard.ps1
+la---          09/19/2025  2:09 PM           2307 Get-AudioLatencyAudit
+                                                  .ps1
+la---          09/21/2025  1:00 AM            779 DadJoke.ps1
+la---          09/21/2025  8:32 PM           6058 whois1.ps1
+la---          09/21/2025  9:06 PM            810 TestM365DesktopApps.p
+                                                  s1
+la---          09/21/2025  9:19 PM           1219 reRegisterOfficeDeskT
+                                                  opApps.ps1
+la---          09/26/2025  9:33 PM           1475 new.ps1
+la---          09/26/2025 10:17 PM           1355 cmdlet-binding.ps1
+la---          10/03/2025 12:56 AM           1080 WhoIsCommunicating.ps
+                                                  1
+la---          10/07/2025  5:53 PM            637 Out-CurrentFile.ps1
+la---          10/08/2025 12:41 AM           1223 invoke-expression.Out
+                                                  -consoleview.ps1
+la---          10/09/2025 10:39 PM           2349 Get-CanonicalPath.ps1
+la---          10/09/2025 11:17 PM           1437 AbstractSyntaxTree.ps
+                                                  1
+la---          10/10/2025  2:39 PM           1456 invoke-magicFunctions
+                                                  .ps1
+la---          10/12/2025 12:12 AM           1490 Get-libraryFolders.ps
+                                                  1
+la---          10/12/2025  1:57 AM         122664 PowershellThings.2025
+                                                  -10-12.log
+la---          10/14/2025 11:44 PM            159 Create-ProfileTable.p
+                                                  s1
+lar--          10/16/2025 12:29 AM                .vscode
+la---          10/16/2025 11:20 PM           5010 Shut-MeDown.ps1
+la---          10/21/2025 12:26 AM           1421 Compare-ObjectDeepDiv
+                                                  e.ps1
+la---          10/21/2025 12:30 AM           4021 get-factorial.ps1
+la---          10/21/2025  1:59 AM           1159 Convert-StringToArray
+                                                  .ps1
+la---          10/25/2025  1:51 AM           2829 GetParentProcessV2.ps
+                                                  1
+la---          10/25/2025  1:54 AM           5358 GetParentProcessV1.ps
+                                                  1
+la---          10/25/2025  1:59 AM           1808 getParentProcess.ps1
+-a---          10/31/2025  6:49 PM           5972 Transcript.2025-10-31
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [64G[18:49]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>notepad .\Transcript.2025-10-31
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [64G[18:49]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[System.Environment]::HasShutdownStarted
+False
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [64G[18:50]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[System.Math] | Get-Member -Static -MemberType Methods
+
+   TypeName: System.Math
+
+Name                   MemberType Definition
+----                   ---------- ----------
+Abs                    Method     static short Abs(short value), stati…
+Acos                   Method     static double Acos(double d)
+Acosh                  Method     static double Acosh(double d)
+Asin                   Method     static double Asin(double d)
+Asinh                  Method     static double Asinh(double d)
+Atan                   Method     static double Atan(double d)
+Atan2                  Method     static double Atan2(double y, double…
+Atanh                  Method     static double Atanh(double d)
+BigMul                 Method     static ulong BigMul(uint a, uint b),…
+BitDecrement           Method     static double BitDecrement(double x)
+BitIncrement           Method     static double BitIncrement(double x)
+Cbrt                   Method     static double Cbrt(double d)
+Ceiling                Method     static double Ceiling(double a), sta…
+Clamp                  Method     static byte Clamp(byte value, byte m…
+CopySign               Method     static double CopySign(double x, dou…
+Cos                    Method     static double Cos(double d)
+Cosh                   Method     static double Cosh(double value)
+DivRem                 Method     static int DivRem(int a, int b, [ref…
+Equals                 Method     static bool Equals(System.Object obj…
+Exp                    Method     static double Exp(double d)
+Floor                  Method     static double Floor(double d), stati…
+FusedMultiplyAdd       Method     static double FusedMultiplyAdd(doubl…
+IEEERemainder          Method     static double IEEERemainder(double x…
+ILogB                  Method     static int ILogB(double x)
+Log                    Method     static double Log(double d), static …
+Log10                  Method     static double Log10(double d)
+Log2                   Method     static double Log2(double x)
+Max                    Method     static byte Max(byte val1, byte val2…
+MaxMagnitude           Method     static double MaxMagnitude(double x,…
+Min                    Method     static byte Min(byte val1, byte val2…
+MinMagnitude           Method     static double MinMagnitude(double x,…
+Pow                    Method     static double Pow(double x, double y)
+ReciprocalEstimate     Method     static double ReciprocalEstimate(dou…
+ReciprocalSqrtEstimate Method     static double ReciprocalSqrtEstimate…
+ReferenceEquals        Method     static bool ReferenceEquals(System.O…
+Round                  Method     static decimal Round(decimal d), sta…
+ScaleB                 Method     static double ScaleB(double x, int n)
+Sign                   Method     static int Sign(decimal value), stat…
+Sin                    Method     static double Sin(double a)
+SinCos                 Method     static System.ValueTuple[double,doub…
+Sinh                   Method     static double Sinh(double value)
+Sqrt                   Method     static double Sqrt(double d)
+Tan                    Method     static double Tan(double a)
+Tanh                   Method     static double Tanh(double value)
+Truncate               Method     static decimal Truncate(decimal d), …
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [64G[18:51]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[System.Math] | Get-Member -Static
+
+   TypeName: System.Math
+
+Name                   MemberType Definition
+----                   ---------- ----------
+Abs                    Method     static short Abs(short value), stati…
+Acos                   Method     static double Acos(double d)
+Acosh                  Method     static double Acosh(double d)
+Asin                   Method     static double Asin(double d)
+Asinh                  Method     static double Asinh(double d)
+Atan                   Method     static double Atan(double d)
+Atan2                  Method     static double Atan2(double y, double…
+Atanh                  Method     static double Atanh(double d)
+BigMul                 Method     static ulong BigMul(uint a, uint b),…
+BitDecrement           Method     static double BitDecrement(double x)
+BitIncrement           Method     static double BitIncrement(double x)
+Cbrt                   Method     static double Cbrt(double d)
+Ceiling                Method     static double Ceiling(double a), sta…
+Clamp                  Method     static byte Clamp(byte value, byte m…
+CopySign               Method     static double CopySign(double x, dou…
+Cos                    Method     static double Cos(double d)
+Cosh                   Method     static double Cosh(double value)
+DivRem                 Method     static int DivRem(int a, int b, [ref…
+Equals                 Method     static bool Equals(System.Object obj…
+Exp                    Method     static double Exp(double d)
+Floor                  Method     static double Floor(double d), stati…
+FusedMultiplyAdd       Method     static double FusedMultiplyAdd(doubl…
+IEEERemainder          Method     static double IEEERemainder(double x…
+ILogB                  Method     static int ILogB(double x)
+Log                    Method     static double Log(double d), static …
+Log10                  Method     static double Log10(double d)
+Log2                   Method     static double Log2(double x)
+Max                    Method     static byte Max(byte val1, byte val2…
+MaxMagnitude           Method     static double MaxMagnitude(double x,…
+Min                    Method     static byte Min(byte val1, byte val2…
+MinMagnitude           Method     static double MinMagnitude(double x,…
+Pow                    Method     static double Pow(double x, double y)
+ReciprocalEstimate     Method     static double ReciprocalEstimate(dou…
+ReciprocalSqrtEstimate Method     static double ReciprocalSqrtEstimate…
+ReferenceEquals        Method     static bool ReferenceEquals(System.O…
+Round                  Method     static decimal Round(decimal d), sta…
+ScaleB                 Method     static double ScaleB(double x, int n)
+Sign                   Method     static int Sign(decimal value), stat…
+Sin                    Method     static double Sin(double a)
+SinCos                 Method     static System.ValueTuple[double,doub…
+Sinh                   Method     static double Sinh(double value)
+Sqrt                   Method     static double Sqrt(double d)
+Tan                    Method     static double Tan(double a)
+Tanh                   Method     static double Tanh(double value)
+Truncate               Method     static decimal Truncate(decimal d), …
+E                      Property   static double E {get;}
+PI                     Property   static double PI {get;}
+Tau                    Property   static double Tau {get;}
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [64G[18:52]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[math]::pi
+3.14159265358979
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [64G[18:52]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[math]::E
+2.71828182845905
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [64G[18:52]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[math]::Tau
+6.28318530717959
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [64G[18:52]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[math]::pi * 2
+6.28318530717959
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [64G[18:55]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[math]::pow([math]::E,[math]::tau)
+535.491655524764
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [64G[19:01]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[math]::pow(10,2)
+100
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [64G[19:01]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[math]::pow([math]::E,[math]::tau)
+535.491655524764
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [64G[19:05]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>fjeditfred
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [64G[19:06]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[math]::pow([math]::E,[math]::tau)
+535.491655524764
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [64G[19:06]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>editprofile
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[19:14]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>history
+
+  Id     Duration CommandLine
+  --     -------- -----------
+   1        0.096 fjquicken -noexit
+   2        0.000 [math]:factorial(6)
+   3        0.027 [math]::factorial(6)
+   4        0.010 [math]::factorial(6)
+   5        0.032 [math]|gm
+   6        0.047 System.Environment] | Get-Member -Static
+   7        0.000 []System.Environment] | Get-Member -Static
+   8        0.017 [system.Environment] | Get-Member -Static
+   9        0.018 [system.math] | Get-Member -Static
+  10        0.013 [system.math]::ReciprocalEstimate(100)
+  11        0.010 [System.Environment]::CommandLine
+  12        0.014 [System.Environment]::OSVersion
+  13        0.011 [System.Environment]::OSVersion.tostring()
+  14        1.143 start-transcript -path $env:userprofile\mystuff
+  15        0.013 start-transcript -path C:\Users\freds\mystuff\Transcript.2025-10-31
+  16        0.002 [System.Environment]::OSVersion
+  17        0.002 [System.Environment]::OSVersion.tostring()
+  18        0.001 [System.Environment]::CommandLine
+  19        0.050 System.Environment] | Get-Member -Static
+  20        0.016 [System.Environment] | Get-Member -Static
+  21        0.010 # Using static classes and methods
+  22        0.011 # https://learn.microsoft.com/en-us/powershell/scripting/samples/using-static-classes-and-methods?view=powershell-7.5
+  23        0.010 cdmystuff
+  24        0.102 lwt
+  25        0.055 notepad .\Transcript.2025-10-31
+  26        0.010 [System.Environment]::HasShutdownStarted
+  27        0.015 [System.Math] | Get-Member -Static -MemberType Methods
+  28        0.016 [System.Math] | Get-Member -Static
+  29        0.010 [math]::pi
+  30        0.012 [math]::E
+  31        0.010 [math]::Tau
+  32        0.013 [math]::pi * 2
+  33        0.015 [math]::pow([math]::E,[math]::tau)
+  34        0.013 [math]::pow(10,2)
+  35        0.001 [math]::pow([math]::E,[math]::tau)
+  36        1.417 fjeditfred
+  37        0.001 [math]::pow([math]::E,[math]::tau)
+  38        1.192 editprofile
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[19:16]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>editprofile
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[19:31]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>clcs
+clcs: The term 'clcs' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+clcs: The term 'clcs' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+⨯ fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[19:34]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>cls
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[19:34]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>. $PROFILE.CurrentUserAllHosts
+
+Friday, October 31, 2025 7:34:33 PM
+$PSHOME is C:\Program Files\PowerShell\7-preview
+pwsh version 7.6.0-preview.5 ✅
+$MyInvocation.MyCommand.Name is [profile.ps1]
+$MyInvocation.MyCommand.Path is [C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1]
+
+Global automatic variables that even work inside sub-functions unlike $MyInvocation.MyCommand.Path:
+$PSCommandpath is [C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1)]
+$PSScriptRoot is [C:\Users\freds\OneDrive\Documents\PowerShell]
+[System.Environment]::CommandLine = "C:\Program Files\PowerShell\7-preview\pwsh.dll"
+Sourcing [profile.ps1]
+WARNING: In function [fjWhichProfileIsThis]
+WARNING: 
+->Start of profile 
+[CurrentUserAllHosts]
+[C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1]
+# Version::2025-10-31 added $string = "{0} = {1}" -f "[System.Environment]::CommandLine",[System.Environment]::CommandLine
+# Version::2025-10-23 write-host "pwsh version $($psversiontable.GitCommitId)" ✅. Refactor Which profile is this.
+PROCESSOR_ARCHITECTURE is ARM64
+Is 64 bit OS
+Is 64 bit process
+Running Pwsh
+Running in Windows Terminal
+WARNING: Exiting function [fjWhichProfileIsThis]
+Define $Env:HOME if not already defined
+WARNING: In function fjShowAreProfilesInSync
+	Comparing LOCAL and REPOsitory versions of the variable $profile.CurrentUserAllHosts
+	LOCAL PROFILE: last update 10/31/2025 19:34:11 Path is C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1
+# Version::2025-10-31 added $string = "{0} = {1}" -f "[System.Environment]::CommandLine",[System.Environment]::CommandLine
+# Version::2025-10-23 write-host "pwsh version $($psversiontable.GitCommitId)" ✅. Refactor Which profile is this.
+	REPO  PROFILE: last update 10/25/2025 01:20:23 Path is C:\Users\freds\Dropbox\Private\Powershell\Profiles\CurrentUser\Profile.ps1
+# Version::2025-10-23 write-host "pwsh version $($psversiontable.GitCommitId)" ✅. Refactor Which profile is this.
+# Version::2025-10-14 Function fjnewEdit {start-process conhost.exe -ArgumentList edit.exe}
+WARNING: Exiting function fjShowAreProfilesInSync
+
+
+
+DisplayName       : fjgpp -> getparentprocessV2.ps1
+CommandType       : Alias
+Definition        : C:\Users\freds\OneDrive\PowershellScripts\mystuff\getparentprocessV2.ps1
+ReferencedCommand : getparentprocessV2.ps1
+ResolvedCommand   : getparentprocessV2.ps1
+
+
+        Scope ExecutionPolicy
+        ----- ---------------
+MachinePolicy       Undefined
+   UserPolicy       Undefined
+      Process       Undefined
+  CurrentUser    RemoteSigned
+ LocalMachine    RemoteSigned
+
+*** Define function for prompt
+imports
+WARNING: PSReadLine Version  2.4.4 
+WARNING:  ***PSReadLine Predictive Source: 'HistoryAndPlugin' set by default. Toggle view with F2
+WARNING: Source SamplePSReadLineProfile.ps1
+*** Version::2021-02-21
+WARNING: [10/31/2025 19:34:49] Return from function profile.ps1:
+Try Windows Admin Center localhost:6516
+https://docs.microsoft.com/en-us/windows-server/manage/windows-admin-center/overview#introduction
+Playground follows
+Fred-Arthur Jacobowitz
+Fred-Arthur Jacobowitz
+WARNING: In function fjAreWeElevated:2020-11-13
+Exiting function fjAreWeElevated
+WARNING: ***  Not Elevated  ***
+WARNING: Mozilla VPN not installed
+WARNING: In function PopBurntToast:
+$PSHOME is C:\Program Files\PowerShell\7-preview
+***The process path is 'C:\Program Files\PowerShell\7-preview\pwsh.exe'
+***The parent path is 'C:\Program Files\WindowsApps\Microsoft.WindowsTerminalPreview_1.24.2812.0_arm64__8wekyb3d8bbwe\WindowsTerminal.exe'
+[PWSH Core 7.6.0-preview.5]
+[Parent: WindowsTerminal]
+[PSReadline: 2.4.4]
+[Online]
+[Not Elevated]
+WARNING: Leaving function PopBurntToast:
+WARNING: In function fjDoFred:
+VERBOSE: [19:34:49.9726207 BEGIN  ] Starting: fjDoFred
+WARNING: Executing C:\Users\freds\OneDrive\Documents\PowerShell\freds.ps1
+WARNING: Called by:: C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1 
+Calling Line::     & (join-path (split-path -parent $profile.CurrentUserAllHosts) freds.ps1)
+===========
+1-Define the here-string $data 2-Invoke the hear-string using Write-Host $data.
+===========
+***  This is the first line after the 'Here-String' 
+To invoke the here-string use write-host $data. ***
+    This is the first line in the 'double quoted' Here-String without any quotes.
+    You can use the subexpression operator $() inside a double quoted here-string.
+    Commands and variables inside the subexpression operator $() will be executed and their output included in the here-string.
+    When you use a double-quoted here-string, PowerShell evaluates any  expressions at the time of assignment, 
+    and inserts their output (not their side effects) into the string.
+
+    The next line makes reference to the $variable as [Hello, $variable!].
+    Hello, World!
+    When the here-string is double quoted this next line [$(get-item -Path *) | select-object -first 2] will be invoked.
+    C:\Users\freds\OneDrive\PowershellScripts\MyStuff\.vscode C:\Users\freds\OneDrive\PowershellScripts\MyStuff\.vscode copy
+    Current date and time: 10/31/2025 19:34:49
+
+You can use 'write-output but not write-host'
+You can use $(Write-Host 'fred' | Out-String) - But even then, 'write-host' is meant for direct display — not for capturing. 
+Better to use 'write-output' or just a string literal.
+In function freds.ps1
+ 
+You can do this:
+$code = @"
+Write-OutPut "hello world"
+Write-OutPut "another line"
+"@
+Invoke-Expression $code  
+
+
+This file is $env:onedrive\Documents\Powershell\freds.ps1
+Edit this file using-> fjeditfred  It is a function in your profile.
+To run this file 'fjDoFred'. It is a function in your profile.
+
+    Here are some useful commands you might want to try:
+        control mmsys.cpl sounds # brings up the Sound control panel
+        shell:appsfolder # opens the Applications folder where you can see all installed apps
+        shell:common startup # opens the common Startup folder for all users
+        shell:programs # opens the Programs folder in the Start Menu
+        shell:libraries # opens the Libraries folder
+        in pwsh start-process "shell:Libraries" or
+        New-Object -ComObject Shell.Application).NameSpace('shell:Libraries').Items()
+        shell:startup # opens the Startup folder where you can add shortcuts to programs you want to start automatically when you log in
+        shell:sendto # opens the SendTo folder where you can add shortcuts to programs for the Send To context menu
+        shell:recent # opens the Recent Items folder
+        shell:profile # opens your PowerShell profile script in the default text editor
+        in the runbox (Win+R) type pwsh -noexit -command "& {Set-Location C:\Users\freds\AppData\Local\Temp; explorer .}"
+        wsreset.exe # resets the Windows Store cache if the Store is not working properly
+    SystemPropertiesPerformance.exe # brings up the 'Performance Options' window with tabs
+        Visual Effects, Advanced (processor scheduling/virtual memory paging file size), and Data Execution Prevention
+
+
+Yes, icacls is essentially an updated replacement for earlier commands like cacls and xcacls. 
+These older tools were also used to manage file and folder permissions in Windows, but they had limitations in terms of features and compatibility.
+
+Here’s why icacls is preferred:
+- **Enhanced Functionality**: icacls introduced new capabilities, such as the ability to back up and restore permissions using /save and /restore options.
+- **Support for Modern ACL Features**: It supports modern security features, like integrity levels, which weren't available in cacls.
+- **Improved Syntax**: The syntax of icacls is more intuitive and offers greater flexibility for managing permissions.
+- **Deprecation of Older Commands**: Both cacls and xcacls have been deprecated in favor of icacls.
+
+***By running the command icacls c:\windows\* /save AclFile, you only created a backup file 
+containing the permissions (Access Control Lists) of all files and folders under C:\Windows. 
+No changes were made to the actual permissions or security settings of the files.
+The backup file (AclFile) can be used later with the /restore option if you ever need to revert permissions to their saved state. 
+This is a safe operation and doesn't affect the system unless you explicitly restore or modify permissions.
+
+If you’re still using older scripts or workflows that rely on cacls or xcacls, 
+it’s a good idea to migrate to icacls for better compatibility with newer Windows systems! 
+Let me know if you want more examples of how to use icacls.
+-----
+Given
+https://www.youtube.com/watch?v=gfCMNNaA6aY
+video ID is gfCMNNaA6aY
+
+With EMBED you can have a start and stop time
+https://www.youtube.com/embed/gfCMNNaA6aY?start=0&end=90
+
+Without EMBED you can only specify a start time.
+https://www.youtube.com/watch?v=gfCMNNaA6aY&t=90s
+----------
+https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-clipboard?view=powershell-7.2
+https://learn.microsoft.com/en-us/
+https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-clipboard?view=powershell-7.2
+https://learn.microsoft.com/en-us/powershell/module/aishell/?view=ps-modules
+[System.Environment]::SetEnvironmentVariable('MYVAR', 'C:\PathToYourDirectory') [System.EnvironmentVariableTarget]::Machine)
+nmap -p- 192.168.86.0-255
+[GC]::Collect()
+[GC]::WaitForPendingFinalizers()
+ = Show-Command -Name Get-Process -PassThru | Invoke-Expression
+Use two code points to display a single emoji:
+    $([char]0xD83D + [char]0xDD14) -> 🔔
+Or, if you prefer to use the Unicode escape sequence explicitly:
+    `u{D83D}`u{DD14} -> 🔔
+    $([char]"`u{D83D}" + [char]"`u{DD14}") -> 🔔
+[System.Environment]::CommandLine = "C:\Program Files\PowerShell\7-preview\pwsh.dll"=🔔
+    # [System.Environment]::CommandLine = "C:\Program Files\PowerShell\7-preview\pwsh.dll" = "🔔"
+[System.Environment]::CommandLine = "C:\Program Files\PowerShell\7-preview\pwsh.dll"
+Fred
+here are some Things you might want to try:
+control mmsys.cpl sounds
+shell:appsfolder
+====Get-AppxPackage -AllUsers | Select Name, PackageFullName====
+wsreset.exe if the Windows Store is not working (it will reset the Windows Store cache).
+Samsung Settings
+settings->time & language -> typing.
+Search in Youtube TV for 'YouTube TV Zen'
+System Internals  Zoomit 
+[System.Globalization.CultureInfo] | gm -static
+[System.Globalization.CultureInfo]::CurrentCulture | gm -static
+[System.Globalization.CultureInfo]::CurrentCulture.TextInfo | gm -static
+----------
+Title Case Proper Case
+rename a file like '2024 Real Estate Tax Factors' to '2024RealEstateTaxFactors'
+$MyString="2024 Real Estate Tax Factors"
+[System.Globalization.CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($MyString.tolower()).Replace(" ","")
+----------
+Accelerators.ps1
+-----
+test-connection 192.168.86.250 -Traceroute -ResolveDestination
+1..254 | ForEach-Object {Test-Connection -ComputerName "192.168.86." -Count 1 -Quiet} | ForEach-Object { if () {}}
+THINGS I TURNED OFF - See C:\Users\freds\OneDrive\Private\ManualsReceiptsWarranties\Samsung\GalaxyBook4Edge\ReadMeBook4.txt
+=====================================
+Find-module -Name posh-git -Repository PSGallery
+    The first step. If you haven't already installed the PowerShellGet module, you may need to do so first.
+    Discovers modules available in the specified repository. List all the versionss of a module available in the repository.
+Install-Module -Name posh-git -Repository PSGallery -Scope CurrentUser
+    The second step. Installs the posh-git module from the PSGallery repository for the current user.
+    Can also run as administrator to install for all users.
+    Alternate is install-psresource -name posh-git -scope currentuser -reinstall
+Import-Module posh-git
+    The third step. Imports the posh-git module into the current PowerShell session, making its commands available for use.
+    You can add this line to your PowerShell profile script to automatically import posh-git in future sessions.    
+    Install-Module -Name posh-git -Repository PSGallery -Scope CurrentUser
+get-module posh-git
+    Verify that the posh-git module is installed and imported correctly.
+    This command lists the details of the posh-git module if it is successfully imported.
+
+Help
+    $(get-command get-help -SYNTAX)
+    
+Get-Help [[-Name] <string>] [-Path <string>] [-Category <string[]>] [-Full] [-Component <string[]>] [-Functionality <string[]>] [-Role <string[]>] [<CommonParameters>]
+
+Get-Help [[-Name] <string>] -Detailed [-Path <string>] [-Category <string[]>] [-Component <string[]>] [-Functionality <string[]>] [-Role <string[]>] [<CommonParameters>]
+
+Get-Help [[-Name] <string>] -Examples [-Path <string>] [-Category <string[]>] [-Component <string[]>] [-Functionality <string[]>] [-Role <string[]>] [<CommonParameters>]
+
+Get-Help [[-Name] <string>] -Parameter <string[]> [-Path <string>] [-Category <string[]>] [-Component <string[]>] [-Functionality <string[]>] [-Role <string[]>] [<CommonParameters>]
+
+Get-Help [[-Name] <string>] -Online [-Path <string>] [-Category <string[]>] [-Component <string[]>] [-Functionality <string[]>] [-Role <string[]>] [<CommonParameters>]
+
+Get-Help [[-Name] <string>] -ShowWindow [-Path <string>] [-Category <string[]>] [-Component <string[]>] [-Functionality <string[]>] [-Role <string[]>] [<CommonParameters>]
+
+    show-Command get-help
+
+Customize Short date in file explorer
+    Control Panel -> Regional
+    Settings -> Time & language > Date & time > Format
+
+C:\Windows\System32>vssadmin list writers
+    vssadmin 1.1 - Volume Shadow Copy Service administrative command-line tool
+   C) Copyright 2001-2013 Microsoft Corp. 
+   How to check: Open an elevated Command Prompt (Admin) and run the command vssadmin list writers. 
+   Look for any writers that do not show a "Stable" state with "No error" in the output.   
+
+    This is a test
+    This is a test
+
+    ===========
+    ***  Next Line Teriminates Here-String   ***
+🔔
+	Executing:: C:\Users\freds\OneDrive\PowershellScripts\MyStuff\GetParentProcessV2.ps1
+	Called by:: C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1
+	Invoked as:: $oGpp=./getParentProcessV2.ps1
+==============================
+   Process and Parent List
+==============================
+[18308] [pwsh           ] [31 06:23:46 PM] [C:\Program Files\PowerShell\7-preview\pwsh.exe]
+[ 5644] [WindowsTerminal] [31 06:23:46 PM] [C:\Program Files\WindowsApps\Microsoft.WindowsTerminalPreview_1.24.2812.0_arm64__8wekyb3d8bbwe\WindowsTerminal.exe]
+Finis
+WARNING: End of Profile [CurrentUserAllHosts]
+WARNING: Located at [C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1]
+WARNING: To source profile -> . $profile.CurrentUserAllHosts
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[19:34]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[19:35]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>editprofile
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[19:35]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>history
+
+  Id     Duration CommandLine
+  --     -------- -----------
+   1        0.096 fjquicken -noexit
+   2        0.000 [math]:factorial(6)
+   3        0.027 [math]::factorial(6)
+   4        0.010 [math]::factorial(6)
+   5        0.032 [math]|gm
+   6        0.047 System.Environment] | Get-Member -Static
+   7        0.000 []System.Environment] | Get-Member -Static
+   8        0.017 [system.Environment] | Get-Member -Static
+   9        0.018 [system.math] | Get-Member -Static
+  10        0.013 [system.math]::ReciprocalEstimate(100)
+  11        0.010 [System.Environment]::CommandLine
+  12        0.014 [System.Environment]::OSVersion
+  13        0.011 [System.Environment]::OSVersion.tostring()
+  14        1.143 start-transcript -path $env:userprofile\mystuff
+  15        0.013 start-transcript -path C:\Users\freds\mystuff\Transcript.2025-10-31
+  16        0.002 [System.Environment]::OSVersion
+  17        0.002 [System.Environment]::OSVersion.tostring()
+  18        0.001 [System.Environment]::CommandLine
+  19        0.050 System.Environment] | Get-Member -Static
+  20        0.016 [System.Environment] | Get-Member -Static
+  21        0.010 # Using static classes and methods
+  22        0.011 # https://learn.microsoft.com/en-us/powershell/scripting/samples/using-static-classes-and-methods?view=powershell-7.5
+  23        0.010 cdmystuff
+  24        0.102 lwt
+  25        0.055 notepad .\Transcript.2025-10-31
+  26        0.010 [System.Environment]::HasShutdownStarted
+  27        0.015 [System.Math] | Get-Member -Static -MemberType Methods
+  28        0.016 [System.Math] | Get-Member -Static
+  29        0.010 [math]::pi
+  30        0.012 [math]::E
+  31        0.010 [math]::Tau
+  32        0.013 [math]::pi * 2
+  33        0.015 [math]::pow([math]::E,[math]::tau)
+  34        0.013 [math]::pow(10,2)
+  35        0.001 [math]::pow([math]::E,[math]::tau)
+  36        1.417 fjeditfred
+  37        0.001 [math]::pow([math]::E,[math]::tau)
+  38        1.192 editprofile
+  39        0.085 history
+  40        1.190 editprofile
+  41        0.080 clcs
+  42        0.005 cls
+  43       16.757 . $PROFILE.CurrentUserAllHosts
+  44        1.178 editprofile
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[19:36]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[19:38]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS># [system.math] | Get-Member
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[19:38]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[system.math] | Get-Member
+
+   TypeName: System.RuntimeType
+
+Name                                  MemberType Definition
+----                                  ---------- ----------
+AsType                                Method     type AsType()
+Clone                                 Method     System.Object Clone(), System.Object ICloneable.Clone()
+Equals                                Method     bool Equals(System.Object obj), bool Equals(type o)
+FindInterfaces                        Method     type[] FindInterfaces(System.Reflection.TypeFilter filter, System.Object filterCriteria)
+FindMembers                           Method     System.Reflection.MemberInfo[] FindMembers(System.Reflection.MemberTypes memberType, System.Refle…
+GetArrayRank                          Method     int GetArrayRank()
+GetConstructor                        Method     System.Reflection.ConstructorInfo GetConstructor(type[] types), System.Reflection.ConstructorInfo…
+GetConstructors                       Method     System.Reflection.ConstructorInfo[] GetConstructors(System.Reflection.BindingFlags bindingAttr), …
+GetCustomAttributes                   Method     System.Object[] GetCustomAttributes(bool inherit), System.Object[] GetCustomAttributes(type attri…
+GetCustomAttributesData               Method     System.Collections.Generic.IList[System.Reflection.CustomAttributeData] GetCustomAttributesData()
+GetDeclaredEvent                      Method     System.Reflection.EventInfo GetDeclaredEvent(string name)
+GetDeclaredField                      Method     System.Reflection.FieldInfo GetDeclaredField(string name)
+GetDeclaredMethod                     Method     System.Reflection.MethodInfo GetDeclaredMethod(string name)
+GetDeclaredMethods                    Method     System.Collections.Generic.IEnumerable[System.Reflection.MethodInfo] GetDeclaredMethods(string na…
+GetDeclaredNestedType                 Method     System.Reflection.TypeInfo GetDeclaredNestedType(string name)
+GetDeclaredProperty                   Method     System.Reflection.PropertyInfo GetDeclaredProperty(string name)
+GetDefaultMembers                     Method     System.Reflection.MemberInfo[] GetDefaultMembers()
+GetElementType                        Method     type GetElementType()
+GetEnumName                           Method     string GetEnumName(System.Object value)
+GetEnumNames                          Method     string[] GetEnumNames()
+GetEnumUnderlyingType                 Method     type GetEnumUnderlyingType()
+GetEnumValues                         Method     array GetEnumValues()
+GetEnumValuesAsUnderlyingType         Method     array GetEnumValuesAsUnderlyingType()
+GetEvent                              Method     System.Reflection.EventInfo GetEvent(string name, System.Reflection.BindingFlags bindingAttr), Sy…
+GetEvents                             Method     System.Reflection.EventInfo[] GetEvents(System.Reflection.BindingFlags bindingAttr), System.Refle…
+GetField                              Method     System.Reflection.FieldInfo GetField(string name, System.Reflection.BindingFlags bindingAttr), Sy…
+GetFields                             Method     System.Reflection.FieldInfo[] GetFields(System.Reflection.BindingFlags bindingAttr), System.Refle…
+GetFunctionPointerCallingConventions  Method     type[] GetFunctionPointerCallingConventions()
+GetFunctionPointerParameterTypes      Method     type[] GetFunctionPointerParameterTypes()
+GetFunctionPointerReturnType          Method     type GetFunctionPointerReturnType()
+GetGenericArguments                   Method     type[] GetGenericArguments()
+GetGenericParameterConstraints        Method     type[] GetGenericParameterConstraints()
+GetGenericTypeDefinition              Method     type GetGenericTypeDefinition()
+GetHashCode                           Method     int GetHashCode()
+GetInterface                          Method     type GetInterface(string fullname, bool ignoreCase), type GetInterface(string name)
+GetInterfaceMap                       Method     System.Reflection.InterfaceMapping GetInterfaceMap(type interfaceType)
+GetInterfaces                         Method     type[] GetInterfaces()
+GetMember                             Method     System.Reflection.MemberInfo[] GetMember(string name, System.Reflection.MemberTypes type, System.…
+GetMembers                            Method     System.Reflection.MemberInfo[] GetMembers(System.Reflection.BindingFlags bindingAttr), System.Ref…
+GetMemberWithSameMetadataDefinitionAs Method     System.Reflection.MemberInfo GetMemberWithSameMetadataDefinitionAs(System.Reflection.MemberInfo m…
+GetMethod                             Method     System.Reflection.MethodInfo GetMethod(string name), System.Reflection.MethodInfo GetMethod(strin…
+GetMethods                            Method     System.Reflection.MethodInfo[] GetMethods(System.Reflection.BindingFlags bindingAttr), System.Ref…
+GetNestedType                         Method     type GetNestedType(string fullname, System.Reflection.BindingFlags bindingAttr), type GetNestedTy…
+GetNestedTypes                        Method     type[] GetNestedTypes(System.Reflection.BindingFlags bindingAttr), type[] GetNestedTypes()
+GetOptionalCustomModifiers            Method     type[] GetOptionalCustomModifiers()
+GetProperties                         Method     System.Reflection.PropertyInfo[] GetProperties(System.Reflection.BindingFlags bindingAttr), Syste…
+GetProperty                           Method     System.Reflection.PropertyInfo GetProperty(string name), System.Reflection.PropertyInfo GetProper…
+GetRequiredCustomModifiers            Method     type[] GetRequiredCustomModifiers()
+GetType                               Method     type GetType()
+GetTypeInfo                           Method     System.Reflection.TypeInfo IReflectableType.GetTypeInfo()
+HasSameMetadataDefinitionAs           Method     bool HasSameMetadataDefinitionAs(System.Reflection.MemberInfo other)
+InvokeMember                          Method     System.Object InvokeMember(string name, System.Reflection.BindingFlags bindingFlags, System.Refle…
+IsAssignableFrom                      Method     bool IsAssignableFrom(System.Reflection.TypeInfo typeInfo), bool IsAssignableFrom(type c)
+IsAssignableTo                        Method     bool IsAssignableTo(type targetType)
+IsDefined                             Method     bool IsDefined(type attributeType, bool inherit), bool ICustomAttributeProvider.IsDefined(type at…
+IsEnumDefined                         Method     bool IsEnumDefined(System.Object value)
+IsEquivalentTo                        Method     bool IsEquivalentTo(type other)
+IsInstanceOfType                      Method     bool IsInstanceOfType(System.Object o)
+IsSubclassOf                          Method     bool IsSubclassOf(type type)
+MakeArrayType                         Method     type MakeArrayType(), type MakeArrayType(int rank)
+MakeByRefType                         Method     type MakeByRefType()
+MakeGenericType                       Method     type MakeGenericType(Params type[] typeArguments)
+MakePointerType                       Method     type MakePointerType()
+ToString                              Method     string ToString()
+Assembly                              Property   System.Reflection.Assembly Assembly {get;}
+AssemblyQualifiedName                 Property   string AssemblyQualifiedName {get;}
+Attributes                            Property   System.Reflection.TypeAttributes Attributes {get;}
+BaseType                              Property   type BaseType {get;}
+ContainsGenericParameters             Property   bool ContainsGenericParameters {get;}
+CustomAttributes                      Property   System.Collections.Generic.IEnumerable[System.Reflection.CustomAttributeData] CustomAttributes {g…
+DeclaredConstructors                  Property   System.Collections.Generic.IEnumerable[System.Reflection.ConstructorInfo] DeclaredConstructors {g…
+DeclaredEvents                        Property   System.Collections.Generic.IEnumerable[System.Reflection.EventInfo] DeclaredEvents {get;}
+DeclaredFields                        Property   System.Collections.Generic.IEnumerable[System.Reflection.FieldInfo] DeclaredFields {get;}
+DeclaredMembers                       Property   System.Collections.Generic.IEnumerable[System.Reflection.MemberInfo] DeclaredMembers {get;}
+DeclaredMethods                       Property   System.Collections.Generic.IEnumerable[System.Reflection.MethodInfo] DeclaredMethods {get;}
+DeclaredNestedTypes                   Property   System.Collections.Generic.IEnumerable[System.Reflection.TypeInfo] DeclaredNestedTypes {get;}
+DeclaredProperties                    Property   System.Collections.Generic.IEnumerable[System.Reflection.PropertyInfo] DeclaredProperties {get;}
+DeclaringMethod                       Property   System.Reflection.MethodBase DeclaringMethod {get;}
+DeclaringType                         Property   type DeclaringType {get;}
+FullName                              Property   string FullName {get;}
+GenericParameterAttributes            Property   System.Reflection.GenericParameterAttributes GenericParameterAttributes {get;}
+GenericParameterPosition              Property   int GenericParameterPosition {get;}
+GenericTypeArguments                  Property   type[] GenericTypeArguments {get;}
+GenericTypeParameters                 Property   type[] GenericTypeParameters {get;}
+GUID                                  Property   guid GUID {get;}
+HasElementType                        Property   bool HasElementType {get;}
+ImplementedInterfaces                 Property   System.Collections.Generic.IEnumerable[type] ImplementedInterfaces {get;}
+IsAbstract                            Property   bool IsAbstract {get;}
+IsAnsiClass                           Property   bool IsAnsiClass {get;}
+IsArray                               Property   bool IsArray {get;}
+IsAutoClass                           Property   bool IsAutoClass {get;}
+IsAutoLayout                          Property   bool IsAutoLayout {get;}
+IsByRef                               Property   bool IsByRef {get;}
+IsByRefLike                           Property   bool IsByRefLike {get;}
+IsClass                               Property   bool IsClass {get;}
+IsCollectible                         Property   bool IsCollectible {get;}
+IsCOMObject                           Property   bool IsCOMObject {get;}
+IsConstructedGenericType              Property   bool IsConstructedGenericType {get;}
+IsContextful                          Property   bool IsContextful {get;}
+IsEnum                                Property   bool IsEnum {get;}
+IsExplicitLayout                      Property   bool IsExplicitLayout {get;}
+IsFunctionPointer                     Property   bool IsFunctionPointer {get;}
+IsGenericMethodParameter              Property   bool IsGenericMethodParameter {get;}
+IsGenericParameter                    Property   bool IsGenericParameter {get;}
+IsGenericType                         Property   bool IsGenericType {get;}
+IsGenericTypeDefinition               Property   bool IsGenericTypeDefinition {get;}
+IsGenericTypeParameter                Property   bool IsGenericTypeParameter {get;}
+IsImport                              Property   bool IsImport {get;}
+IsInterface                           Property   bool IsInterface {get;}
+IsLayoutSequential                    Property   bool IsLayoutSequential {get;}
+IsMarshalByRef                        Property   bool IsMarshalByRef {get;}
+IsNested                              Property   bool IsNested {get;}
+IsNestedAssembly                      Property   bool IsNestedAssembly {get;}
+IsNestedFamANDAssem                   Property   bool IsNestedFamANDAssem {get;}
+IsNestedFamily                        Property   bool IsNestedFamily {get;}
+IsNestedFamORAssem                    Property   bool IsNestedFamORAssem {get;}
+IsNestedPrivate                       Property   bool IsNestedPrivate {get;}
+IsNestedPublic                        Property   bool IsNestedPublic {get;}
+IsNotPublic                           Property   bool IsNotPublic {get;}
+IsPointer                             Property   bool IsPointer {get;}
+IsPrimitive                           Property   bool IsPrimitive {get;}
+IsPublic                              Property   bool IsPublic {get;}
+IsSealed                              Property   bool IsSealed {get;}
+IsSecurityCritical                    Property   bool IsSecurityCritical {get;}
+IsSecuritySafeCritical                Property   bool IsSecuritySafeCritical {get;}
+IsSecurityTransparent                 Property   bool IsSecurityTransparent {get;}
+IsSerializable                        Property   bool IsSerializable {get;}
+IsSignatureType                       Property   bool IsSignatureType {get;}
+IsSpecialName                         Property   bool IsSpecialName {get;}
+IsSZArray                             Property   bool IsSZArray {get;}
+IsTypeDefinition                      Property   bool IsTypeDefinition {get;}
+IsUnicodeClass                        Property   bool IsUnicodeClass {get;}
+IsUnmanagedFunctionPointer            Property   bool IsUnmanagedFunctionPointer {get;}
+IsValueType                           Property   bool IsValueType {get;}
+IsVariableBoundArray                  Property   bool IsVariableBoundArray {get;}
+IsVisible                             Property   bool IsVisible {get;}
+MemberType                            Property   System.Reflection.MemberTypes MemberType {get;}
+MetadataToken                         Property   int MetadataToken {get;}
+Module                                Property   System.Reflection.Module Module {get;}
+Name                                  Property   string Name {get;}
+Namespace                             Property   string Namespace {get;}
+ReflectedType                         Property   type ReflectedType {get;}
+StructLayoutAttribute                 Property   System.Runtime.InteropServices.StructLayoutAttribute StructLayoutAttribute {get;}
+TypeHandle                            Property   System.RuntimeTypeHandle TypeHandle {get;}
+TypeInitializer                       Property   System.Reflection.ConstructorInfo TypeInitializer {get;}
+UnderlyingSystemType                  Property   type UnderlyingSystemType {get;}
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[19:38]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[19:39]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[system.math] | Get-Member -static
+
+   TypeName: System.Math
+
+Name                   MemberType Definition
+----                   ---------- ----------
+Abs                    Method     static short Abs(short value), static int Abs(int value), static long Abs(long value), static System.IntPtr Abs(…
+Acos                   Method     static double Acos(double d)
+Acosh                  Method     static double Acosh(double d)
+Asin                   Method     static double Asin(double d)
+Asinh                  Method     static double Asinh(double d)
+Atan                   Method     static double Atan(double d)
+Atan2                  Method     static double Atan2(double y, double x)
+Atanh                  Method     static double Atanh(double d)
+BigMul                 Method     static ulong BigMul(uint a, uint b), static long BigMul(int a, int b), static ulong BigMul(ulong a, ulong b, [re…
+BitDecrement           Method     static double BitDecrement(double x)
+BitIncrement           Method     static double BitIncrement(double x)
+Cbrt                   Method     static double Cbrt(double d)
+Ceiling                Method     static double Ceiling(double a), static decimal Ceiling(decimal d)
+Clamp                  Method     static byte Clamp(byte value, byte min, byte max), static decimal Clamp(decimal value, decimal min, decimal max)…
+CopySign               Method     static double CopySign(double x, double y)
+Cos                    Method     static double Cos(double d)
+Cosh                   Method     static double Cosh(double value)
+DivRem                 Method     static int DivRem(int a, int b, [ref] int result), static long DivRem(long a, long b, [ref] long result), static…
+Equals                 Method     static bool Equals(System.Object objA, System.Object objB)
+Exp                    Method     static double Exp(double d)
+Floor                  Method     static double Floor(double d), static decimal Floor(decimal d)
+FusedMultiplyAdd       Method     static double FusedMultiplyAdd(double x, double y, double z)
+IEEERemainder          Method     static double IEEERemainder(double x, double y)
+ILogB                  Method     static int ILogB(double x)
+Log                    Method     static double Log(double d), static double Log(double a, double newBase)
+Log10                  Method     static double Log10(double d)
+Log2                   Method     static double Log2(double x)
+Max                    Method     static byte Max(byte val1, byte val2), static decimal Max(decimal val1, decimal val2), static double Max(double …
+MaxMagnitude           Method     static double MaxMagnitude(double x, double y)
+Min                    Method     static byte Min(byte val1, byte val2), static decimal Min(decimal val1, decimal val2), static double Min(double …
+MinMagnitude           Method     static double MinMagnitude(double x, double y)
+Pow                    Method     static double Pow(double x, double y)
+ReciprocalEstimate     Method     static double ReciprocalEstimate(double d)
+ReciprocalSqrtEstimate Method     static double ReciprocalSqrtEstimate(double d)
+ReferenceEquals        Method     static bool ReferenceEquals(System.Object objA, System.Object objB)
+Round                  Method     static decimal Round(decimal d), static decimal Round(decimal d, int decimals), static decimal Round(decimal d, …
+ScaleB                 Method     static double ScaleB(double x, int n)
+Sign                   Method     static int Sign(decimal value), static int Sign(double value), static int Sign(short value), static int Sign(int…
+Sin                    Method     static double Sin(double a)
+SinCos                 Method     static System.ValueTuple[double,double] SinCos(double x)
+Sinh                   Method     static double Sinh(double value)
+Sqrt                   Method     static double Sqrt(double d)
+Tan                    Method     static double Tan(double a)
+Tanh                   Method     static double Tanh(double value)
+Truncate               Method     static decimal Truncate(decimal d), static double Truncate(double d)
+E                      Property   static double E {get;}
+PI                     Property   static double PI {get;}
+Tau                    Property   static double Tau {get;}
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[19:39]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>fjquicken
+WARNING: In function fjStartQuicken: 11:54:01
+Using parameters from ParameterSet: Quicken
+String is C:\Users\freds\Dropbox\Private\Q\LoadQuickenDb.ps1
+
+[pwsh  -noprofile  -command & C:\Users\freds\Dropbox\Private\Q\LoadQuickenDb.ps1 -Filename Home.qdf -SourceDir C:\Users\freds\Dropbox\Private\Q -DestinationDir C:\Users\freds\Documents\Quicken -Priority  ]
+
+Using these parameters
+
+Name  : ArgumentList
+Key   : ArgumentList
+Value : pwsh  -noprofile  -command & C:\Users\freds\Dropbox\Private\Q\LoadQuickenDb.ps1 -Filename Home.qdf -SourceDir
+        C:\Users\freds\Dropbox\Private\Q -DestinationDir C:\Users\freds\Documents\Quicken -Priority
+
+Name  : FilePath
+Key   : FilePath
+Value : conhost.exe
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[23:54]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>fjqtrimqbackupfiles -AddDays -0
+WARNING: In function fjqtrimqbackupfiles:
+Files Found: 2
+
+FullName : C:\Users\freds\OneDrive\QBACKUP\Home-2025-10-31.PM02.53.QDF-backup
+
+FullName : C:\Users\freds\OneDrive\QBACKUP\Home-2025-10-31.PM07.12.QDF-backup
+
+Deleting File C:\Users\freds\OneDrive\QBACKUP\Home-2025-10-31.PM02.53.QDF-backup
+WARNING: In function MoveFileToRecycleBin 10/31/2025 23:55:00
+File [C:\Users\freds\OneDrive\QBACKUP\Home-2025-10-31.PM02.53.QDF-backup] exists.
+Returned from $ns.InvokeVerb("delete")
+Deleted File [C:\Users\freds\OneDrive\QBACKUP\Home-2025-10-31.PM02.53.QDF-backup]
+WARNING: Leaving function MoveFileToRecycleBin
+Retaining file
+
+FullName : C:\Users\freds\OneDrive\QBACKUP\Home-2025-10-31.PM07.12.QDF-backup
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[23:55]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>edit $profile
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[23:55]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>editprofile
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[23:58]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>edit $profile
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[23:59]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>edit $profile
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[00:15]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>cls
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[00:15]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>. $profile
+WARNING:  C:\Users\freds\OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1: 11/01/2025 00:15:37
+pwsh version 7.6.0-preview.5
+$PSHOME is C:\Program Files\PowerShell\7-preview
+$MyInvocation.MyCommand.Name is Microsoft.PowerShell_profile.ps1
+MyInvocation.MyCommand.path follows
+C:\Users\freds\OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+Sourcing [Microsoft.PowerShell_profile.ps1]
+[System.Environment]::CommandLine = "C:\Program Files\PowerShell\7-preview\pwsh.dll"
+WARNING: In function fjWhichProfileIsThis
+$PSScriptRoot is C:\Users\freds\OneDrive\Documents\PowerShell
+->Start of profile [CurrentUserCurrentHost] with path [C:\Users\freds\OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1]
+Write-Warning " $($MyInvocation.MyCommand.Path): $(Get-Date)"
+PROCESSOR_ARCHITECTURE is ARM64
+Is 64 bit OS
+Is 64 bit process
+Running Pwsh
+Running in Windows Terminal
+WARNING: Exiting function fjWhichProfileIsThis
+
+DisplayName       : fjshutmedown -> shut-medown.ps1
+CommandType       : Alias
+Definition        : C:\Users\freds\mystuff\shut-medown.ps1
+ReferencedCommand : shut-medown.ps1
+ResolvedCommand   : shut-medown.ps1
+
+WARNING: In function Get-ProfileType
+WARNING: Determining profile type for path: C:\Users\freds\OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+This profile is of type: CurrentUserCurrentHost
+This profile is of type: CurrentUserCurrentHost
+The profile path is: C:\Users\freds\OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[00:15]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>PushProfileToRepository
+WARNING: In function fjPushProfileToRepository:r2020-11-13
+Repository is C:\Users\freds\Dropbox\Private\Powershell\Profiles\CurrentUser:
+WARNING: # Version::2025-10-23 write-host "pwsh version $($psversiontable.GitCommitId)" ✅. Refactor Which profile is this.
+WARNING: # Version::2025-10-14 Function fjnewEdit {start-process conhost.exe -ArgumentList edit.exe}
+<->
+Working Profile is C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1:
+WARNING: # Version::2025-10-31 added $string = "{0} = {1}" -f "[System.Environment]::CommandLine",[System.Environment]::CommandLine
+WARNING: # Version::2025-10-23 write-host "pwsh version $($psversiontable.GitCommitId)" ✅. Refactor Which profile is this.
+
+WARNING: Files are different in 7 places.
+
+InputObject   : # Version::2025-10-31 added $string = "{0} = {1}" -f "[System.Environment]::CommandLine",[System.Environment]::CommandLine
+SideIndicator : =>
+
+InputObject   : $string = "{0} = {1}" -f "[System.Environment]::CommandLine",[System.Environment]::CommandLine
+SideIndicator : =>
+
+InputObject   : write-host $string
+SideIndicator : =>
+
+InputObject   : # [system.Environment] | Get-Member -Static
+SideIndicator : =>
+
+InputObject   : # [System.Math] | Get-Member -Static -MemberType Methods
+SideIndicator : =>
+
+InputObject   : 
+SideIndicator : <=
+
+InputObject   : 
+SideIndicator : <=
+
+Confirm
+Are you sure you want to perform this action?
+Performing the operation "Copy File" on target "Item: C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1 Destination: C:\Users\freds\Dropbox\Private\Powershell\Profiles\CurrentUser\profile.ps1".
+&Yes  Yes to &All  &No  No to A&ll  &Suspend
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[00:20]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>cls; . $profile.CurrentUserAllHosts
+
+Saturday, November 1, 2025 12:25:01 AM
+$PSHOME is C:\Program Files\PowerShell\7-preview
+pwsh version 7.6.0-preview.5 ✅
+$MyInvocation.MyCommand.Name is [profile.ps1]
+$MyInvocation.MyCommand.Path is [C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1]
+
+Global automatic variables that even work inside sub-functions unlike $MyInvocation.MyCommand.Path:
+$PSCommandpath is [C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1)]
+$PSScriptRoot is [C:\Users\freds\OneDrive\Documents\PowerShell]
+[System.Environment]::CommandLine = "C:\Program Files\PowerShell\7-preview\pwsh.dll"
+Sourcing [profile.ps1]
+WARNING: In function [fjWhichProfileIsThis]
+WARNING: 
+->Start of profile 
+[CurrentUserAllHosts]
+[C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1]
+# Version::2025-10-31 added $string = "{0} = {1}" -f "[System.Environment]::CommandLine",[System.Environment]::CommandLine
+# Version::2025-10-23 write-host "pwsh version $($psversiontable.GitCommitId)" ✅. Refactor Which profile is this.
+PROCESSOR_ARCHITECTURE is ARM64
+Is 64 bit OS
+Is 64 bit process
+Running Pwsh
+Running in Windows Terminal
+WARNING: Exiting function [fjWhichProfileIsThis]
+Define $Env:HOME if not already defined
+WARNING: In function fjShowAreProfilesInSync
+	Comparing LOCAL and REPOsitory versions of the variable $profile.CurrentUserAllHosts
+	LOCAL PROFILE: last update 11/01/2025 00:24:44 Path is C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1
+# Version::2025-10-31 added $string = "{0} = {1}" -f "[System.Environment]::CommandLine",[System.Environment]::CommandLine
+# Version::2025-10-23 write-host "pwsh version $($psversiontable.GitCommitId)" ✅. Refactor Which profile is this.
+	REPO  PROFILE: last update 10/25/2025 01:20:23 Path is C:\Users\freds\Dropbox\Private\Powershell\Profiles\CurrentUser\Profile.ps1
+# Version::2025-10-23 write-host "pwsh version $($psversiontable.GitCommitId)" ✅. Refactor Which profile is this.
+# Version::2025-10-14 Function fjnewEdit {start-process conhost.exe -ArgumentList edit.exe}
+WARNING: Exiting function fjShowAreProfilesInSync
+
+
+
+DisplayName       : fjgpp -> getparentprocessV2.ps1
+CommandType       : Alias
+Definition        : C:\Users\freds\OneDrive\PowershellScripts\mystuff\getparentprocessV2.ps1
+ReferencedCommand : getparentprocessV2.ps1
+ResolvedCommand   : getparentprocessV2.ps1
+
+
+        Scope ExecutionPolicy
+        ----- ---------------
+MachinePolicy       Undefined
+   UserPolicy       Undefined
+      Process       Undefined
+  CurrentUser    RemoteSigned
+ LocalMachine    RemoteSigned
+
+*** Define function for prompt
+imports
+WARNING: PSReadLine Version  2.4.4 
+WARNING:  ***PSReadLine Predictive Source: 'HistoryAndPlugin' set by default. Toggle view with F2
+WARNING: Source SamplePSReadLineProfile.ps1
+*** Version::2021-02-21
+WARNING: [11/01/2025 00:25:02] Return from function profile.ps1:
+Try Windows Admin Center localhost:6516
+https://docs.microsoft.com/en-us/windows-server/manage/windows-admin-center/overview#introduction
+Playground follows
+Fred-Arthur Jacobowitz
+Fred-Arthur Jacobowitz
+WARNING: In function fjAreWeElevated:2020-11-13
+Exiting function fjAreWeElevated
+WARNING: ***  Not Elevated  ***
+WARNING: Mozilla VPN not installed
+WARNING: In function PopBurntToast:
+$PSHOME is C:\Program Files\PowerShell\7-preview
+***The process path is 'C:\Program Files\PowerShell\7-preview\pwsh.exe'
+***The parent path is 'C:\Program Files\WindowsApps\Microsoft.WindowsTerminalPreview_1.24.2812.0_arm64__8wekyb3d8bbwe\WindowsTerminal.exe'
+[PWSH Core 7.6.0-preview.5]
+[Parent: WindowsTerminal]
+[PSReadline: 2.4.4]
+[Online]
+[Not Elevated]
+WARNING: Leaving function PopBurntToast:
+🔔
+	Executing:: C:\Users\freds\OneDrive\PowershellScripts\MyStuff\GetParentProcessV2.ps1
+	Called by:: C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1
+	Invoked as:: $oGpp=./getParentProcessV2.ps1
+==============================
+   Process and Parent List
+==============================
+[18308] [pwsh           ] [31 06:23:46 PM] [C:\Program Files\PowerShell\7-preview\pwsh.exe]
+[ 5644] [WindowsTerminal] [31 06:23:46 PM] [C:\Program Files\WindowsApps\Microsoft.WindowsTerminalPreview_1.24.2812.0_arm64__8wekyb3d8bbwe\WindowsTerminal.exe]
+Finis
+WARNING: End of Profile [CurrentUserAllHosts]
+WARNING: Located at [C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1]
+WARNING: To source profile -> . $profile.CurrentUserAllHosts
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[00:25]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>PushProfileToRepository
+WARNING: In function fjPushProfileToRepository:r2020-11-13
+Repository is C:\Users\freds\Dropbox\Private\Powershell\Profiles\CurrentUser:
+WARNING: # Version::2025-10-23 write-host "pwsh version $($psversiontable.GitCommitId)" ✅. Refactor Which profile is this.
+WARNING: # Version::2025-10-14 Function fjnewEdit {start-process conhost.exe -ArgumentList edit.exe}
+<->
+Working Profile is C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1:
+WARNING: # Version::2025-10-31 added $string = "{0} = {1}" -f "[System.Environment]::CommandLine",[System.Environment]::CommandLine
+WARNING: # Version::2025-10-23 write-host "pwsh version $($psversiontable.GitCommitId)" ✅. Refactor Which profile is this.
+
+WARNING: Files are different in 10 places.
+
+InputObject   : # Version::2025-10-31 added $string = "{0} = {1}" -f "[System.Environment]::CommandLine",[System.Environment]::CommandLine
+SideIndicator : =>
+
+InputObject   : $string = "{0} = {1}" -f "[System.Environment]::CommandLine",[System.Environment]::CommandLine
+SideIndicator : =>
+
+InputObject   : write-host $string
+SideIndicator : =>
+
+InputObject   : # https://learn.microsoft.com/en-us/powershell/scripting/samples/using-static-classes-and-methods?view=powershell-7.5
+SideIndicator : =>
+
+InputObject   : # [system.Environment] | Get-Member -Static
+SideIndicator : =>
+
+InputObject   : # Get the list of static methods for the Math class
+SideIndicator : =>
+
+InputObject   : # [System.Math] | Get-Member -Static #includes properties and methods. The Propeties are constants like PI and E.
+SideIndicator : =>
+
+InputObject   : # [System.Math] | Get-Member -Static -MemberType Methods
+SideIndicator : =>
+
+InputObject   : 
+SideIndicator : <=
+
+InputObject   : 
+SideIndicator : <=
+
+Confirm
+Are you sure you want to perform this action?
+Performing the operation "Copy File" on target "Item: C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1 Destination: C:\Users\freds\Dropbox\Private\Powershell\Profiles\CurrentUser\profile.ps1".
+&Yes  Yes to &All  &No  No to A&ll  &Suspend
+Y
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[00:26]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>cls; . $profile.CurrentUserAllHosts
+
+Saturday, November 1, 2025 12:26:10 AM
+$PSHOME is C:\Program Files\PowerShell\7-preview
+pwsh version 7.6.0-preview.5 ✅
+$MyInvocation.MyCommand.Name is [profile.ps1]
+$MyInvocation.MyCommand.Path is [C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1]
+
+Global automatic variables that even work inside sub-functions unlike $MyInvocation.MyCommand.Path:
+$PSCommandpath is [C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1)]
+$PSScriptRoot is [C:\Users\freds\OneDrive\Documents\PowerShell]
+[System.Environment]::CommandLine = "C:\Program Files\PowerShell\7-preview\pwsh.dll"
+Sourcing [profile.ps1]
+WARNING: In function [fjWhichProfileIsThis]
+WARNING: 
+->Start of profile 
+[CurrentUserAllHosts]
+[C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1]
+# Version::2025-10-31 added $string = "{0} = {1}" -f "[System.Environment]::CommandLine",[System.Environment]::CommandLine
+# Version::2025-10-23 write-host "pwsh version $($psversiontable.GitCommitId)" ✅. Refactor Which profile is this.
+PROCESSOR_ARCHITECTURE is ARM64
+Is 64 bit OS
+Is 64 bit process
+Running Pwsh
+Running in Windows Terminal
+WARNING: Exiting function [fjWhichProfileIsThis]
+Define $Env:HOME if not already defined
+WARNING: In function fjShowAreProfilesInSync
+	Comparing LOCAL and REPOsitory versions of the variable $profile.CurrentUserAllHosts
+	LOCAL PROFILE: last update 11/01/2025 00:24:44 Path is C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1
+# Version::2025-10-31 added $string = "{0} = {1}" -f "[System.Environment]::CommandLine",[System.Environment]::CommandLine
+# Version::2025-10-23 write-host "pwsh version $($psversiontable.GitCommitId)" ✅. Refactor Which profile is this.
+	REPO  PROFILE: last update 11/01/2025 00:24:44 Path is C:\Users\freds\Dropbox\Private\Powershell\Profiles\CurrentUser\Profile.ps1
+# Version::2025-10-31 added $string = "{0} = {1}" -f "[System.Environment]::CommandLine",[System.Environment]::CommandLine
+# Version::2025-10-23 write-host "pwsh version $($psversiontable.GitCommitId)" ✅. Refactor Which profile is this.
+WARNING: Exiting function fjShowAreProfilesInSync
+Profiles are in Sync
+
+
+DisplayName       : fjgpp -> getparentprocessV2.ps1
+CommandType       : Alias
+Definition        : C:\Users\freds\OneDrive\PowershellScripts\mystuff\getparentprocessV2.ps1
+ReferencedCommand : getparentprocessV2.ps1
+ResolvedCommand   : getparentprocessV2.ps1
+
+
+        Scope ExecutionPolicy
+        ----- ---------------
+MachinePolicy       Undefined
+   UserPolicy       Undefined
+      Process       Undefined
+  CurrentUser    RemoteSigned
+ LocalMachine    RemoteSigned
+
+*** Define function for prompt
+imports
+WARNING: PSReadLine Version  2.4.4 
+WARNING:  ***PSReadLine Predictive Source: 'HistoryAndPlugin' set by default. Toggle view with F2
+WARNING: Source SamplePSReadLineProfile.ps1
+*** Version::2021-02-21
+WARNING: [11/01/2025 00:26:10] Return from function profile.ps1:
+Try Windows Admin Center localhost:6516
+https://docs.microsoft.com/en-us/windows-server/manage/windows-admin-center/overview#introduction
+Playground follows
+Fred-Arthur Jacobowitz
+Fred-Arthur Jacobowitz
+WARNING: In function fjAreWeElevated:2020-11-13
+Exiting function fjAreWeElevated
+WARNING: ***  Not Elevated  ***
+WARNING: Mozilla VPN not installed
+WARNING: In function PopBurntToast:
+$PSHOME is C:\Program Files\PowerShell\7-preview
+***The process path is 'C:\Program Files\PowerShell\7-preview\pwsh.exe'
+***The parent path is 'C:\Program Files\WindowsApps\Microsoft.WindowsTerminalPreview_1.24.2812.0_arm64__8wekyb3d8bbwe\WindowsTerminal.exe'
+[PWSH Core 7.6.0-preview.5]
+[Parent: WindowsTerminal]
+[PSReadline: 2.4.4]
+[Online]
+[Not Elevated]
+WARNING: Leaving function PopBurntToast:
+🔔
+	Executing:: C:\Users\freds\OneDrive\PowershellScripts\MyStuff\GetParentProcessV2.ps1
+	Called by:: C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1
+	Invoked as:: $oGpp=./getParentProcessV2.ps1
+==============================
+   Process and Parent List
+==============================
+[18308] [pwsh           ] [31 06:23:46 PM] [C:\Program Files\PowerShell\7-preview\pwsh.exe]
+[ 5644] [WindowsTerminal] [31 06:23:46 PM] [C:\Program Files\WindowsApps\Microsoft.WindowsTerminalPreview_1.24.2812.0_arm64__8wekyb3d8bbwe\WindowsTerminal.exe]
+Finis
+WARNING: End of Profile [CurrentUserAllHosts]
+WARNING: Located at [C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1]
+WARNING: To source profile -> . $profile.CurrentUserAllHosts
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[00:26]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>start-process store
+>> TerminatingError(Start-Process): "This command cannot be run due to the error: An error occurred trying to start process 'store' with working directory 'C:\Users\freds\OneDrive\PowershellScripts\MyStuff'. The system cannot find the file specified."
+Start-Process: This command cannot be run due to the error: An error occurred trying to start process 'store' with working directory 'C:\Users\freds\OneDrive\PowershellScripts\MyStuff'. The system cannot find the file specified.
+Start-Process: This command cannot be run due to the error: An error occurred trying to start process 'store' with working directory 'C:\Users\freds\OneDrive\PowershellScripts\MyStuff'. The system cannot find the file specified.
+⨯ fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[00:26]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[system.management.automation] | gm
+InvalidOperation: Unable to find type [system.management.automation].
+InvalidOperation: Unable to find type [system.management.automation].
+⨯ fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[00:41]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>history
+
+  Id     Duration CommandLine
+  --     -------- -----------
+   1        0.096 fjquicken -noexit
+   2        0.000 [math]:factorial(6)
+   3        0.027 [math]::factorial(6)
+   4        0.010 [math]::factorial(6)
+   5        0.032 [math]|gm
+   6        0.047 System.Environment] | Get-Member -Static
+   7        0.000 []System.Environment] | Get-Member -Static
+   8        0.017 [system.Environment] | Get-Member -Static
+   9        0.018 [system.math] | Get-Member -Static
+  10        0.013 [system.math]::ReciprocalEstimate(100)
+  11        0.010 [System.Environment]::CommandLine
+  12        0.014 [System.Environment]::OSVersion
+  13        0.011 [System.Environment]::OSVersion.tostring()
+  14        1.143 start-transcript -path $env:userprofile\mystuff
+  15        0.013 start-transcript -path C:\Users\freds\mystuff\Transcript.2025-10-31
+  16        0.002 [System.Environment]::OSVersion
+  17        0.002 [System.Environment]::OSVersion.tostring()
+  18        0.001 [System.Environment]::CommandLine
+  19        0.050 System.Environment] | Get-Member -Static
+  20        0.016 [System.Environment] | Get-Member -Static
+  21        0.010 # Using static classes and methods
+  22        0.011 # https://learn.microsoft.com/en-us/powershell/scripting/samples/using-static-classes-and-methods?view=powershell-7.5
+  23        0.010 cdmystuff
+  24        0.102 lwt
+  25        0.055 notepad .\Transcript.2025-10-31
+  26        0.010 [System.Environment]::HasShutdownStarted
+  27        0.015 [System.Math] | Get-Member -Static -MemberType Methods
+  28        0.016 [System.Math] | Get-Member -Static
+  29        0.010 [math]::pi
+  30        0.012 [math]::E
+  31        0.010 [math]::Tau
+  32        0.013 [math]::pi * 2
+  33        0.015 [math]::pow([math]::E,[math]::tau)
+  34        0.013 [math]::pow(10,2)
+  35        0.001 [math]::pow([math]::E,[math]::tau)
+  36        1.417 fjeditfred
+  37        0.001 [math]::pow([math]::E,[math]::tau)
+  38        1.192 editprofile
+  39        0.085 history
+  40        1.190 editprofile
+  41        0.080 clcs
+  42        0.005 cls
+  43       16.757 . $PROFILE.CurrentUserAllHosts
+  44        1.178 editprofile
+  45        0.013 history
+  46        0.010 # [system.math] | Get-Member
+  47        0.026 [system.math] | Get-Member
+  48        0.021 [system.math] | Get-Member -static
+  49        0.032 fjquicken
+  50        1.922 fjqtrimqbackupfiles -AddDays -0
+  51       48.256 edit $profile
+  52        1.338 editprofile
+  53       38.098 edit $profile
+  54    12:14.145 edit $profile
+  55        0.001 cls
+  56        0.045 . $profile
+  57     4:02.464 PushProfileToRepository
+  58        1.952 cls; . $profile.CurrentUserAllHosts
+  59       55.486 PushProfileToRepository
+  60        0.118 cls; . $profile.CurrentUserAllHosts
+  61        0.137 start-process store
+  62        0.051 [system.management.automation] | gm
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[00:41]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[system.math] |gm 
+
+   TypeName: System.RuntimeType
+
+Name                                  MemberType Definition
+----                                  ---------- ----------
+AsType                                Method     type AsType()
+Clone                                 Method     System.Object Clone(), System.Object ICloneable.Clone()
+Equals                                Method     bool Equals(System.Object obj), bool Equals(type o)
+FindInterfaces                        Method     type[] FindInterfaces(System.Reflection.TypeFilter filter, System.Object filterCriteria)
+FindMembers                           Method     System.Reflection.MemberInfo[] FindMembers(System.Reflection.MemberTypes memberType, System.Refle…
+GetArrayRank                          Method     int GetArrayRank()
+GetConstructor                        Method     System.Reflection.ConstructorInfo GetConstructor(type[] types), System.Reflection.ConstructorInfo…
+GetConstructors                       Method     System.Reflection.ConstructorInfo[] GetConstructors(System.Reflection.BindingFlags bindingAttr), …
+GetCustomAttributes                   Method     System.Object[] GetCustomAttributes(bool inherit), System.Object[] GetCustomAttributes(type attri…
+GetCustomAttributesData               Method     System.Collections.Generic.IList[System.Reflection.CustomAttributeData] GetCustomAttributesData()
+GetDeclaredEvent                      Method     System.Reflection.EventInfo GetDeclaredEvent(string name)
+GetDeclaredField                      Method     System.Reflection.FieldInfo GetDeclaredField(string name)
+GetDeclaredMethod                     Method     System.Reflection.MethodInfo GetDeclaredMethod(string name)
+GetDeclaredMethods                    Method     System.Collections.Generic.IEnumerable[System.Reflection.MethodInfo] GetDeclaredMethods(string na…
+GetDeclaredNestedType                 Method     System.Reflection.TypeInfo GetDeclaredNestedType(string name)
+GetDeclaredProperty                   Method     System.Reflection.PropertyInfo GetDeclaredProperty(string name)
+GetDefaultMembers                     Method     System.Reflection.MemberInfo[] GetDefaultMembers()
+GetElementType                        Method     type GetElementType()
+GetEnumName                           Method     string GetEnumName(System.Object value)
+GetEnumNames                          Method     string[] GetEnumNames()
+GetEnumUnderlyingType                 Method     type GetEnumUnderlyingType()
+GetEnumValues                         Method     array GetEnumValues()
+GetEnumValuesAsUnderlyingType         Method     array GetEnumValuesAsUnderlyingType()
+GetEvent                              Method     System.Reflection.EventInfo GetEvent(string name, System.Reflection.BindingFlags bindingAttr), Sy…
+GetEvents                             Method     System.Reflection.EventInfo[] GetEvents(System.Reflection.BindingFlags bindingAttr), System.Refle…
+GetField                              Method     System.Reflection.FieldInfo GetField(string name, System.Reflection.BindingFlags bindingAttr), Sy…
+GetFields                             Method     System.Reflection.FieldInfo[] GetFields(System.Reflection.BindingFlags bindingAttr), System.Refle…
+GetFunctionPointerCallingConventions  Method     type[] GetFunctionPointerCallingConventions()
+GetFunctionPointerParameterTypes      Method     type[] GetFunctionPointerParameterTypes()
+GetFunctionPointerReturnType          Method     type GetFunctionPointerReturnType()
+GetGenericArguments                   Method     type[] GetGenericArguments()
+GetGenericParameterConstraints        Method     type[] GetGenericParameterConstraints()
+GetGenericTypeDefinition              Method     type GetGenericTypeDefinition()
+GetHashCode                           Method     int GetHashCode()
+GetInterface                          Method     type GetInterface(string fullname, bool ignoreCase), type GetInterface(string name)
+GetInterfaceMap                       Method     System.Reflection.InterfaceMapping GetInterfaceMap(type interfaceType)
+GetInterfaces                         Method     type[] GetInterfaces()
+GetMember                             Method     System.Reflection.MemberInfo[] GetMember(string name, System.Reflection.MemberTypes type, System.…
+GetMembers                            Method     System.Reflection.MemberInfo[] GetMembers(System.Reflection.BindingFlags bindingAttr), System.Ref…
+GetMemberWithSameMetadataDefinitionAs Method     System.Reflection.MemberInfo GetMemberWithSameMetadataDefinitionAs(System.Reflection.MemberInfo m…
+GetMethod                             Method     System.Reflection.MethodInfo GetMethod(string name), System.Reflection.MethodInfo GetMethod(strin…
+GetMethods                            Method     System.Reflection.MethodInfo[] GetMethods(System.Reflection.BindingFlags bindingAttr), System.Ref…
+GetNestedType                         Method     type GetNestedType(string fullname, System.Reflection.BindingFlags bindingAttr), type GetNestedTy…
+GetNestedTypes                        Method     type[] GetNestedTypes(System.Reflection.BindingFlags bindingAttr), type[] GetNestedTypes()
+GetOptionalCustomModifiers            Method     type[] GetOptionalCustomModifiers()
+GetProperties                         Method     System.Reflection.PropertyInfo[] GetProperties(System.Reflection.BindingFlags bindingAttr), Syste…
+GetProperty                           Method     System.Reflection.PropertyInfo GetProperty(string name), System.Reflection.PropertyInfo GetProper…
+GetRequiredCustomModifiers            Method     type[] GetRequiredCustomModifiers()
+GetType                               Method     type GetType()
+GetTypeInfo                           Method     System.Reflection.TypeInfo IReflectableType.GetTypeInfo()
+HasSameMetadataDefinitionAs           Method     bool HasSameMetadataDefinitionAs(System.Reflection.MemberInfo other)
+InvokeMember                          Method     System.Object InvokeMember(string name, System.Reflection.BindingFlags bindingFlags, System.Refle…
+IsAssignableFrom                      Method     bool IsAssignableFrom(System.Reflection.TypeInfo typeInfo), bool IsAssignableFrom(type c)
+IsAssignableTo                        Method     bool IsAssignableTo(type targetType)
+IsDefined                             Method     bool IsDefined(type attributeType, bool inherit), bool ICustomAttributeProvider.IsDefined(type at…
+IsEnumDefined                         Method     bool IsEnumDefined(System.Object value)
+IsEquivalentTo                        Method     bool IsEquivalentTo(type other)
+IsInstanceOfType                      Method     bool IsInstanceOfType(System.Object o)
+IsSubclassOf                          Method     bool IsSubclassOf(type type)
+MakeArrayType                         Method     type MakeArrayType(), type MakeArrayType(int rank)
+MakeByRefType                         Method     type MakeByRefType()
+MakeGenericType                       Method     type MakeGenericType(Params type[] typeArguments)
+MakePointerType                       Method     type MakePointerType()
+ToString                              Method     string ToString()
+Assembly                              Property   System.Reflection.Assembly Assembly {get;}
+AssemblyQualifiedName                 Property   string AssemblyQualifiedName {get;}
+Attributes                            Property   System.Reflection.TypeAttributes Attributes {get;}
+BaseType                              Property   type BaseType {get;}
+ContainsGenericParameters             Property   bool ContainsGenericParameters {get;}
+CustomAttributes                      Property   System.Collections.Generic.IEnumerable[System.Reflection.CustomAttributeData] CustomAttributes {g…
+DeclaredConstructors                  Property   System.Collections.Generic.IEnumerable[System.Reflection.ConstructorInfo] DeclaredConstructors {g…
+DeclaredEvents                        Property   System.Collections.Generic.IEnumerable[System.Reflection.EventInfo] DeclaredEvents {get;}
+DeclaredFields                        Property   System.Collections.Generic.IEnumerable[System.Reflection.FieldInfo] DeclaredFields {get;}
+DeclaredMembers                       Property   System.Collections.Generic.IEnumerable[System.Reflection.MemberInfo] DeclaredMembers {get;}
+DeclaredMethods                       Property   System.Collections.Generic.IEnumerable[System.Reflection.MethodInfo] DeclaredMethods {get;}
+DeclaredNestedTypes                   Property   System.Collections.Generic.IEnumerable[System.Reflection.TypeInfo] DeclaredNestedTypes {get;}
+DeclaredProperties                    Property   System.Collections.Generic.IEnumerable[System.Reflection.PropertyInfo] DeclaredProperties {get;}
+DeclaringMethod                       Property   System.Reflection.MethodBase DeclaringMethod {get;}
+DeclaringType                         Property   type DeclaringType {get;}
+FullName                              Property   string FullName {get;}
+GenericParameterAttributes            Property   System.Reflection.GenericParameterAttributes GenericParameterAttributes {get;}
+GenericParameterPosition              Property   int GenericParameterPosition {get;}
+GenericTypeArguments                  Property   type[] GenericTypeArguments {get;}
+GenericTypeParameters                 Property   type[] GenericTypeParameters {get;}
+GUID                                  Property   guid GUID {get;}
+HasElementType                        Property   bool HasElementType {get;}
+ImplementedInterfaces                 Property   System.Collections.Generic.IEnumerable[type] ImplementedInterfaces {get;}
+IsAbstract                            Property   bool IsAbstract {get;}
+IsAnsiClass                           Property   bool IsAnsiClass {get;}
+IsArray                               Property   bool IsArray {get;}
+IsAutoClass                           Property   bool IsAutoClass {get;}
+IsAutoLayout                          Property   bool IsAutoLayout {get;}
+IsByRef                               Property   bool IsByRef {get;}
+IsByRefLike                           Property   bool IsByRefLike {get;}
+IsClass                               Property   bool IsClass {get;}
+IsCollectible                         Property   bool IsCollectible {get;}
+IsCOMObject                           Property   bool IsCOMObject {get;}
+IsConstructedGenericType              Property   bool IsConstructedGenericType {get;}
+IsContextful                          Property   bool IsContextful {get;}
+IsEnum                                Property   bool IsEnum {get;}
+IsExplicitLayout                      Property   bool IsExplicitLayout {get;}
+IsFunctionPointer                     Property   bool IsFunctionPointer {get;}
+IsGenericMethodParameter              Property   bool IsGenericMethodParameter {get;}
+IsGenericParameter                    Property   bool IsGenericParameter {get;}
+IsGenericType                         Property   bool IsGenericType {get;}
+IsGenericTypeDefinition               Property   bool IsGenericTypeDefinition {get;}
+IsGenericTypeParameter                Property   bool IsGenericTypeParameter {get;}
+IsImport                              Property   bool IsImport {get;}
+IsInterface                           Property   bool IsInterface {get;}
+IsLayoutSequential                    Property   bool IsLayoutSequential {get;}
+IsMarshalByRef                        Property   bool IsMarshalByRef {get;}
+IsNested                              Property   bool IsNested {get;}
+IsNestedAssembly                      Property   bool IsNestedAssembly {get;}
+IsNestedFamANDAssem                   Property   bool IsNestedFamANDAssem {get;}
+IsNestedFamily                        Property   bool IsNestedFamily {get;}
+IsNestedFamORAssem                    Property   bool IsNestedFamORAssem {get;}
+IsNestedPrivate                       Property   bool IsNestedPrivate {get;}
+IsNestedPublic                        Property   bool IsNestedPublic {get;}
+IsNotPublic                           Property   bool IsNotPublic {get;}
+IsPointer                             Property   bool IsPointer {get;}
+IsPrimitive                           Property   bool IsPrimitive {get;}
+IsPublic                              Property   bool IsPublic {get;}
+IsSealed                              Property   bool IsSealed {get;}
+IsSecurityCritical                    Property   bool IsSecurityCritical {get;}
+IsSecuritySafeCritical                Property   bool IsSecuritySafeCritical {get;}
+IsSecurityTransparent                 Property   bool IsSecurityTransparent {get;}
+IsSerializable                        Property   bool IsSerializable {get;}
+IsSignatureType                       Property   bool IsSignatureType {get;}
+IsSpecialName                         Property   bool IsSpecialName {get;}
+IsSZArray                             Property   bool IsSZArray {get;}
+IsTypeDefinition                      Property   bool IsTypeDefinition {get;}
+IsUnicodeClass                        Property   bool IsUnicodeClass {get;}
+IsUnmanagedFunctionPointer            Property   bool IsUnmanagedFunctionPointer {get;}
+IsValueType                           Property   bool IsValueType {get;}
+IsVariableBoundArray                  Property   bool IsVariableBoundArray {get;}
+IsVisible                             Property   bool IsVisible {get;}
+MemberType                            Property   System.Reflection.MemberTypes MemberType {get;}
+MetadataToken                         Property   int MetadataToken {get;}
+Module                                Property   System.Reflection.Module Module {get;}
+Name                                  Property   string Name {get;}
+Namespace                             Property   string Namespace {get;}
+ReflectedType                         Property   type ReflectedType {get;}
+StructLayoutAttribute                 Property   System.Runtime.InteropServices.StructLayoutAttribute StructLayoutAttribute {get;}
+TypeHandle                            Property   System.RuntimeTypeHandle TypeHandle {get;}
+TypeInitializer                       Property   System.Reflection.ConstructorInfo TypeInitializer {get;}
+UnderlyingSystemType                  Property   type UnderlyingSystemType {get;}
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[12:27]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[system.math].fullname
+System.Math
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[12:30]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[system.math].membertype
+TypeInfo
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[12:31]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[system.math].getfields
+
+OverloadDefinitions
+-------------------
+System.Reflection.FieldInfo[] GetFields(System.Reflection.BindingFlags bindingAttr)
+System.Reflection.FieldInfo[] GetFields()
+System.Reflection.FieldInfo[] IReflect.GetFields(System.Reflection.BindingFlags bindingAttr)
+
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[12:31]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[system.math]|gm -Static methods
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[12:32]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[system.math]|gm -Static 
+
+   TypeName: System.Math
+
+Name                   MemberType Definition
+----                   ---------- ----------
+Abs                    Method     static short Abs(short value), static int Abs(int value), static long Abs(long value), static System.IntPtr Abs(…
+Acos                   Method     static double Acos(double d)
+Acosh                  Method     static double Acosh(double d)
+Asin                   Method     static double Asin(double d)
+Asinh                  Method     static double Asinh(double d)
+Atan                   Method     static double Atan(double d)
+Atan2                  Method     static double Atan2(double y, double x)
+Atanh                  Method     static double Atanh(double d)
+BigMul                 Method     static ulong BigMul(uint a, uint b), static long BigMul(int a, int b), static ulong BigMul(ulong a, ulong b, [re…
+BitDecrement           Method     static double BitDecrement(double x)
+BitIncrement           Method     static double BitIncrement(double x)
+Cbrt                   Method     static double Cbrt(double d)
+Ceiling                Method     static double Ceiling(double a), static decimal Ceiling(decimal d)
+Clamp                  Method     static byte Clamp(byte value, byte min, byte max), static decimal Clamp(decimal value, decimal min, decimal max)…
+CopySign               Method     static double CopySign(double x, double y)
+Cos                    Method     static double Cos(double d)
+Cosh                   Method     static double Cosh(double value)
+DivRem                 Method     static int DivRem(int a, int b, [ref] int result), static long DivRem(long a, long b, [ref] long result), static…
+Equals                 Method     static bool Equals(System.Object objA, System.Object objB)
+Exp                    Method     static double Exp(double d)
+Floor                  Method     static double Floor(double d), static decimal Floor(decimal d)
+FusedMultiplyAdd       Method     static double FusedMultiplyAdd(double x, double y, double z)
+IEEERemainder          Method     static double IEEERemainder(double x, double y)
+ILogB                  Method     static int ILogB(double x)
+Log                    Method     static double Log(double d), static double Log(double a, double newBase)
+Log10                  Method     static double Log10(double d)
+Log2                   Method     static double Log2(double x)
+Max                    Method     static byte Max(byte val1, byte val2), static decimal Max(decimal val1, decimal val2), static double Max(double …
+MaxMagnitude           Method     static double MaxMagnitude(double x, double y)
+Min                    Method     static byte Min(byte val1, byte val2), static decimal Min(decimal val1, decimal val2), static double Min(double …
+MinMagnitude           Method     static double MinMagnitude(double x, double y)
+Pow                    Method     static double Pow(double x, double y)
+ReciprocalEstimate     Method     static double ReciprocalEstimate(double d)
+ReciprocalSqrtEstimate Method     static double ReciprocalSqrtEstimate(double d)
+ReferenceEquals        Method     static bool ReferenceEquals(System.Object objA, System.Object objB)
+Round                  Method     static decimal Round(decimal d), static decimal Round(decimal d, int decimals), static decimal Round(decimal d, …
+ScaleB                 Method     static double ScaleB(double x, int n)
+Sign                   Method     static int Sign(decimal value), static int Sign(double value), static int Sign(short value), static int Sign(int…
+Sin                    Method     static double Sin(double a)
+SinCos                 Method     static System.ValueTuple[double,double] SinCos(double x)
+Sinh                   Method     static double Sinh(double value)
+Sqrt                   Method     static double Sqrt(double d)
+Tan                    Method     static double Tan(double a)
+Tanh                   Method     static double Tanh(double value)
+Truncate               Method     static decimal Truncate(decimal d), static double Truncate(double d)
+E                      Property   static double E {get;}
+PI                     Property   static double PI {get;}
+Tau                    Property   static double Tau {get;}
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[12:32]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>sprofile math]
+
+C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1:935:     @{name = "GB"; expression = { [math]::round($_.sum / (1Gb), 6) } }  | 
+format-list *
+C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1:947:    @{name = "GB"; expression = { [math]::round($_.sum / (1Gb), 6) } }  | format-list 
+*
+C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1:1174:            where-object { $_.$($Property).date -eq [datetime]::today.Adddays( -
+[System.Math]::abs($days)) } |`
+C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1:1179:            where-object { $_.$($Property).date -ge [datetime]::today.Adddays( -
+[System.Math]::abs($days)) } |`
+C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1:1196:        where-object { $_.$($Property).date -ge [datetime]::today.Adddays( -
+[System.Math]::abs($days)) } |`
+C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1:1801:[math] | gm -Static # shows methods and properties of [math]
+C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1:1802:[math]::pi #property
+C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1:1803:[math]::round(12.789,2) #method`
+C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1:1840:# [System.Math] | Get-Member -Static #includes properties and methods. The Propeties 
+are constants like PI and E.
+C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1:1841:# [System.Math] | Get-Member -Static -MemberType Methods
+C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1:1854:# [math]|get-member -static
+C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1:1855:# [math]::pow(256,22)
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[12:32]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>[system.math]|gm -Static -membertype methods
+
+   TypeName: System.Math
+
+Name                   MemberType Definition
+----                   ---------- ----------
+Abs                    Method     static short Abs(short value), static int Abs(int value), static long Abs(long value), static System.IntPtr Abs(…
+Acos                   Method     static double Acos(double d)
+Acosh                  Method     static double Acosh(double d)
+Asin                   Method     static double Asin(double d)
+Asinh                  Method     static double Asinh(double d)
+Atan                   Method     static double Atan(double d)
+Atan2                  Method     static double Atan2(double y, double x)
+Atanh                  Method     static double Atanh(double d)
+BigMul                 Method     static ulong BigMul(uint a, uint b), static long BigMul(int a, int b), static ulong BigMul(ulong a, ulong b, [re…
+BitDecrement           Method     static double BitDecrement(double x)
+BitIncrement           Method     static double BitIncrement(double x)
+Cbrt                   Method     static double Cbrt(double d)
+Ceiling                Method     static double Ceiling(double a), static decimal Ceiling(decimal d)
+Clamp                  Method     static byte Clamp(byte value, byte min, byte max), static decimal Clamp(decimal value, decimal min, decimal max)…
+CopySign               Method     static double CopySign(double x, double y)
+Cos                    Method     static double Cos(double d)
+Cosh                   Method     static double Cosh(double value)
+DivRem                 Method     static int DivRem(int a, int b, [ref] int result), static long DivRem(long a, long b, [ref] long result), static…
+Equals                 Method     static bool Equals(System.Object objA, System.Object objB)
+Exp                    Method     static double Exp(double d)
+Floor                  Method     static double Floor(double d), static decimal Floor(decimal d)
+FusedMultiplyAdd       Method     static double FusedMultiplyAdd(double x, double y, double z)
+IEEERemainder          Method     static double IEEERemainder(double x, double y)
+ILogB                  Method     static int ILogB(double x)
+Log                    Method     static double Log(double d), static double Log(double a, double newBase)
+Log10                  Method     static double Log10(double d)
+Log2                   Method     static double Log2(double x)
+Max                    Method     static byte Max(byte val1, byte val2), static decimal Max(decimal val1, decimal val2), static double Max(double …
+MaxMagnitude           Method     static double MaxMagnitude(double x, double y)
+Min                    Method     static byte Min(byte val1, byte val2), static decimal Min(decimal val1, decimal val2), static double Min(double …
+MinMagnitude           Method     static double MinMagnitude(double x, double y)
+Pow                    Method     static double Pow(double x, double y)
+ReciprocalEstimate     Method     static double ReciprocalEstimate(double d)
+ReciprocalSqrtEstimate Method     static double ReciprocalSqrtEstimate(double d)
+ReferenceEquals        Method     static bool ReferenceEquals(System.Object objA, System.Object objB)
+Round                  Method     static decimal Round(decimal d), static decimal Round(decimal d, int decimals), static decimal Round(decimal d, …
+ScaleB                 Method     static double ScaleB(double x, int n)
+Sign                   Method     static int Sign(decimal value), static int Sign(double value), static int Sign(short value), static int Sign(int…
+Sin                    Method     static double Sin(double a)
+SinCos                 Method     static System.ValueTuple[double,double] SinCos(double x)
+Sinh                   Method     static double Sinh(double value)
+Sqrt                   Method     static double Sqrt(double d)
+Tan                    Method     static double Tan(double a)
+Tanh                   Method     static double Tanh(double value)
+Truncate               Method     static decimal Truncate(decimal d), static double Truncate(double d)
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[12:33]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>$([system.math]|gm -Static -membertype methods).count
+45
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[12:34]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>$([system.math]|gm -Static).count
+48
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[12:35]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>$([system.math]|gm -Static -membertype properties).count
+3
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[12:35]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>editprofile
+
+fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[12:35]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>cd dropbox\private\q
+Set-Location: Cannot find path 'C:\Users\freds\OneDrive\PowershellScripts\MyStuff\dropbox\private\q' because it does not exist.
+Set-Location: Cannot find path 'C:\Users\freds\OneDrive\PowershellScripts\MyStuff\dropbox\private\q' because it does not exist.
+⨯ fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[12:40]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>cd dropbox:
+Set-Location: Cannot find drive. A drive with the name 'dropbox' does not exist.
+Set-Location: Cannot find drive. A drive with the name 'dropbox' does not exist.
+⨯ fred@BOOK4EDGE  ~\OneDrive\PowershellScripts\MyStuff   master ≣ +19 ~5 -4 ! [140G[12:40]
+❯ ]2;C:\...\PowershellScripts\MyStuff]9;9;"C:\Users\freds\OneDrive\PowershellScripts\MyStuff"
+PS>cd $env:dropbox\private\q
+fred@BOOK4EDGE  ~\Dropbox\Private\Q [140G[12:40]
+❯ ]2;C:\...\Private\Q]9;9;"C:\Users\freds\Dropbox\Private\Q"
+PS>lwt
+
+    Directory: C:\Users\freds\Dropbox\Private\Q
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---          04/01/2017  1:23 AM           2079 LoadTurboTax.ps1
+-a---          05/31/2019 10:33 PM            109 Quicken.code-workspace
+-a---          05/13/2020  2:52 PM       13135872 HarrietClosedCrownClassic2020-05-12.qdf
+-a---          10/26/2020 12:35 PM          10063 SouthernStockPurchases.xlsx
+-a---          10/26/2020  1:34 PM         404282 SouthernClassAction.pdf
+-a---          01/10/2021  1:43 AM         193367 FixAguereStockEntriesPlaceHolders.xlsx
+-a---          02/09/2021  7:41 PM          19499 southernShares.xlsx
+-a---          03/12/2021  8:38 PM       13917824 harriet.qdf.old
+-a---          03/15/2021  7:49 PM       13926400 harriet.qdf
+-a---          02/16/2024  8:09 PM             43 Q.code-workspace
+da---          06/20/2024 10:33 AM                .vscode
+-a---          08/02/2024  9:15 PM      230811280 home.qdf.2024-08-02.old
+-a---          08/05/2024 10:53 PM         303280 home_SyncLog.dat
+-a---          08/05/2024 10:55 PM            480 homeOFXLOG.DAT
+-a---          07/08/2025 10:03 PM          29348 LiberationDay.xlsx
+-a---          08/06/2025  1:27 PM          10371 ericComfortShoes.xlsx
+-a---          08/21/2025 11:29 AM            219 .gitignore
+-a---          10/01/2025  2:25 AM           2236 README.md
+-a---          10/06/2025  5:24 PM          27127 LoadQuickenDb.ps1
+-a---          10/11/2025 11:44 AM            409 ReadMeQuicken.txt
+-a---          10/31/2025  7:13 PM      245673984 Home.qdf.old
+-a---          10/31/2025  7:13 PM           9982 QuickenTranscript.out.old
+-a---          10/31/2025 11:54 PM      245673984 Home.qdf
+-a---          10/31/2025 11:54 PM          10007 QuickenTranscript.out
+
+fred@BOOK4EDGE  ~\Dropbox\Private\Q [140G[12:40]
+❯ ]2;C:\...\Private\Q]9;9;"C:\Users\freds\Dropbox\Private\Q"
+PS>lwt
+
+    Directory: C:\Users\freds\Dropbox\Private\Q
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---          04/01/2017  1:23 AM           2079 LoadTurboTax.ps1
+-a---          05/31/2019 10:33 PM            109 Quicken.code-workspace
+-a---          05/13/2020  2:52 PM       13135872 HarrietClosedCrownClassic2020-05-12.qdf
+-a---          10/26/2020 12:35 PM          10063 SouthernStockPurchases.xlsx
+-a---          10/26/2020  1:34 PM         404282 SouthernClassAction.pdf
+-a---          01/10/2021  1:43 AM         193367 FixAguereStockEntriesPlaceHolders.xlsx
+-a---          02/09/2021  7:41 PM          19499 southernShares.xlsx
+-a---          03/12/2021  8:38 PM       13917824 harriet.qdf.old
+-a---          03/15/2021  7:49 PM       13926400 harriet.qdf
+-a---          02/16/2024  8:09 PM             43 Q.code-workspace
+da---          06/20/2024 10:33 AM                .vscode
+-a---          08/02/2024  9:15 PM      230811280 home.qdf.2024-08-02.old
+-a---          08/05/2024 10:53 PM         303280 home_SyncLog.dat
+-a---          08/05/2024 10:55 PM            480 homeOFXLOG.DAT
+-a---          07/08/2025 10:03 PM          29348 LiberationDay.xlsx
+-a---          08/06/2025  1:27 PM          10371 ericComfortShoes.xlsx
+-a---          08/21/2025 11:29 AM            219 .gitignore
+-a---          10/01/2025  2:25 AM           2236 README.md
+-a---          10/06/2025  5:24 PM          27127 LoadQuickenDb.ps1
+-a---          10/11/2025 11:44 AM            409 ReadMeQuicken.txt
+-a---          10/31/2025  7:13 PM      245673984 Home.qdf.old
+-a---          10/31/2025  7:13 PM           9982 QuickenTranscript.out.old
+-a---          10/31/2025 11:54 PM      245673984 Home.qdf
+-a---          10/31/2025 11:54 PM          10007 QuickenTranscript.out
+
+fred@BOOK4EDGE  ~\Dropbox\Private\Q [140G[12:41]
+❯ ]2;C:\...\Private\Q]9;9;"C:\Users\freds\Dropbox\Private\Q"
+PS>code .\LoadQuickenDb.ps1
+
+fred@BOOK4EDGE  ~\Dropbox\Private\Q [140G[12:41]
+❯ ]2;C:\...\Private\Q]9;9;"C:\Users\freds\Dropbox\Private\Q"
+PS>help
+PS>TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+fred@BOOK4EDGE  ~\Dropbox\Private\Q [140G[12:53]
+❯ ]2;C:\...\Private\Q]9;9;"C:\Users\freds\Dropbox\Private\Q"
+PS>fjdoit
+
+ NPM(K)    PM(M)      WS(M)     CPU(s)      Id  SI ProcessName
+ ------    -----      -----     ------      --  -- -----------
+      3     0.44       3.73       0.03   24700   2 UsoClient
+WARNING: In function fjStartQuicken: 12:59:47
+Using parameters from ParameterSet: Quicken
+String is C:\Users\freds\Dropbox\Private\Q\LoadQuickenDb.ps1
+
+[pwsh  -noprofile  -command & C:\Users\freds\Dropbox\Private\Q\LoadQuickenDb.ps1 -Filename Home.qdf -SourceDir C:\Users\freds\Dropbox\Private\Q -DestinationDir C:\Users\freds\Documents\Quicken -Priority  ]
+
+Using these parameters
+
+
+Name  : ArgumentList
+Key   : ArgumentList
+Value : pwsh  -noprofile  -command & C:\Users\freds\Dropbox\Private\Q\LoadQuickenDb.ps1 -Filename Home.qdf -SourceDir
+        C:\Users\freds\Dropbox\Private\Q -DestinationDir C:\Users\freds\Documents\Quicken -Priority
+
+Name  : FilePath
+Key   : FilePath
+Value : conhost.exe
+
+fred@BOOK4EDGE  ~\Dropbox\Private\Q [140G[12:59]
+❯ ]2;C:\...\Private\Q]9;9;"C:\Users\freds\Dropbox\Private\Q"
+PS>[System.Environmenton]::commandline
+InvalidOperation: Unable to find type [System.Environmenton].
+InvalidOperation: Unable to find type [System.Environmenton].
+⨯ fred@BOOK4EDGE  ~\Dropbox\Private\Q [140G[13:02]
+❯ ]2;C:\...\Private\Q]9;9;"C:\Users\freds\Dropbox\Private\Q"
+PS>[System.Environment]::commandline
+"C:\Program Files\PowerShell\7-preview\pwsh.dll"
+fred@BOOK4EDGE  ~\Dropbox\Private\Q [140G[13:02]
+❯ ]2;C:\...\Private\Q]9;9;"C:\Users\freds\Dropbox\Private\Q"
+PS>cd downloads
+Set-Location: Cannot find path 'C:\Users\freds\Dropbox\Private\Q\downloads' because it does not exist.
+Set-Location: Cannot find path 'C:\Users\freds\Dropbox\Private\Q\downloads' because it does not exist.
+⨯ fred@BOOK4EDGE  ~\Dropbox\Private\Q [140G[13:04]
+❯ ]2;C:\...\Private\Q]9;9;"C:\Users\freds\Dropbox\Private\Q"
+PS>cd $env:home
+fred@BOOK4EDGE  ~ [140G[13:04]
+❯ ]2;C:\Users\freds]9;9;"C:\Users\freds"
+PS>$pshome
+C:\Program Files\PowerShell\7-preview
+fred@BOOK4EDGE  ~ [140G[13:05]
+❯ ]2;C:\Users\freds]9;9;"C:\Users\freds"
+PS>cd $home
+fred@BOOK4EDGE  ~ [140G[13:05]
+❯ ]2;C:\Users\freds]9;9;"C:\Users\freds"
+PS>cd .\Downloads\
+fred@BOOK4EDGE  ~\Downloads [140G[13:05]
+❯ ]2;C:\...\freds\Downloads]9;9;"C:\Users\freds\Downloads"
+PS>lwt
+
+    Directory: C:\Users\freds\Downloads
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---          07/28/2024 11:57 AM         172696 DNSBench.exe
+-a---          09/26/2024  7:56 PM       13728752 systemINformation.txt
+-a---          10/07/2024  2:25 PM         346143 Complete_with_Docusign_Dojolvi_UltraCare_Sta.pdf
+-a---          10/07/2024  2:36 PM         342720 Dojolvi Patient Start Form.Vockley.pdf
+-a---          10/22/2024  7:58 PM        1813733 PJ.SnapDragonSummit.2024-10-22.HEIC
+-a---          10/22/2024  8:01 PM        2679985 PJ.SnapDragonSummit.2024-10-22.jpg
+-a---          10/22/2024 10:43 PM         338327 2024-10-22.TomeyProgressNotes.pdf
+-ar--          10/23/2024 10:15 PM         686486 PJsGym.jpeg
+-a---          11/11/2024 10:53 PM        1393485 LLMs-from-scratch-main.zip
+-a---          11/20/2024  6:39 PM          86883 Editor guidance details_English.docx
+-a---          11/26/2024 10:14 PM          40971 2024-07-02.Blood.Tomey.pdf
+-a---          12/24/2024  6:44 PM        2013584 FredAsLeon.png
+-a---          02/25/2025 11:19 PM          31223 Ferritin History _ Fatty Liver (2018) Endoscopy_Colonoscopy and Capsule
+                                                  Endoscopy_2023-10-23_6-42_PM.html
+-a---          02/26/2025 12:16 PM       32075520 WarpSetup-arm64.exe
+d----          03/06/2025  5:46 PM                Samsung Gallery Downloads
+-a---          03/07/2025  3:07 AM           1309 fredmidi.txt
+-a---          03/12/2025  1:18 PM        3536462 MSUAC_2177-2.zip
+-a---          03/12/2025  2:34 PM       78107064 MelodicsInstaller.exe
+-a---          03/17/2025  6:58 PM      372773592 Windows_PC_TurboTax_Download.exe
+-a---          03/23/2025  3:09 AM        3690029 HandWithStim.png
+-a---          03/23/2025  3:13 AM         760598 HandWithStim.jpg
+-a---          03/23/2025  3:35 AM         179741 aHand.jpg
+-a---          03/28/2025 12:45 AM         152974 FredSwimmingAquaCrestPool.JPG
+-a---          03/28/2025  8:10 PM       33858464 inSSIDerSetup.exe
+-a---          03/28/2025  9:28 PM        2292989 2022-10-19. JengaTower.Tribeca.KellieHayden.jpg
+-a---          04/01/2025 10:45 PM       21404713 PowershellScripts.zip
+-a---          04/02/2025 12:24 PM     5798223557 qBackup.zip
+-a---          04/16/2025 11:48 AM         784465 Clip (April 16 2025 at 1140 AM).mp4
+-a---          04/16/2025 11:52 AM         598265 rotating_molecule2.mp4
+-a---          04/16/2025  1:49 PM         104780 HIPAA release fillable.pdf
+-a---          04/16/2025  1:58 PM         238556 HIPAA release fillable2025-04-16.pdf
+-a---          04/20/2025  2:31 AM      458990531 AnythingLLMDesktop-Arm64.exe
+-a---          05/02/2025  1:20 AM       16260319 This is the title.mp4
+-a---          05/03/2025 12:15 AM       22292974 SUPD-4.08.1.3348-V4-ARM64.zip
+-a---          05/03/2025  5:50 PM       10880224 Update.cab
+d----          05/03/2025  6:51 PM                Cab
+-a---          05/08/2025  2:25 AM           6504 It sounds like your custom protocol.txt
+-a---          05/28/2025  2:09 PM           1071 Boot into SAFE Mode.txt
+-a---          05/30/2025  1:57 AM        1939949 PJDeeVidAI.mp4
+-a---          05/30/2025  6:49 PM          60723 YetAnotherCPT2.jpg
+-a---          06/08/2025 12:16 AM        2558397 voices from an old shoebox.pdf
+-a---          06/11/2025 11:53 PM      116142612 ChairExercise.webm
+-a---          06/15/2025  1:57 PM       97996712 Untitled video.mp4
+-a---          06/17/2025  2:21 PM         341706 Fred Arthur Joel Carol Dan with Ava June 2007.jpg
+-a---          06/17/2025  2:42 PM         338219 Mara with Ava June 2007 (1).JPG
+-a---          07/09/2025  6:42 PM           7207 Scripts_Examples_PS.zip
+-a---          07/16/2025  1:36 AM           4475 2025-07-15.Arnie.txt
+-a---          07/25/2025 10:04 PM      579100200 registry.2025-07-25.reg
+-a---          08/11/2025 11:22 AM           2303 Billing History.xls
+d----          08/22/2025 11:20 AM                Phone Link
+-a---          08/27/2025 12:08 PM           1235 BORSCHT BELT.md
+-a---          09/08/2025 12:19 AM          14645 DisputeDetails.D-339735190725.PDF
+-a---          09/17/2025  2:47 PM          14022 fredOutback.xlsx
+-a---          09/18/2025  1:21 AM         204264 FortuneOne.pdf
+-a---          09/24/2025 12:42 PM       22562243 SUPD-5.03.1.3642-V4-ARM64.zip
+-a---          09/24/2025 10:24 PM           5423 SnippingToolFaults.2025-05-16.txt
+-a---          09/24/2025 11:27 PM      106173489 HPSPARKTools-5.03.1.589.zip
+d----          09/24/2025 11:28 PM                HPSPARKTools-5.03.1.589
+-a---          09/30/2025 12:19 AM         474071 w2RIW_on_tower.jpg
+-a---          10/09/2025 12:08 PM          10819 Dojolvi.16245217_OrderDetails.pdf
+-a---          10/17/2025  3:36 PM         998100 Big Jacobowitz Family Picture July 2023.jpg
+-a---          10/21/2025 10:04 PM         554114 10_21_2025, 10_04_04 PM - Audio - Untitled video.webm
+-a---          10/21/2025 10:50 PM       14717879 10_21_2025, 10_50_25 PM - Webcam - Untitled video.webm
+-a---          10/21/2025 10:50 PM        3005877 10_21_2025, 10_50_25 PM - Screen - Untitled video.webm
+-a---          10/24/2025 12:16 PM          66770 2025-10-01.ProtocolLetterForMaraCardio.Azari.pdf
+-a---          10/28/2025  2:52 PM           8296 liberty.xlsx
+-a---          10/30/2025  8:13 PM            274 charges.txt
+
+fred@BOOK4EDGE  ~\Downloads [140G[13:05]
+❯ ]2;C:\...\freds\Downloads]9;9;"C:\Users\freds\Downloads"
+PS>fjqtrimqbackupfiles -AddDays -0
+WARNING: In function fjqtrimqbackupfiles:
+Files Found: 1
+
+FullName : C:\Users\freds\OneDrive\QBACKUP\Home-2025-11-01.PM01.42.QDF-backup
+
+Retaining file
+
+FullName : C:\Users\freds\OneDrive\QBACKUP\Home-2025-11-01.PM01.42.QDF-backup
+
+fred@BOOK4EDGE  ~\Downloads [140G[13:42]
+❯ ]2;C:\...\freds\Downloads]9;9;"C:\Users\freds\Downloads"
+PS>$PSCommandPath
+
+fred@BOOK4EDGE  ~\Downloads [140G[13:45]
+❯ ]2;C:\...\freds\Downloads]9;9;"C:\Users\freds\Downloads"
+PS>cd $env:dropbox\private\q
+fred@BOOK4EDGE  ~\Dropbox\Private\Q [140G[13:45]
+❯ ]2;C:\...\Private\Q]9;9;"C:\Users\freds\Dropbox\Private\Q"
+PS>code .\LoadQuickenDb.ps1
+
+fred@BOOK4EDGE  ~\Dropbox\Private\Q [140G[13:45]
+❯ ]2;C:\...\Private\Q]9;9;"C:\Users\freds\Dropbox\Private\Q"
+PS>fjquicken
+WARNING: In function fjStartQuicken: 01:47:33
+Using parameters from ParameterSet: Quicken
+String is C:\Users\freds\Dropbox\Private\Q\LoadQuickenDb.ps1
+
+[pwsh  -noprofile  -command & C:\Users\freds\Dropbox\Private\Q\LoadQuickenDb.ps1 -Filename Home.qdf -SourceDir C:\Users\freds\Dropbox\Private\Q -DestinationDir C:\Users\freds\Documents\Quicken -Priority  ]
+
+Using these parameters
+
+Name  : ArgumentList
+Key   : ArgumentList
+Value : pwsh  -noprofile  -command & C:\Users\freds\Dropbox\Private\Q\LoadQuickenDb.ps1 -Filename Home.qdf -SourceDir
+        C:\Users\freds\Dropbox\Private\Q -DestinationDir C:\Users\freds\Documents\Quicken -Priority
+
+Name  : FilePath
+Key   : FilePath
+Value : conhost.exe
+
+fred@BOOK4EDGE  ~\Dropbox\Private\Q [140G[13:47]
+❯ ]2;C:\...\Private\Q]9;9;"C:\Users\freds\Dropbox\Private\Q"
+PS>fjfba
+fred@BOOK4EDGE  ~\Dropbox\Private\Q [140G[01:46]
+❯ ]2;C:\...\Private\Q]9;9;"C:\Users\freds\Dropbox\Private\Q"
+PS>fjdoit
+
+ NPM(K)    PM(M)      WS(M)     CPU(s)      Id  SI ProcessName
+ ------    -----      -----     ------      --  -- -----------
+      6     2.02       9.26       0.00   39776   2 UsoClient
+WARNING: In function fjStartQuicken: 11:51:33
+Using parameters from ParameterSet: Quicken
+String is C:\Users\freds\Dropbox\Private\Q\LoadQuickenDb.ps1
+
+[pwsh  -noprofile  -command & C:\Users\freds\Dropbox\Private\Q\LoadQuickenDb.ps1 -Filename Home.qdf -SourceDir C:\Users\freds\Dropbox\Private\Q -DestinationDir C:\Users\freds\Documents\Quicken -Priority  ]
+
+Using these parameters
+
+
+Name  : ArgumentList
+Key   : ArgumentList
+Value : pwsh  -noprofile  -command & C:\Users\freds\Dropbox\Private\Q\LoadQuickenDb.ps1 -Filename Home.qdf -SourceDir
+        C:\Users\freds\Dropbox\Private\Q -DestinationDir C:\Users\freds\Documents\Quicken -Priority
+
+Name  : FilePath
+Key   : FilePath
+Value : conhost.exe
+
+fred@BOOK4EDGE  ~\Dropbox\Private\Q [140G[11:51]
+❯ ]2;C:\...\Private\Q]9;9;"C:\Users\freds\Dropbox\Private\Q"
+PS>code .\LoadQuickenDb.ps1
+
+fred@BOOK4EDGE  ~\Dropbox\Private\Q [140G[11:54]
+❯ ]2;C:\...\Private\Q]9;9;"C:\Users\freds\Dropbox\Private\Q"
+PS>cd $home
+fred@BOOK4EDGE  ~ [140G[11:55]
+❯ ]2;C:\Users\freds]9;9;"C:\Users\freds"
+PS>pwsh -noprofile
+USERDOMAIN                     BOOK4EDGE
+USERDOMAIN_ROAMINGPROFILE      BOOK4EDGE
+USERNAME                       fred
+USERPROFILE                    C:\Users\freds
+windir                         C:\windows
+WSLENV                         WT_SESSION:WT_PROFILE_ID:
+WT_PROFILE_ID                  {6fac9038-3d9f-4a7d-ba7d-b12121f44512}
+WT_SESSION                     b8f8aac8-5fa5-4e1f-af3b-1a3c1431893f
+
+PS C:\Users\freds> exit
+fred@BOOK4EDGE  ~ [140G[11:56]
+❯ ]2;C:\Users\freds]9;9;"C:\Users\freds"
+PS>sprofile $env:home
+>> TerminatingError(Select-String): "The string C:\Users\freds is not a valid regular expression: Invalid pattern 'C:\Users\freds' at offset 4. Unrecognized escape sequence \U."
+Select-String: C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1:654
+Line |
+ 654 |      Select-String -path $profile.CurrentUserAllHosts -Pattern $ThisMa …
+     |      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The string C:\Users\freds is not a valid regular expression: Invalid pattern 'C:\Users\freds' at offset 4. Unrecognized escape sequence \U.
+Select-String: C:\Users\freds\OneDrive\Documents\PowerShell\profile.ps1:654
+Line |
+ 654 |      Select-String -path $profile.CurrentUserAllHosts -Pattern $ThisMa …
+     |      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The string C:\Users\freds is not a valid regular expression: Invalid pattern 'C:\Users\freds' at offset 4. Unrecognized escape sequence \U.
+
+⨯ fred@BOOK4EDGE  ~ [140G[11:59]
+❯ ]2;C:\Users\freds]9;9;"C:\Users\freds"
+PS>sprofile $env:
+At line:1 char:10
++ sprofile $env:
++          ~~~~~
+Variable reference is not valid. ':' was not followed by a valid variable name character. Consider using ${} to delimit the name.
+ParserError: 
+Line |
+   1 |  sprofile $env:
+     |           ~~~~~
+     | Variable reference is not valid. ':' was not followed by a valid variable name character. Consider using ${} to delimit the name.
+
+⨯ fred@BOOK4EDGE  ~ [140G[12:00]
+❯ ]2;C:\Users\freds]9;9;"C:\Users\freds"
+PS>exit
+**********************
+PowerShell transcript end
+End time: 20251102120028
+**********************

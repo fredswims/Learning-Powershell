@@ -1,0 +1,46 @@
+Bookmarks
+got to next bookmark: Cntrl-Alt-L
+Use context menu to add, remove, etc.
+
+
+Snippets
+(select a snippet) Cntl-Alt-J 
+Snippets
+
+Step-by-Step: Add Custom Snippets in VS Code
+1. Open User Snippets
+- Press Ctrl+Shift+P (or F1) to open the Command Palette.
+- Type: Preferences: Configure User Snippets (no good)
+- Type:	Snippets: Configure Snippets
+- Select:
+- powershell.json for PowerShell-specific snippets, or
+- New Global Snippets file for cross-language snippets
+
+2. Define (see example in [powershell.json])
+3. Save
+
+Pro Tips
+- Use $TM_FILENAME or $CURRENT_YEAR for dynamic values
+- You can create language-specific snippets for PowerShell, JSON, Markdown, etc.
+- Organize snippets by function type: logging, diagnostics, headers, etc.
+
+
+
+https://pavolkutaj.medium.com/how-to-find-file-history-with-git-and-visual-studio-code-5d4ea0bc79c
+1. VS Code Timeline feature — easiest view of file history
+In VS Code, run the command
+Explorer: Focus on Timeline View
+Shortcut: CTRL + SHIFT + P → Enter Timeline → Select Explorer: Focus on Timeline View
+
+Explorer: Focus on Folders View
+
+2. VS Code Open in Github Extension
+https://marketplace.visualstudio.com/items?itemName=fabiospampinato.vscode-open-in-github
+Use Open in GitHub — Visual Studio Marketplace
+Shortcut: CTRL + SHIFT + P → Enter File History → Select Open in Github: File History
+
+???
+add setting
+    "files.defaultLanguage": "powershell"
+
+Microsoft.PowerShell.Commands.Internal.Format.FormatEndData

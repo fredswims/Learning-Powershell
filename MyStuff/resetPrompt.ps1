@@ -1,1 +1,2 @@
-Function Prompt { write-host "$(split-path -leaf -path $(get-location))✔" }
+
+Function Prompt { write-host "$(split-path -leaf -path $(get-location))FAJ" }

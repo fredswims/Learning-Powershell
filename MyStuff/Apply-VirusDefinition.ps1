@@ -1,30 +1,43 @@
-Function fjApplyVirusDefinition {
+    [CmdletBinding()]
     param ([Int32]$Seconds = 15)
     # FAJ Sept 2024 
     # File -> 'Apply-VirusDefinition.ps1'
     # https://www.microsoft.com/en-us/wdsi/defenderupdates
     write-warning "In [$PSCommandPath]"
+    Write-Host "=== Invocation ==="
+Write-Host "Command Line: $($MyInvocation.Line)"
+$MyInvocation.Line
+Write-Host "Bound Parameters:"
+$PSBoundParameters | ConvertTo-Json -Depth 3
+Write-Host "Raw Args:"
+$args | ForEach-Object { "`t$_" }
+read-host "Press Enter to continue..."
+[System.Environment]::commandline
+read-host "Press Enter to continue..."
+read-host "MyInvocation Details:"
+$MyInvocation
+Read-Host "Press Enter to continue..."
 
-    $File = (Join-Path $HOME 'Downloads\mpam-fe.exe') # file path to download latest virus definition file.
-    $SourceUrl = "https://go.microsoft.com/fwlink/?LinkID=121721&arch=arm64"
+    try {
+        $File = (Join-Path $HOME 'Downloads\mpam-fe.exe') # file path to download latest virus definition file.
+        $SourceUrl = "https://go.microsoft.com/fwlink/?LinkID=121721&arch=arm64"
     
-    if (test-path -Path $File) { remove-item $File -Verbose }
+        if (test-path -Path $File) { remove-item $File -Verbose }
     
-    # Use Start-BitsTransfer to download the latest virus definition file. 
-    $parameterSplat = @{
-        Source      = $SourceUrl
-        Destination = $File
-        DisplayName = 'Threat detections for Microsoft Defender Antivirus and other Microsoft antimalware.'
-    }
-    Start-BitsTransfer @parameterSplat -verbose
+        # Use Start-BitsTransfer to download the latest virus definition file. 
+        $parameterSplat = @{
+            Source      = $SourceUrl
+            Destination = $File
+            DisplayName = 'Threat detections for Microsoft Defender Antivirus and other Microsoft antimalware.'
+        }
+        Start-BitsTransfer @parameterSplat -verbose
+        write-host "Download complete -> [$File] "
 
-    # apply the file
-    if (test-path $File) { 
-        # wait for file to be applied - like invoke-command but waits for it to complete.
-        Write-Warning "Applying file '$File'..."
+        Write-host "Applying file [$File]"
+        # Apply the file and wait for it to complete.
         start-process -Verbose -Wait -filepath $File
-        write-warning "$File applied"
-
+        write-host "$File applied"
+        
         # open web page with release notes.
         $parameterSplat = @{
             FilePath     = "Chrome.exe"
@@ -33,14 +46,14 @@ Function fjApplyVirusDefinition {
         $parameterSplat
         start-process @parameterSplat -Verbose
     }
-    else {
-        write-error ("File '$File' was not found.") 
+    catch {
+        write-host -ForegroundColor Red "Error in [$PSCommandPath]"
+        write-error $_.Exception.Message
+        Get-Error
+        Read-Host ("Press Enter to continue...")
     }
-    if (test-path $File) { remove-item $File -Verbose }
-    
-    Write-Warning "Leaving [$PSCommandPath] in $Seconds seconds..."
-    Start-Sleep -Seconds $Seconds -Verbose
-    return $true
-} # fjApplyVirusDefinition
-
-fjApplyVirusDefinition -Seconds 15
+    Finally {
+        if (test-path $File) { remove-item $File -Verbose }
+        Write-Warning "Leaving [$PSCommandPath] in $Seconds seconds..."
+        Start-Sleep -Seconds $Seconds -Verbose
+    }

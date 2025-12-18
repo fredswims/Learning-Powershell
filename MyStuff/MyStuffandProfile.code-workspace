@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../Documents/Powershell"
+		}
+	],
+	"settings": {
+		"powershell.cwd": "mystuff"
+	}
+}

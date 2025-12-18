@@ -2,3 +2,4 @@
 $1MonthAgo=[datetime]::now.addmonths(-1)
 
 dir -Recurse | where {$1MonthAgo -le $_.LastWriteTime} | Group Extension | sort -Descending Count |Select -First 10 | Format-Table Count,Name -AutoSize
+

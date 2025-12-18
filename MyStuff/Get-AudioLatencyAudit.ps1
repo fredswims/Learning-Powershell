@@ -1,4 +1,4 @@
-function Get-AudioLatencyAudit {
+function Get-THEAudioLatencyAudit {
     Write-Host "`n🔍 Audio Latency Audit Report" -ForegroundColor Cyan
 
     # Get default playback and recording devices
@@ -43,4 +43,4 @@ function Get-AudioLatencyAudit {
 }
 
 # Run the audit
-Get-AudioLatencyAudit
+Get-THEAudioLatencyAudit

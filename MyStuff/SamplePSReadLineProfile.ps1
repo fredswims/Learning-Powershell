@@ -12,7 +12,7 @@ try
     $ReferencModule="PSReadLine"
     # Don't Import if running in VS Code.
     $thisHost=$host.name.tostring().trim()
-    if($thisHost -eq "Visual Studio Code Host") {
+    if($thisHost -eq "Visual Studio Code Host2") {
         write-host "Don't Import [$ReferencModule] in [$thisHost]. Returning to caller"
         Return 
     }    

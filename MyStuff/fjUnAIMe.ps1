@@ -22,10 +22,14 @@ Function fjUnAiMe {
 
     Get-FreePhysicalMemory
     # What processess are we looking for?
-    $ProcessName = "WorkloadsSession*"
-    $Tasks = get-process $ProcessName 
+    $ProcessName = "WorkloadsSessionHost"
+    $ProcessName = ( "WorkLoadsSessionManager", "WorkloadsSessionHost")
+    Write-Host "`n Checking for Processes: $($ProcessName -join ', ')"
+    $Tasks = get-process $ProcessName -ErrorAction SilentlyContinue
     # How many processes are running? 
-    Foreach ($Task in $Tasks) { write-host "$($task.name) `n`tPID: $($Task.Id) `tMemory Usage (GB): $([math]::Round($Task.WorkingSet64 /1GB,3))" }
+    write-host " $($Tasks.Count) instances of $($ProcessName -join ' & ') running"
+    # Foreach ($Task in $Tasks) { write-host "$($task.name) `tPID: $($Task.Id) `tMemory Usage (GB): $([math]::Round($Task.WorkingSet64 /1GB,3))" }
+    Foreach ($Task in $Tasks) { write-host " `tPID: $($Task.Id) `tMemory Usage (GB): $([math]::Round($Task.WorkingSet64 /1GB,3)) `t$($task.name)" }
 
     # How much memory is used by all WorkloadsSessionHost processes
     # write-host "`n Total Memory Used by WorkloadsSessionHost Processes:"
@@ -34,7 +38,7 @@ Function fjUnAiMe {
     $PrintSize = @{ Name = " GB of Memory"; Expression = { [math]::Round($Size.sum / 1GB, 3) } }
     # Write-Host "Result:" (& $PrintSize.Expression) $PrintSize.Name -ForegroundColor Green
     $freeGB = (& $PrintSize.Expression)
-    Write-Host ("Physical Memory Used by $($ProcessName): {0:N3} GB" -f $freeGB) -ForegroundColor Green
+    Write-Host ("Physical Memory Used by $($ProcessName -join ' & '): {0:N3} GB" -f $freeGB) -ForegroundColor Green
 
     try {
         if ($Stop) {

@@ -14,7 +14,10 @@ Function fjUnAiMe {
     }
     
     Function SleepProgress {
-        $items = 1..5
+        param (
+            [int]$Seconds = 5
+        )   
+        $items = 1..$Seconds
         foreach ($i in $items) {
             $percent = ($i / $items.Count) * 100
             Write-Progress -Activity "Processing data" -Status "$percent% Complete" -PercentComplete $percent
@@ -75,7 +78,7 @@ Function fjUnAiMe {
     }  
     finally {
         <#Do this after the try block regardless of whether an exception occurred or not#>
-        SleepProgress
+        SleepProgress -Seconds 4
         Get-FreePhysicalMemory
         get-service -name $ServiceName|format-table status,name,StartType 
         Write-Warning "[END  ] Leaving: $($MyInvocation.Mycommand)"

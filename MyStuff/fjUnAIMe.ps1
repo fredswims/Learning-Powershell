@@ -41,7 +41,7 @@ Function fjUnAiMe {
     # Write-Host "Result:" (& $PrintSize.Expression) $PrintSize.Name -ForegroundColor Green
     $freeGB = (& $PrintSize.Expression)
     Write-Host ("[{0:N3} GB] Physical Memory Used by $($ProcessName -join ' & '): " -f $freeGB) -ForegroundColor Green
-    Get-FreePhysicalMemory
+    # Get-FreePhysicalMemory
 
     try {
         if ($Stop) {
@@ -50,16 +50,14 @@ Function fjUnAiMe {
             if (-not $LeaveServiceRunning) {
                 Set-Service -Name $ServiceName -StartupType Disabled  -verbose
                 Stop-Service -Name $ServiceName -Force -Verbose
-                get-service -name $ServiceName|format-table status,name,StartType 
             }
             start-sleep -Seconds 5 -Verbose
             # write-warning ("Free Physical Memory: {0} GB" -f $($(Get-ComputerInfo).OsFreePhysicalMemory / (1024*1024)))
-            Get-FreePhysicalMemory
+            # Get-FreePhysicalMemory
         }
         if ($Start) {
             Set-Service -Name $ServiceName -StartupType AutomaticDelayedStart -Verbose && Start-Service -Name $ServiceName -Verbose
-            get-service -name $ServiceName|format-table status,name,StartType 
-            Get-FreePhysicalMemory
+            # Get-FreePhysicalMemory
         }
     }
     catch {
@@ -68,6 +66,8 @@ Function fjUnAiMe {
     }  
     finally {
         <#Do this after the try block regardless of whether an exception occurred or not#>
+        Get-FreePhysicalMemory
+        get-service -name $ServiceName|format-table status,name,StartType 
         Write-Warning "[END  ] Leaving: $($MyInvocation.Mycommand)"
     }
 }

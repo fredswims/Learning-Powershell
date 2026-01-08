@@ -1,3 +1,4 @@
+<# 
 function Get-WorkloadStatus {
     Write-Host "`n=== Workload / AI Fabric Status ===`n"
 
@@ -37,15 +38,6 @@ function Get-WorkloadStatus {
     Write-Host "`n=====================================`n"
 }
 # get-workloadstatus
-
-
-
-get-process WorkloadsSessionHost |stop-process  
-Set-Service -Name "WSAIFabricSvc" -StartupType Disabled 
-Stop-Service -Name "WSAIFabricSvc" -Force 
-
-
-
 
 function Set-WorkloadState {
     param(
@@ -95,3 +87,38 @@ function Set-WorkloadState {
         Write-Host "Workload subsystem enabled."
     }
 }
+    
+ #>
+ 
+ 
+ #region WorkloadsSessionHost
+Function fjUnAiMe {
+    param(
+        $name,
+        $age,
+        [switch]$Stop=$false
+    )
+    Clear-Host
+    $ProcessName = "WorkloadsSession*"
+    $Tasks = get-process $ProcessName 
+    # Foreach ($Task in $Tasks) { write-host "$($task.name) `n`tPID: $($_.Id) `tMemory Usage (GB): $([math]::Round($_.WorkingSet64 /1GB,2))" }
+    # get total memory used by all WorkloadsSessionHost processes
+    write-host "`n Total Memory Used by WorkloadsSessionHost Processes:"
+    # $tasks | Measure-Object WorkingSet64 -sum | select-object -Property @{ Name = " GB of Memory"; Expression = { $($_.sum) / 1GB } }
+
+    <#
+    if ($false) {
+        try {
+            $tasks.foreach{stop-process -id $_.id -force} 
+            Set-Service -Name "WSAIFabricSvc" -StartupType Disabled 
+            Stop-Service -Name "WSAIFabricSvc" -Force 
+        }
+        catch {
+            write-host "An error occured"
+            Get-Error
+        }    
+    }
+    #>
+}
+#endregion
+    

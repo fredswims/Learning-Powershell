@@ -1,14 +1,16 @@
 Function fjUnAiMe {
+    [CmdletBinding()]
     param(
         [switch]$Start = $false,
-        [switch]$Stop = $false
+        [switch]$Stop = $false,
+        [switch]$LeaveServiceRunning = $false
     )
 
     Function Get-FreePhysicalMemory {
         # Get Free Physical Memory
         $freeGB = (Get-Counter '\Memory\Available MBytes').CounterSamples.CookedValue / 1KB
         # write-warning ("Free Physical Memory: {0} GB" -f $($(Get-ComputerInfo).OsFreePhysicalMemory / (1024*1024)))
-        Write-Host ("Free Physical Memory: {0:N3} GB" -f $freeGB ) -ForegroundColor Green 
+        Write-Host ("[{0:N3} GB] Free Physical Memory " -f $freeGB ) -ForegroundColor Green 
     }
     
     Write-Warning "[BEGIN  ] Starting: $($MyInvocation.Mycommand)"
@@ -24,10 +26,10 @@ Function fjUnAiMe {
     # What processess are we looking for?
     $ProcessName = "WorkloadsSessionHost"
     $ProcessName = ( "WorkLoadsSessionManager", "WorkloadsSessionHost")
-    Write-Host "`n Checking for Processes: $($ProcessName -join ', ')"
+    Write-Host "Checking for Processes: $($ProcessName -join ', ')"
     $Tasks = get-process $ProcessName -ErrorAction SilentlyContinue
     # How many processes are running? 
-    write-host " $($Tasks.Count) instances of $($ProcessName -join ' & ') running"
+    write-host "[$($Tasks.Count)] instances of $($ProcessName -join ' & ') running"
     # Foreach ($Task in $Tasks) { write-host "$($task.name) `tPID: $($Task.Id) `tMemory Usage (GB): $([math]::Round($Task.WorkingSet64 /1GB,3))" }
     Foreach ($Task in $Tasks) { write-host " `tPID: $($Task.Id) `tMemory Usage (GB): $([math]::Round($Task.WorkingSet64 /1GB,3)) `t$($task.name)" }
 
@@ -38,20 +40,25 @@ Function fjUnAiMe {
     $PrintSize = @{ Name = " GB of Memory"; Expression = { [math]::Round($Size.sum / 1GB, 3) } }
     # Write-Host "Result:" (& $PrintSize.Expression) $PrintSize.Name -ForegroundColor Green
     $freeGB = (& $PrintSize.Expression)
-    Write-Host ("Physical Memory Used by $($ProcessName -join ' & '): {0:N3} GB" -f $freeGB) -ForegroundColor Green
+    Write-Host ("[{0:N3} GB] Physical Memory Used by $($ProcessName -join ' & '): " -f $freeGB) -ForegroundColor Green
+    Get-FreePhysicalMemory
 
     try {
         if ($Stop) {
-            Write-Host "Stopping Processes $($ProcessName), Stopping Service $($ServiceName), Setting-Service $($ServiceName) to Disabled"
+            # Write-Host "Stopping Processes $($ProcessName), Stopping Service $($ServiceName), Setting-Service $($ServiceName) to Disabled"
             $tasks.foreach{ stop-process -id $_.id -force -Verbose } 
-            Set-Service -Name $ServiceName -StartupType Disabled  -verbose
-            Stop-Service -Name $ServiceName -Force -Verbose 
+            if (-not $LeaveServiceRunning) {
+                Set-Service -Name $ServiceName -StartupType Disabled  -verbose
+                Stop-Service -Name $ServiceName -Force -Verbose
+                get-service -name $ServiceName|format-table status,name,StartType 
+            }
             start-sleep -Seconds 5 -Verbose
             # write-warning ("Free Physical Memory: {0} GB" -f $($(Get-ComputerInfo).OsFreePhysicalMemory / (1024*1024)))
             Get-FreePhysicalMemory
         }
         if ($Start) {
             Set-Service -Name $ServiceName -StartupType AutomaticDelayedStart -Verbose && Start-Service -Name $ServiceName -Verbose
+            get-service -name $ServiceName|format-table status,name,StartType 
             Get-FreePhysicalMemory
         }
     }

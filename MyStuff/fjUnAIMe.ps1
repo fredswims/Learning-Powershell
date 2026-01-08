@@ -16,7 +16,7 @@ Function fjUnAiMe {
     if ($Start -and $Stop) { Write-Warning "Both the -Start and -Stop options were selected. Terminating."; return }
     # Are we elevated?
     $IsElevated = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-    if (($Stop -or $Start) -and !$IsElevated) { Write-Warning "You must be elevated to run with -Stop or -Start option. Terminating."; return }
+    if (($Stop -or $Start) -and !$IsElevated) { Write-Warning "You must be elevated to run with -Stop or -Start option. Terminating."; return "Not Elevated" }
 
     $ServiceName = "WSAIFabricSvc"
 
@@ -44,8 +44,8 @@ Function fjUnAiMe {
         if ($Stop) {
             Write-Host "Stopping Processes $($ProcessName), Stopping Service $($ServiceName), Setting-Service $($ServiceName) to Disabled"
             $tasks.foreach{ stop-process -id $_.id -force -Verbose } 
-            Stop-Service -Name $ServiceName -Force -Verbose 
             Set-Service -Name $ServiceName -StartupType Disabled  -verbose
+            Stop-Service -Name $ServiceName -Force -Verbose 
             start-sleep -Seconds 5 -Verbose
             # write-warning ("Free Physical Memory: {0} GB" -f $($(Get-ComputerInfo).OsFreePhysicalMemory / (1024*1024)))
             Get-FreePhysicalMemory

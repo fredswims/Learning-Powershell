@@ -69,6 +69,7 @@ if(!$NoReport){Printline $ThisProcess}
 
 # Find the first Potential parent Id.
 $ParentId = $(get-process -ErrorAction SilentlyContinue -id $id).parent.id
+
 #Loop thru all parents. Stop if Potential parent Id is invalid.
 While ($null -ne $ParentId) {
     $ParentProcess = get-process -id $ParentId -ErrorAction SilentlyContinue

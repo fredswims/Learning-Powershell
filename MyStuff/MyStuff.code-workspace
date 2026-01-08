@@ -1,7 +1,29 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	]
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "terminal.integrated.profiles.windows": {
+      "Pwsh-Preview": {
+        "path": "C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe",
+        "overrideName": true,
+        "icon": "flame"
+      },
+      "Pwsh-Stable": {
+        "path": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+        "overrideName": true,
+        "icon": "terminal-powershell"
+      }
+    },
+    "terminal.integrated.defaultProfile.windows": "Pwsh-Preview",
+
+    // 👇 Startup behavior
+    "workbench.startupEditor": "none",
+    "window.restoreWindows": "all",
+
+    // 👇 Terminal tabs visible
+    "terminal.integrated.tabs.enabled": true
+  }
 }

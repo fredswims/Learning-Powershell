@@ -13,6 +13,15 @@ Function fjUnAiMe {
         Write-Host ("[{0:N3} GB] Free Physical Memory " -f $freeGB ) -ForegroundColor Green 
     }
     
+    Function SleepProgress {
+        $items = 1..5
+        foreach ($i in $items) {
+            $percent = ($i / $items.Count) * 100
+            Write-Progress -Activity "Processing data" -Status "$percent% Complete" -PercentComplete $percent
+            Start-Sleep -seconds 1 # Simulate work
+        }
+    }
+
     Write-Warning "[BEGIN  ] Starting: $($MyInvocation.Mycommand)"
     # Cant have -Start and -Stop option at the same time.
     if ($Start -and $Stop) { Write-Warning "Both the -Start and -Stop options were selected. Terminating."; return }
@@ -51,7 +60,7 @@ Function fjUnAiMe {
                 Set-Service -Name $ServiceName -StartupType Disabled  -verbose
                 Stop-Service -Name $ServiceName -Force -Verbose
             }
-            start-sleep -Seconds 5 -Verbose
+            # start-sleep -Seconds 5 -Verbose
             # write-warning ("Free Physical Memory: {0} GB" -f $($(Get-ComputerInfo).OsFreePhysicalMemory / (1024*1024)))
             # Get-FreePhysicalMemory
         }
@@ -66,6 +75,7 @@ Function fjUnAiMe {
     }  
     finally {
         <#Do this after the try block regardless of whether an exception occurred or not#>
+        SleepProgress
         Get-FreePhysicalMemory
         get-service -name $ServiceName|format-table status,name,StartType 
         Write-Warning "[END  ] Leaving: $($MyInvocation.Mycommand)"

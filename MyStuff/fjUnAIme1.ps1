@@ -93,7 +93,7 @@ write-host "IsScheduledTask: $IsScheduledTask"
 . C:\Users\freds\MyStuff\fjUnAIme.ps1
 # fjunaime -stop -LeaveServiceRunning 
 $Mymode=$(fjunaime -auto -limitgb 2.77)
-# write-host "`$myMode is $mymode.mode"
-PopBurntToast -mode "test"
+write-host "`$myMode is $mymode.mode"
+PopBurntToast -mode $Mymode.mode
 Stop-Transcript
 Write-Host "Exiting Script $($PSCommandPath): [$(Get-Date -Format o)]"

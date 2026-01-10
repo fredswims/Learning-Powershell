@@ -1,116 +1,90 @@
-***[2026-01-09T14:19:01.9729296-05:00]
-In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T14:19:01.9763547-05:00] 
+***[2026-01-09T23:10:08.0219907-05:00]
+In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:10:08.0242812-05:00] 
 UserName: fred
 UserProfile: C:\Users\freds
 IsScheduledTask: In function Test-IsScheduledTask: Parent Process Name: svchost Session Name:  True
-In Script C:\Users\freds\MyStuff\fjUnAIme.ps1: [2026-01-09T14:19:02.2410654-05:00] 
-IsElevated: True 
-Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T14:19:09.7446947-05:00]
-***[2026-01-09T14:25:25.0649117-05:00]
-In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T14:25:25.0691128-05:00] 
+Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:10:09.9947041-05:00]
+***[2026-01-09T23:19:03.1596229-05:00]
+In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:19:03.1623768-05:00] 
 UserName: fred
 UserProfile: C:\Users\freds
 IsScheduledTask: In function Test-IsScheduledTask: Parent Process Name: svchost Session Name:  True
-In Script C:\Users\freds\MyStuff\fjUnAIme.ps1: [2026-01-09T14:25:25.3561573-05:00] 
-IsElevated: True 
-Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T14:25:33.4178216-05:00]
-***[2026-01-09T14:34:01.4453222-05:00]
-In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T14:34:01.4483589-05:00] 
+Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:19:06.7156531-05:00]
+***[2026-01-09T23:19:40.1852590-05:00]
+In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:19:40.1876170-05:00] 
 UserName: fred
 UserProfile: C:\Users\freds
 IsScheduledTask: In function Test-IsScheduledTask: Parent Process Name: svchost Session Name:  True
-In Script C:\Users\freds\MyStuff\fjUnAIme.ps1: [2026-01-09T14:34:01.6401765-05:00] 
-IsElevated: True 
-Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T14:34:08.7930461-05:00]
-***[2026-01-09T14:49:02.9425111-05:00]
-In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T14:49:02.9487526-05:00] 
+Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:19:42.3092593-05:00]
+***[2026-01-09T23:25:49.4656639-05:00]
+In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:25:49.4681411-05:00] 
 UserName: fred
 UserProfile: C:\Users\freds
 IsScheduledTask: In function Test-IsScheduledTask: Parent Process Name: svchost Session Name:  True
-In Script C:\Users\freds\MyStuff\fjUnAIme.ps1: [2026-01-09T14:49:03.4554276-05:00] 
-IsElevated: True 
-Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T14:49:12.0947326-05:00]
-***[2026-01-09T15:33:16.6896554-05:00]
-In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T15:33:16.6951013-05:00] 
+Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:25:51.5839758-05:00]
+***[2026-01-09T23:27:33.9847023-05:00]
+In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:27:33.9869508-05:00] 
 UserName: fred
 UserProfile: C:\Users\freds
 IsScheduledTask: In function Test-IsScheduledTask: Parent Process Name: svchost Session Name:  True
-In Script C:\Users\freds\MyStuff\fjUnAIme.ps1: [2026-01-09T15:33:17.1416549-05:00] 
-IsElevated: True 
-Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T15:33:24.8273744-05:00]
-***[2026-01-09T15:34:01.4466778-05:00]
-In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T15:34:01.4507188-05:00] 
+Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:27:36.1818385-05:00]
+***[2026-01-09T23:29:14.1166847-05:00]
+In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:29:14.1196447-05:00] 
 UserName: fred
 UserProfile: C:\Users\freds
 IsScheduledTask: In function Test-IsScheduledTask: Parent Process Name: svchost Session Name:  True
-In Script C:\Users\freds\MyStuff\fjUnAIme.ps1: [2026-01-09T15:34:01.7546197-05:00] 
-IsElevated: True 
-Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T15:34:08.7340283-05:00]
-***[2026-01-09T17:31:00.9501672-05:00]
-In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T17:31:00.9531941-05:00] 
+Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:29:16.3788051-05:00]
+***[2026-01-09T23:31:21.8143237-05:00]
+In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:31:21.8166454-05:00] 
 UserName: fred
 UserProfile: C:\Users\freds
 IsScheduledTask: In function Test-IsScheduledTask: Parent Process Name: svchost Session Name:  True
-In Script C:\Users\freds\MyStuff\fjUnAIme.ps1: [2026-01-09T17:31:01.1898688-05:00] 
-IsElevated: True 
-Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T17:31:08.5544367-05:00]
-***[2026-01-09T17:34:01.6853476-05:00]
-In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T17:34:01.6877285-05:00] 
+Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:31:23.9729618-05:00]
+***[2026-01-09T23:32:29.5927460-05:00]
+In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:32:29.5948633-05:00] 
 UserName: fred
 UserProfile: C:\Users\freds
 IsScheduledTask: In function Test-IsScheduledTask: Parent Process Name: svchost Session Name:  True
-In Script C:\Users\freds\MyStuff\fjUnAIme.ps1: [2026-01-09T17:34:01.9132306-05:00] 
-IsElevated: True 
-Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T17:34:08.7011791-05:00]
-***[2026-01-09T17:49:01.7853619-05:00]
-In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T17:49:01.7917773-05:00] 
+Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:32:31.6886092-05:00]
+***[2026-01-09T23:34:02.0512557-05:00]
+In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:34:02.0537239-05:00] 
 UserName: fred
 UserProfile: C:\Users\freds
 IsScheduledTask: In function Test-IsScheduledTask: Parent Process Name: svchost Session Name:  True
-In Script C:\Users\freds\MyStuff\fjUnAIme.ps1: [2026-01-09T17:49:02.0604290-05:00] 
-IsElevated: True 
-Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T17:49:09.6352740-05:00]
-***[2026-01-09T18:04:01.7005374-05:00]
-In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T18:04:01.7029690-05:00] 
+Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:34:04.0847667-05:00]
+***[2026-01-09T23:49:02.0849381-05:00]
+In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:49:02.0880926-05:00] 
 UserName: fred
 UserProfile: C:\Users\freds
 IsScheduledTask: In function Test-IsScheduledTask: Parent Process Name: svchost Session Name:  True
-In Script C:\Users\freds\MyStuff\fjUnAIme.ps1: [2026-01-09T18:04:01.9067742-05:00] 
-IsElevated: True 
-Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T18:04:08.6921113-05:00]
-***[2026-01-09T18:19:01.7030088-05:00]
-In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T18:19:01.7060615-05:00] 
+Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:49:04.1600599-05:00]
+***[2026-01-09T23:59:24.0792689-05:00]
+In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:59:24.0820180-05:00] 
 UserName: fred
 UserProfile: C:\Users\freds
 IsScheduledTask: In function Test-IsScheduledTask: Parent Process Name: svchost Session Name:  True
-In Script C:\Users\freds\MyStuff\fjUnAIme.ps1: [2026-01-09T18:19:01.9055014-05:00] 
-IsElevated: True 
-Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T18:19:08.6322441-05:00]
-In Script C:\Users\freds\MyStuff\fjUnAIMe.ps1: [2026-01-09T18:27:57.6675711-05:00] 
-In Script C:\Users\freds\MyStuff\fjUnAIMe.ps1: [2026-01-09T18:29:05.1221545-05:00] 
-In Script C:\Users\freds\MyStuff\fjUnAIMe.ps1: [2026-01-09T18:29:51.2108925-05:00] 
-***[2026-01-09T18:34:15.9715685-05:00]
-In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T18:34:15.9784162-05:00] 
+Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T23:59:26.2418774-05:00]
+***[2026-01-10T00:01:12.0400069-05:00]
+In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-10T00:01:12.0426635-05:00] 
 UserName: fred
 UserProfile: C:\Users\freds
 IsScheduledTask: In function Test-IsScheduledTask: Parent Process Name: svchost Session Name:  True
-In Script C:\Users\freds\MyStuff\fjUnAIme.ps1: [2026-01-09T18:34:16.2639148-05:00] 
-Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T18:34:23.1465853-05:00]
-In Script C:\Users\freds\MyStuff\fjUnAIMe.ps1: [2026-01-09T18:35:04.1674726-05:00] 
-In Script C:\Users\freds\MyStuff\fjUnAIMe.ps1: [2026-01-09T18:37:55.5483145-05:00] 
-In Script C:\Users\freds\MyStuff\fjUnAIMe.ps1: [2026-01-09T18:39:07.6286820-05:00] 
-In Script C:\Users\freds\MyStuff\fjUnAIMe.ps1: [2026-01-09T18:41:32.0975834-05:00] 
-In Script C:\Users\freds\MyStuff\fjUnAIMe.ps1: [2026-01-09T18:41:45.4739421-05:00] 
-In Script C:\Users\freds\MyStuff\fjUnAIMe.ps1: [2026-01-09T18:43:33.5730914-05:00] 
-In Script C:\Users\freds\MyStuff\fjUnAIMe.ps1: [2026-01-09T18:44:03.3680527-05:00] 
-In Script C:\Users\freds\MyStuff\fjUnAIMe.ps1: [2026-01-09T18:45:54.8908728-05:00] 
-***[2026-01-09T18:49:01.9652898-05:00]
-In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T18:49:01.9683070-05:00] 
+Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-10T00:01:19.1182962-05:00]
+***[2026-01-10T00:04:02.0585501-05:00]
+In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-10T00:04:02.0607540-05:00] 
 UserName: fred
 UserProfile: C:\Users\freds
 IsScheduledTask: In function Test-IsScheduledTask: Parent Process Name: svchost Session Name:  True
-In Script C:\Users\freds\MyStuff\fjUnAIme.ps1: [2026-01-09T18:49:02.2751863-05:00] 
-Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T18:49:04.4571191-05:00]
-In Script C:\Users\freds\MyStuff\fjUnAIMe.ps1: [2026-01-09T18:50:41.1450856-05:00] 
-In Script C:\Users\freds\MyStuff\fjUnAIMe.ps1: [2026-01-09T18:51:51.0396618-05:00] 
-In Script C:\Users\freds\MyStuff\fjUnAIMe.ps1: [2026-01-09T18:52:33.7190399-05:00] 
+Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-10T00:04:03.9970095-05:00]
+***[2026-01-10T00:19:02.0509254-05:00]
+In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-10T00:19:02.0530836-05:00] 
+UserName: fred
+UserProfile: C:\Users\freds
+IsScheduledTask: In function Test-IsScheduledTask: Parent Process Name: svchost Session Name:  True
+Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-10T00:19:03.9521318-05:00]
+***[2026-01-10T00:34:02.0844572-05:00]
+In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-10T00:34:02.0866097-05:00] 
+UserName: fred
+UserProfile: C:\Users\freds
+IsScheduledTask: In function Test-IsScheduledTask: Parent Process Name: svchost Session Name:  True
+Exiting Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-10T00:34:03.9644289-05:00]

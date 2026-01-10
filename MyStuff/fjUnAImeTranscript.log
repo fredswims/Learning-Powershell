@@ -1,12 +1,12 @@
 **********************
 PowerShell transcript start
-Start time: 20260109141901
+Start time: 20260110001902
 Username: BOOK4EDGE\fred
 RunAs User: BOOK4EDGE\fred
 Configuration Name: 
 Machine: BOOK4EDGE (Microsoft Windows NT 10.0.26200.0)
 Host Application: C:\Program Files\PowerShell\7-preview\pwsh.dll -w Hidden -nonInteractive -noProfile -noLogo -file C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1
-Process ID: 18508
+Process ID: 7708
 PSVersion: 7.6.0-preview.6
 PSEdition: Core
 GitCommitId: 7.6.0-preview.6
@@ -18,728 +18,25 @@ SerializationVersion: 1.1.0.1
 WSManStackVersion: 3.0
 **********************
 Transcript started, output file is C:\Users\freds\mystuff\fjUnAImeTranscript.log
-WARNING: Write-warning In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T14:19:01.9770740-05:00]
-Write-host In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T14:19:01.9780101-05:00]
-Script started at 01/09/2026 14:19:01
+WARNING: Write-warning In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-10T00:19:02.0540637-05:00]
+Write-host In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-10T00:19:02.0549217-05:00]
+Script started at 01/10/2026 00:19:02
 fjUnAIme1.ps1: This is an error test
 fjUnAIme1.ps1: This is an error test
 VERBOSE: Verbose test
-In function fjUnAIme1.ps1: [2026-01-09T14:19:02.1117350-05:00]
+In function fjUnAIme1.ps1: [2026-01-10T00:19:02.1418621-05:00]
 Running under Task Scheduler
 Using Write Host Running under Task Scheduler
-[BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[5.096 GB] Free Physical Memory
-Checking for Processes: WorkLoadsSessionManager, WorkloadsSessionHost
-[7] instances of WorkLoadsSessionManager & WorkloadsSessionHost running
- 	PID: 2420 	Memory Usage (GB): 0.22 	WorkloadsSessionHost
- 	PID: 2672 	Memory Usage (GB): 0.124 	WorkloadsSessionHost
- 	PID: 5256 	Memory Usage (GB): 0.249 	WorkloadsSessionHost
- 	PID: 7812 	Memory Usage (GB): 0.303 	WorkloadsSessionHost
- 	PID: 10876 	Memory Usage (GB): 0.347 	WorkloadsSessionHost
- 	PID: 11760 	Memory Usage (GB): 0.128 	WorkloadsSessionHost
- 	PID: 10748 	Memory Usage (GB): 0.023 	WorkloadsSessionManager
-[1.394 GB] Physical Memory Used by WorkLoadsSessionManager & WorkloadsSessionHost:
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (2420)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (2672)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (5256)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (7812)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (10876)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (11760)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionManager (10748)".
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[5.495 GB] Free Physical Memory
-
- Status Name          StartType
- ------ ----          ---------
-Running WSAIFabricSvc Automatic
-
-WARNING: [END  ] Leaving: fjUnAiMe
-In function PopBurntToast:
-$PSHOME is C:\Program Files\PowerShell\7-preview
-***The process path is 'C:\Program Files\PowerShell\7-preview\pwsh.EXE'
-***The parent path is 'C:\windows\system32\svchost.exe'
-[PWSH Core 7.6.0-preview.6]
-[Parent: svchost]
-[PSReadline: 9]
-[Online] [Elevated]
-Leaving function PopBurntToast:
-**********************
-PowerShell transcript end
-End time: 20260109141909
-**********************
-**********************
-PowerShell transcript start
-Start time: 20260109142524
-Username: BOOK4EDGE\fred
-RunAs User: BOOK4EDGE\fred
-Configuration Name: 
-Machine: BOOK4EDGE (Microsoft Windows NT 10.0.26200.0)
-Host Application: C:\Program Files\PowerShell\7-preview\pwsh.dll -w Hidden -nonInteractive -noProfile -noLogo -file C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1
-Process ID: 14584
-PSVersion: 7.6.0-preview.6
-PSEdition: Core
-GitCommitId: 7.6.0-preview.6
-OS: Microsoft Windows 10.0.26200
-Platform: Win32NT
-PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
-PSRemotingProtocolVersion: 2.4
-SerializationVersion: 1.1.0.1
-WSManStackVersion: 3.0
-**********************
-Transcript started, output file is C:\Users\freds\mystuff\fjUnAImeTranscript.log
-WARNING: Write-warning In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T14:25:25.0695888-05:00]
-Write-host In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T14:25:25.0707164-05:00]
-Script started at 01/09/2026 14:25:25
-fjUnAIme1.ps1: This is an error test
-fjUnAIme1.ps1: This is an error test
-VERBOSE: Verbose test
-In function fjUnAIme1.ps1: [2026-01-09T14:25:25.2120300-05:00]
-Running under Task Scheduler
-Using Write Host Running under Task Scheduler
-[BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[1.219 GB] Free Physical Memory
-Checking for Processes: WorkLoadsSessionManager, WorkloadsSessionHost
-[9] instances of WorkLoadsSessionManager & WorkloadsSessionHost running
- 	PID: 5136 	Memory Usage (GB): 0.346 	WorkloadsSessionHost
- 	PID: 9672 	Memory Usage (GB): 0.24 	WorkloadsSessionHost
- 	PID: 11884 	Memory Usage (GB): 0.301 	WorkloadsSessionHost
- 	PID: 12552 	Memory Usage (GB): 0.123 	WorkloadsSessionHost
- 	PID: 12984 	Memory Usage (GB): 2.596 	WorkloadsSessionHost
- 	PID: 14692 	Memory Usage (GB): 0.208 	WorkloadsSessionHost
- 	PID: 15984 	Memory Usage (GB): 0.033 	WorkloadsSessionHost
- 	PID: 20232 	Memory Usage (GB): 0.22 	WorkloadsSessionHost
- 	PID: 14936 	Memory Usage (GB): 0.022 	WorkloadsSessionManager
-[4.088 GB] Physical Memory Used by WorkLoadsSessionManager & WorkloadsSessionHost:
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (5136)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (9672)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (11884)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (12552)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (12984)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (14692)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (15984)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (20232)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionManager (14936)".
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[6.476 GB] Free Physical Memory
-
- Status Name          StartType
- ------ ----          ---------
-Running WSAIFabricSvc Automatic
-
-WARNING: [END  ] Leaving: fjUnAiMe
-In function PopBurntToast:
-$PSHOME is C:\Program Files\PowerShell\7-preview
-***The process path is 'C:\Program Files\PowerShell\7-preview\pwsh.EXE'
-***The parent path is 'C:\windows\system32\svchost.exe'
-[PWSH Core 7.6.0-preview.6]
-[Parent: svchost]
-[PSReadline: 9]
-[Online] [Elevated]
-Leaving function PopBurntToast:
-**********************
-PowerShell transcript end
-End time: 20260109142533
-**********************
-**********************
-PowerShell transcript start
-Start time: 20260109143401
-Username: BOOK4EDGE\fred
-RunAs User: BOOK4EDGE\fred
-Configuration Name: 
-Machine: BOOK4EDGE (Microsoft Windows NT 10.0.26200.0)
-Host Application: C:\Program Files\PowerShell\7-preview\pwsh.dll -w Hidden -nonInteractive -noProfile -noLogo -file C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1
-Process ID: 4472
-PSVersion: 7.6.0-preview.6
-PSEdition: Core
-GitCommitId: 7.6.0-preview.6
-OS: Microsoft Windows 10.0.26200
-Platform: Win32NT
-PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
-PSRemotingProtocolVersion: 2.4
-SerializationVersion: 1.1.0.1
-WSManStackVersion: 3.0
-**********************
-Transcript started, output file is C:\Users\freds\mystuff\fjUnAImeTranscript.log
-WARNING: Write-warning In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T14:34:01.4487598-05:00]
-Write-host In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T14:34:01.4496064-05:00]
-Script started at 01/09/2026 14:34:01
-fjUnAIme1.ps1: This is an error test
-fjUnAIme1.ps1: This is an error test
-VERBOSE: Verbose test
-In function fjUnAIme1.ps1: [2026-01-09T14:34:01.5383741-05:00]
-Running under Task Scheduler
-Using Write Host Running under Task Scheduler
-[BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[1.691 GB] Free Physical Memory
-Checking for Processes: WorkLoadsSessionManager, WorkloadsSessionHost
-[9] instances of WorkLoadsSessionManager & WorkloadsSessionHost running
- 	PID: 4568 	Memory Usage (GB): 0.171 	WorkloadsSessionHost
- 	PID: 4604 	Memory Usage (GB): 2.596 	WorkloadsSessionHost
- 	PID: 7388 	Memory Usage (GB): 0.033 	WorkloadsSessionHost
- 	PID: 10508 	Memory Usage (GB): 0.127 	WorkloadsSessionHost
- 	PID: 13080 	Memory Usage (GB): 0.123 	WorkloadsSessionHost
- 	PID: 13444 	Memory Usage (GB): 0.24 	WorkloadsSessionHost
- 	PID: 17548 	Memory Usage (GB): 0.346 	WorkloadsSessionHost
- 	PID: 18492 	Memory Usage (GB): 0.216 	WorkloadsSessionHost
- 	PID: 6488 	Memory Usage (GB): 0.022 	WorkloadsSessionManager
-[3.875 GB] Physical Memory Used by WorkLoadsSessionManager & WorkloadsSessionHost:
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (4568)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (4604)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (7388)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (10508)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (13080)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (13444)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (17548)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (18492)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionManager (6488)".
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[5.631 GB] Free Physical Memory
-
- Status Name          StartType
- ------ ----          ---------
-Running WSAIFabricSvc Automatic
-
-WARNING: [END  ] Leaving: fjUnAiMe
-In function PopBurntToast:
-$PSHOME is C:\Program Files\PowerShell\7-preview
-***The process path is 'C:\Program Files\PowerShell\7-preview\pwsh.EXE'
-***The parent path is 'C:\windows\system32\svchost.exe'
-[PWSH Core 7.6.0-preview.6]
-[Parent: svchost]
-[PSReadline: 9]
-[Online] [Elevated]
-Leaving function PopBurntToast:
-**********************
-PowerShell transcript end
-End time: 20260109143408
-**********************
-**********************
-PowerShell transcript start
-Start time: 20260109144902
-Username: BOOK4EDGE\fred
-RunAs User: BOOK4EDGE\fred
-Configuration Name: 
-Machine: BOOK4EDGE (Microsoft Windows NT 10.0.26200.0)
-Host Application: C:\Program Files\PowerShell\7-preview\pwsh.dll -w Hidden -nonInteractive -noProfile -noLogo -file C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1
-Process ID: 3084
-PSVersion: 7.6.0-preview.6
-PSEdition: Core
-GitCommitId: 7.6.0-preview.6
-OS: Microsoft Windows 10.0.26200
-Platform: Win32NT
-PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
-PSRemotingProtocolVersion: 2.4
-SerializationVersion: 1.1.0.1
-WSManStackVersion: 3.0
-**********************
-Transcript started, output file is C:\Users\freds\mystuff\fjUnAImeTranscript.log
-WARNING: Write-warning In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T14:49:02.9494386-05:00]
-Write-host In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T14:49:02.9506320-05:00]
-Script started at 01/09/2026 14:49:02
-fjUnAIme1.ps1: This is an error test
-fjUnAIme1.ps1: This is an error test
-VERBOSE: Verbose test
-In function fjUnAIme1.ps1: [2026-01-09T14:49:03.1722175-05:00]
-Running under Task Scheduler
-Using Write Host Running under Task Scheduler
-[BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[1.345 GB] Free Physical Memory
-Checking for Processes: WorkLoadsSessionManager, WorkloadsSessionHost
-[4] instances of WorkLoadsSessionManager & WorkloadsSessionHost running
- 	PID: 4032 	Memory Usage (GB): 0.24 	WorkloadsSessionHost
- 	PID: 4652 	Memory Usage (GB): 2.585 	WorkloadsSessionHost
- 	PID: 9200 	Memory Usage (GB): 0.414 	WorkloadsSessionHost
- 	PID: 17880 	Memory Usage (GB): 0.022 	WorkloadsSessionManager
-[3.261 GB] Physical Memory Used by WorkLoadsSessionManager & WorkloadsSessionHost:
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (4032)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (4652)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (9200)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionManager (17880)".
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[5.948 GB] Free Physical Memory
-
- Status Name          StartType
- ------ ----          ---------
-Running WSAIFabricSvc Automatic
-
-WARNING: [END  ] Leaving: fjUnAiMe
-In function PopBurntToast:
-$PSHOME is C:\Program Files\PowerShell\7-preview
-***The process path is 'C:\Program Files\PowerShell\7-preview\pwsh.EXE'
-***The parent path is 'C:\windows\system32\svchost.exe'
-[PWSH Core 7.6.0-preview.6]
-[Parent: svchost]
-[PSReadline: 9]
-[Online] [Elevated]
-Leaving function PopBurntToast:
-**********************
-PowerShell transcript end
-End time: 20260109144912
-**********************
-**********************
-PowerShell transcript start
-Start time: 20260109153316
-Username: BOOK4EDGE\fred
-RunAs User: BOOK4EDGE\fred
-Configuration Name: 
-Machine: BOOK4EDGE (Microsoft Windows NT 10.0.26200.0)
-Host Application: C:\Program Files\PowerShell\7-preview\pwsh.dll -w Hidden -nonInteractive -noProfile -noLogo -file C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1
-Process ID: 12476
-PSVersion: 7.6.0-preview.6
-PSEdition: Core
-GitCommitId: 7.6.0-preview.6
-OS: Microsoft Windows 10.0.26200
-Platform: Win32NT
-PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
-PSRemotingProtocolVersion: 2.4
-SerializationVersion: 1.1.0.1
-WSManStackVersion: 3.0
-**********************
-Transcript started, output file is C:\Users\freds\mystuff\fjUnAImeTranscript.log
-WARNING: Write-warning In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T15:33:16.6957448-05:00]
-Write-host In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T15:33:16.6971160-05:00]
-Script started at 01/09/2026 15:33:16
-fjUnAIme1.ps1: This is an error test
-fjUnAIme1.ps1: This is an error test
-VERBOSE: Verbose test
-In function fjUnAIme1.ps1: [2026-01-09T15:33:16.8688255-05:00]
-Running under Task Scheduler
-Using Write Host Running under Task Scheduler
-[BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[4.805 GB] Free Physical Memory
-Checking for Processes: WorkLoadsSessionManager, WorkloadsSessionHost
-[0] instances of WorkLoadsSessionManager & WorkloadsSessionHost running
-[0.000 GB] Physical Memory Used by WorkLoadsSessionManager & WorkloadsSessionHost:
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[4.555 GB] Free Physical Memory
-
- Status Name          StartType
- ------ ----          ---------
-Running WSAIFabricSvc Automatic
-
-WARNING: [END  ] Leaving: fjUnAiMe
-In function PopBurntToast:
-$PSHOME is C:\Program Files\PowerShell\7-preview
-***The process path is 'C:\Program Files\PowerShell\7-preview\pwsh.EXE'
-***The parent path is 'C:\windows\system32\svchost.exe'
-[PWSH Core 7.6.0-preview.6]
-[Parent: svchost]
-[PSReadline: 9]
-[Online] [Elevated]
-Leaving function PopBurntToast:
-**********************
-PowerShell transcript end
-End time: 20260109153324
-**********************
-**********************
-PowerShell transcript start
-Start time: 20260109153401
-Username: BOOK4EDGE\fred
-RunAs User: BOOK4EDGE\fred
-Configuration Name: 
-Machine: BOOK4EDGE (Microsoft Windows NT 10.0.26200.0)
-Host Application: C:\Program Files\PowerShell\7-preview\pwsh.dll -w Hidden -nonInteractive -noProfile -noLogo -file C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1
-Process ID: 23104
-PSVersion: 7.6.0-preview.6
-PSEdition: Core
-GitCommitId: 7.6.0-preview.6
-OS: Microsoft Windows 10.0.26200
-Platform: Win32NT
-PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
-PSRemotingProtocolVersion: 2.4
-SerializationVersion: 1.1.0.1
-WSManStackVersion: 3.0
-**********************
-Transcript started, output file is C:\Users\freds\mystuff\fjUnAImeTranscript.log
-WARNING: Write-warning In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T15:34:01.4511784-05:00]
-Write-host In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T15:34:01.4519950-05:00]
-Script started at 01/09/2026 15:34:01
-fjUnAIme1.ps1: This is an error test
-fjUnAIme1.ps1: This is an error test
-VERBOSE: Verbose test
-In function fjUnAIme1.ps1: [2026-01-09T15:34:01.5433387-05:00]
-Running under Task Scheduler
-Using Write Host Running under Task Scheduler
-[BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[3.735 GB] Free Physical Memory
-Checking for Processes: WorkLoadsSessionManager, WorkloadsSessionHost
-[5] instances of WorkLoadsSessionManager & WorkloadsSessionHost running
- 	PID: 3528 	Memory Usage (GB): 0.509 	WorkloadsSessionHost
- 	PID: 17360 	Memory Usage (GB): 0.129 	WorkloadsSessionHost
- 	PID: 21584 	Memory Usage (GB): 0.032 	WorkloadsSessionHost
- 	PID: 22008 	Memory Usage (GB): 0.171 	WorkloadsSessionHost
- 	PID: 10540 	Memory Usage (GB): 0.022 	WorkloadsSessionManager
-[0.863 GB] Physical Memory Used by WorkLoadsSessionManager & WorkloadsSessionHost:
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (3528)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (17360)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (21584)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionHost (22008)".
-VERBOSE: Performing the operation "Stop-Process" on target "WorkloadsSessionManager (10540)".
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[4.667 GB] Free Physical Memory
-
- Status Name          StartType
- ------ ----          ---------
-Running WSAIFabricSvc Automatic
-
-WARNING: [END  ] Leaving: fjUnAiMe
-In function PopBurntToast:
-$PSHOME is C:\Program Files\PowerShell\7-preview
-***The process path is 'C:\Program Files\PowerShell\7-preview\pwsh.EXE'
-***The parent path is 'C:\windows\system32\svchost.exe'
-[PWSH Core 7.6.0-preview.6]
-[Parent: svchost]
-[PSReadline: 9]
-[Online] [Elevated]
-Leaving function PopBurntToast:
-**********************
-PowerShell transcript end
-End time: 20260109153408
-**********************
-**********************
-PowerShell transcript start
-Start time: 20260109173100
-Username: BOOK4EDGE\fred
-RunAs User: BOOK4EDGE\fred
-Configuration Name: 
-Machine: BOOK4EDGE (Microsoft Windows NT 10.0.26200.0)
-Host Application: C:\Program Files\PowerShell\7-preview\pwsh.dll -w Hidden -nonInteractive -noProfile -noLogo -file C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1
-Process ID: 9348
-PSVersion: 7.6.0-preview.6
-PSEdition: Core
-GitCommitId: 7.6.0-preview.6
-OS: Microsoft Windows 10.0.26200
-Platform: Win32NT
-PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
-PSRemotingProtocolVersion: 2.4
-SerializationVersion: 1.1.0.1
-WSManStackVersion: 3.0
-**********************
-Transcript started, output file is C:\Users\freds\mystuff\fjUnAImeTranscript.log
-WARNING: Write-warning In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T17:31:00.9537066-05:00]
-Write-host In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T17:31:00.9546659-05:00]
-Script started at 01/09/2026 17:31:00
-fjUnAIme1.ps1: This is an error test
-fjUnAIme1.ps1: This is an error test
-VERBOSE: Verbose test
-In function fjUnAIme1.ps1: [2026-01-09T17:31:01.0560985-05:00]
-Running under Task Scheduler
-Using Write Host Running under Task Scheduler
-[BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[5.344 GB] Free Physical Memory
-Checking for Processes: WorkLoadsSessionManager, WorkloadsSessionHost
-[0] instances of WorkLoadsSessionManager & WorkloadsSessionHost running
-[0.000 GB] Physical Memory Used by WorkLoadsSessionManager & WorkloadsSessionHost:
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[5.486 GB] Free Physical Memory
-
- Status Name          StartType
- ------ ----          ---------
-Running WSAIFabricSvc Automatic
-
-WARNING: [END  ] Leaving: fjUnAiMe
-In function PopBurntToast:
-$PSHOME is C:\Program Files\PowerShell\7-preview
-***The process path is 'C:\Program Files\PowerShell\7-preview\pwsh.EXE'
-***The parent path is 'C:\windows\system32\svchost.exe'
-[PWSH Core 7.6.0-preview.6]
-[Parent: svchost]
-[PSReadline: 9]
-[Online] [Elevated]
-Leaving function PopBurntToast:
-**********************
-PowerShell transcript end
-End time: 20260109173108
-**********************
-**********************
-PowerShell transcript start
-Start time: 20260109173401
-Username: BOOK4EDGE\fred
-RunAs User: BOOK4EDGE\fred
-Configuration Name: 
-Machine: BOOK4EDGE (Microsoft Windows NT 10.0.26200.0)
-Host Application: C:\Program Files\PowerShell\7-preview\pwsh.dll -w Hidden -nonInteractive -noProfile -noLogo -file C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1
-Process ID: 9388
-PSVersion: 7.6.0-preview.6
-PSEdition: Core
-GitCommitId: 7.6.0-preview.6
-OS: Microsoft Windows 10.0.26200
-Platform: Win32NT
-PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
-PSRemotingProtocolVersion: 2.4
-SerializationVersion: 1.1.0.1
-WSManStackVersion: 3.0
-**********************
-Transcript started, output file is C:\Users\freds\mystuff\fjUnAImeTranscript.log
-WARNING: Write-warning In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T17:34:01.6880932-05:00]
-Write-host In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T17:34:01.6888219-05:00]
-Script started at 01/09/2026 17:34:01
-fjUnAIme1.ps1: This is an error test
-fjUnAIme1.ps1: This is an error test
-VERBOSE: Verbose test
-In function fjUnAIme1.ps1: [2026-01-09T17:34:01.7943727-05:00]
-Running under Task Scheduler
-Using Write Host Running under Task Scheduler
-[BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[5.576 GB] Free Physical Memory
-Checking for Processes: WorkLoadsSessionManager, WorkloadsSessionHost
-[0] instances of WorkLoadsSessionManager & WorkloadsSessionHost running
-[0.000 GB] Physical Memory Used by WorkLoadsSessionManager & WorkloadsSessionHost:
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[5.537 GB] Free Physical Memory
-
- Status Name          StartType
- ------ ----          ---------
-Running WSAIFabricSvc Automatic
-
-WARNING: [END  ] Leaving: fjUnAiMe
-In function PopBurntToast:
-$PSHOME is C:\Program Files\PowerShell\7-preview
-***The process path is 'C:\Program Files\PowerShell\7-preview\pwsh.EXE'
-***The parent path is 'C:\windows\system32\svchost.exe'
-[PWSH Core 7.6.0-preview.6]
-[Parent: svchost]
-[PSReadline: 9]
-[Online] [Elevated]
-Leaving function PopBurntToast:
-**********************
-PowerShell transcript end
-End time: 20260109173408
-**********************
-**********************
-PowerShell transcript start
-Start time: 20260109174901
-Username: BOOK4EDGE\fred
-RunAs User: BOOK4EDGE\fred
-Configuration Name: 
-Machine: BOOK4EDGE (Microsoft Windows NT 10.0.26200.0)
-Host Application: C:\Program Files\PowerShell\7-preview\pwsh.dll -w Hidden -nonInteractive -noProfile -noLogo -file C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1
-Process ID: 18632
-PSVersion: 7.6.0-preview.6
-PSEdition: Core
-GitCommitId: 7.6.0-preview.6
-OS: Microsoft Windows 10.0.26200
-Platform: Win32NT
-PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
-PSRemotingProtocolVersion: 2.4
-SerializationVersion: 1.1.0.1
-WSManStackVersion: 3.0
-**********************
-Transcript started, output file is C:\Users\freds\mystuff\fjUnAImeTranscript.log
-WARNING: Write-warning In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T17:49:01.7922930-05:00]
-Write-host In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T17:49:01.7932746-05:00]
-Script started at 01/09/2026 17:49:01
-fjUnAIme1.ps1: This is an error test
-fjUnAIme1.ps1: This is an error test
-VERBOSE: Verbose test
-In function fjUnAIme1.ps1: [2026-01-09T17:49:01.9156107-05:00]
-Running under Task Scheduler
-Using Write Host Running under Task Scheduler
-[BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[4.813 GB] Free Physical Memory
-Checking for Processes: WorkLoadsSessionManager, WorkloadsSessionHost
-[0] instances of WorkLoadsSessionManager & WorkloadsSessionHost running
-[0.000 GB] Physical Memory Used by WorkLoadsSessionManager & WorkloadsSessionHost:
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[4.824 GB] Free Physical Memory
-
- Status Name          StartType
- ------ ----          ---------
-Running WSAIFabricSvc Automatic
-
-WARNING: [END  ] Leaving: fjUnAiMe
-In function PopBurntToast:
-$PSHOME is C:\Program Files\PowerShell\7-preview
-***The process path is 'C:\Program Files\PowerShell\7-preview\pwsh.EXE'
-***The parent path is 'C:\windows\system32\svchost.exe'
-[PWSH Core 7.6.0-preview.6]
-[Parent: svchost]
-[PSReadline: 9]
-[Online] [Elevated]
-Leaving function PopBurntToast:
-**********************
-PowerShell transcript end
-End time: 20260109174909
-**********************
-**********************
-PowerShell transcript start
-Start time: 20260109180401
-Username: BOOK4EDGE\fred
-RunAs User: BOOK4EDGE\fred
-Configuration Name: 
-Machine: BOOK4EDGE (Microsoft Windows NT 10.0.26200.0)
-Host Application: C:\Program Files\PowerShell\7-preview\pwsh.dll -w Hidden -nonInteractive -noProfile -noLogo -file C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1
-Process ID: 7412
-PSVersion: 7.6.0-preview.6
-PSEdition: Core
-GitCommitId: 7.6.0-preview.6
-OS: Microsoft Windows 10.0.26200
-Platform: Win32NT
-PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
-PSRemotingProtocolVersion: 2.4
-SerializationVersion: 1.1.0.1
-WSManStackVersion: 3.0
-**********************
-Transcript started, output file is C:\Users\freds\mystuff\fjUnAImeTranscript.log
-WARNING: Write-warning In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T18:04:01.7034904-05:00]
-Write-host In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T18:04:01.7045848-05:00]
-Script started at 01/09/2026 18:04:01
-fjUnAIme1.ps1: This is an error test
-fjUnAIme1.ps1: This is an error test
-VERBOSE: Verbose test
-In function fjUnAIme1.ps1: [2026-01-09T18:04:01.7972574-05:00]
-Running under Task Scheduler
-Using Write Host Running under Task Scheduler
-[BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[5.019 GB] Free Physical Memory
-Checking for Processes: WorkLoadsSessionManager, WorkloadsSessionHost
-[0] instances of WorkLoadsSessionManager & WorkloadsSessionHost running
-[0.000 GB] Physical Memory Used by WorkLoadsSessionManager & WorkloadsSessionHost:
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[5.013 GB] Free Physical Memory
-
- Status Name          StartType
- ------ ----          ---------
-Running WSAIFabricSvc Automatic
-
-WARNING: [END  ] Leaving: fjUnAiMe
-In function PopBurntToast:
-$PSHOME is C:\Program Files\PowerShell\7-preview
-***The process path is 'C:\Program Files\PowerShell\7-preview\pwsh.EXE'
-***The parent path is 'C:\windows\system32\svchost.exe'
-[PWSH Core 7.6.0-preview.6]
-[Parent: svchost]
-[PSReadline: 9]
-[Online] [Elevated]
-Leaving function PopBurntToast:
-**********************
-PowerShell transcript end
-End time: 20260109180408
-**********************
-**********************
-PowerShell transcript start
-Start time: 20260109181901
-Username: BOOK4EDGE\fred
-RunAs User: BOOK4EDGE\fred
-Configuration Name: 
-Machine: BOOK4EDGE (Microsoft Windows NT 10.0.26200.0)
-Host Application: C:\Program Files\PowerShell\7-preview\pwsh.dll -w Hidden -nonInteractive -noProfile -noLogo -file C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1
-Process ID: 10916
-PSVersion: 7.6.0-preview.6
-PSEdition: Core
-GitCommitId: 7.6.0-preview.6
-OS: Microsoft Windows 10.0.26200
-Platform: Win32NT
-PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
-PSRemotingProtocolVersion: 2.4
-SerializationVersion: 1.1.0.1
-WSManStackVersion: 3.0
-**********************
-Transcript started, output file is C:\Users\freds\mystuff\fjUnAImeTranscript.log
-WARNING: Write-warning In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T18:19:01.7069322-05:00]
-Write-host In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T18:19:01.7081658-05:00]
-Script started at 01/09/2026 18:19:01
-fjUnAIme1.ps1: This is an error test
-fjUnAIme1.ps1: This is an error test
-VERBOSE: Verbose test
-In function fjUnAIme1.ps1: [2026-01-09T18:19:01.7973971-05:00]
-Running under Task Scheduler
-Using Write Host Running under Task Scheduler
-[BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: fjUnAiMe
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[5.455 GB] Free Physical Memory
-Checking for Processes: WorkLoadsSessionManager, WorkloadsSessionHost
-[0] instances of WorkLoadsSessionManager & WorkloadsSessionHost running
-[0.000 GB] Physical Memory Used by WorkLoadsSessionManager & WorkloadsSessionHost:
-[write-host BEGIN  ] Starting: Get-FreePhysicalMemory
-[5.459 GB] Free Physical Memory
-
- Status Name          StartType
- ------ ----          ---------
-Running WSAIFabricSvc Automatic
-
-WARNING: [END  ] Leaving: fjUnAiMe
-In function PopBurntToast:
-$PSHOME is C:\Program Files\PowerShell\7-preview
-***The process path is 'C:\Program Files\PowerShell\7-preview\pwsh.EXE'
-***The parent path is 'C:\windows\system32\svchost.exe'
-[PWSH Core 7.6.0-preview.6]
-[Parent: svchost]
-[PSReadline: 9]
-[Online] [Elevated]
-Leaving function PopBurntToast:
-**********************
-PowerShell transcript end
-End time: 20260109181908
-**********************
-**********************
-PowerShell transcript start
-Start time: 20260109183415
-Username: BOOK4EDGE\fred
-RunAs User: BOOK4EDGE\fred
-Configuration Name: 
-Machine: BOOK4EDGE (Microsoft Windows NT 10.0.26200.0)
-Host Application: C:\Program Files\PowerShell\7-preview\pwsh.dll -w Hidden -nonInteractive -noProfile -noLogo -file C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1
-Process ID: 22344
-PSVersion: 7.6.0-preview.6
-PSEdition: Core
-GitCommitId: 7.6.0-preview.6
-OS: Microsoft Windows 10.0.26200
-Platform: Win32NT
-PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
-PSRemotingProtocolVersion: 2.4
-SerializationVersion: 1.1.0.1
-WSManStackVersion: 3.0
-**********************
-Transcript started, output file is C:\Users\freds\mystuff\fjUnAImeTranscript.log
-WARNING: Write-warning In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T18:34:15.9847003-05:00]
-Write-host In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T18:34:15.9863167-05:00]
-Script started at 01/09/2026 18:34:15
-fjUnAIme1.ps1: This is an error test
-fjUnAIme1.ps1: This is an error test
-VERBOSE: Verbose test
-In function fjUnAIme1.ps1: [2026-01-09T18:34:16.0929654-05:00]
-Running under Task Scheduler
-Using Write Host Running under Task Scheduler
-Friday 2026.01.09 18:34:16 -05:00
-[*BEGIN  ] Starting: fjUnAiMe
+Saturday 2026.01.10 00:19:02 -05:00
+[*BEGIN  ] Starting:$pscommandpath C:\Users\freds\MyStuff\fjUnAIme.ps1
 IsElevated: True
 [BEGIN  ] Starting: Get-FreePhysicalMemory
-[1.173 GB] Free Physical Memory
+[5.370 GB] Free Physical Memory
+[2.770 GB] Limit/Trigger
+Free Physical Memory is sufficient.
 Checking for Processes: WorkLoadsSessionManager, WorkloadsSessionHost
-[6] instances of WorkLoadsSessionManager & WorkloadsSessionHost running
- 	PID: 8804 	Memory Usage (GB): 0.24 	WorkloadsSessionHost
- 	PID: 10624 	Memory Usage (GB): 2.596 	WorkloadsSessionHost
- 	PID: 18640 	Memory Usage (GB): 0.128 	WorkloadsSessionHost
- 	PID: 20640 	Memory Usage (GB): 0.171 	WorkloadsSessionHost
- 	PID: 22784 	Memory Usage (GB): 0.508 	WorkloadsSessionHost
- 	PID: 22288 	Memory Usage (GB): 0.021 	WorkloadsSessionManager
-[3.664 GB] Physical Memory Used by WorkLoadsSessionManager & WorkloadsSessionHost:
-[*BEGIN  ] Starting: SleepProgress
-[BEGIN  ] Starting: Get-FreePhysicalMemory
-[1.178 GB] Free Physical Memory
-1.177734375
+[0] Instances of WorkLoadsSessionManager & WorkloadsSessionHost are running.
+[0.000 GB] Physical Memory Used by WorkLoadsSessionManager & WorkloadsSessionHost
 
  Status Name          StartType
  ------ ----          ---------
@@ -757,17 +54,17 @@ $PSHOME is C:\Program Files\PowerShell\7-preview
 Leaving function PopBurntToast:
 **********************
 PowerShell transcript end
-End time: 20260109183423
+End time: 20260110001903
 **********************
 **********************
 PowerShell transcript start
-Start time: 20260109184901
+Start time: 20260110003402
 Username: BOOK4EDGE\fred
 RunAs User: BOOK4EDGE\fred
 Configuration Name: 
 Machine: BOOK4EDGE (Microsoft Windows NT 10.0.26200.0)
 Host Application: C:\Program Files\PowerShell\7-preview\pwsh.dll -w Hidden -nonInteractive -noProfile -noLogo -file C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1
-Process ID: 6848
+Process ID: 11168
 PSVersion: 7.6.0-preview.6
 PSEdition: Core
 GitCommitId: 7.6.0-preview.6
@@ -779,29 +76,25 @@ SerializationVersion: 1.1.0.1
 WSManStackVersion: 3.0
 **********************
 Transcript started, output file is C:\Users\freds\mystuff\fjUnAImeTranscript.log
-WARNING: Write-warning In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T18:49:01.9688560-05:00]
-Write-host In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-09T18:49:01.9697074-05:00]
-Script started at 01/09/2026 18:49:01
+WARNING: Write-warning In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-10T00:34:02.0871553-05:00]
+Write-host In Script C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1: [2026-01-10T00:34:02.0877657-05:00]
+Script started at 01/10/2026 00:34:02
 fjUnAIme1.ps1: This is an error test
 fjUnAIme1.ps1: This is an error test
 VERBOSE: Verbose test
-In function fjUnAIme1.ps1: [2026-01-09T18:49:02.0892843-05:00]
+In function fjUnAIme1.ps1: [2026-01-10T00:34:02.1760607-05:00]
 Running under Task Scheduler
 Using Write Host Running under Task Scheduler
-Friday 2026.01.09 18:49:02 -05:00
-[*BEGIN  ] Starting: fjUnAiMe
+Saturday 2026.01.10 00:34:02 -05:00
+[*BEGIN  ] Starting:$pscommandpath C:\Users\freds\MyStuff\fjUnAIme.ps1
 IsElevated: True
 [BEGIN  ] Starting: Get-FreePhysicalMemory
-[2.275 GB] Free Physical Memory
-FreePhysicalMemory: 2.275390625 LimitGB: 1
+[5.673 GB] Free Physical Memory
+[2.770 GB] Limit/Trigger
+Free Physical Memory is sufficient.
 Checking for Processes: WorkLoadsSessionManager, WorkloadsSessionHost
-[5] instances of WorkLoadsSessionManager & WorkloadsSessionHost running
- 	PID: 7196 	Memory Usage (GB): 0.123 	WorkloadsSessionHost
- 	PID: 14880 	Memory Usage (GB): 0.227 	WorkloadsSessionHost
- 	PID: 16624 	Memory Usage (GB): 2.596 	WorkloadsSessionHost
- 	PID: 18656 	Memory Usage (GB): 0.24 	WorkloadsSessionHost
- 	PID: 11748 	Memory Usage (GB): 0.022 	WorkloadsSessionManager
-[3.209 GB] Physical Memory Used by WorkLoadsSessionManager & WorkloadsSessionHost:
+[0] Instances of WorkLoadsSessionManager & WorkloadsSessionHost are running.
+[0.000 GB] Physical Memory Used by WorkLoadsSessionManager & WorkloadsSessionHost
 
  Status Name          StartType
  ------ ----          ---------
@@ -819,5 +112,5 @@ $PSHOME is C:\Program Files\PowerShell\7-preview
 Leaving function PopBurntToast:
 **********************
 PowerShell transcript end
-End time: 20260109184904
+End time: 20260110003403
 **********************

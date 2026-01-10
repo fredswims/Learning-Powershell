@@ -40,7 +40,7 @@ Function fjUnAiMe {
     # Define Service and Process Names
     $ServiceName = "WSAIFabricSvc"
     $ProcessName = ( "WorkLoadsSessionManager", "WorkloadsSessionHost")
-
+    [string]$MyMode=$null # returned to caller. What was done.
     
     # Cant have -Start and -Stop option at the same time.
     if ($Start -and $Stop) { Write-Warning "Both the -Start and -Stop options were selected. Terminating."; return }
@@ -56,10 +56,13 @@ Function fjUnAiMe {
     Write-Host ("[{0:N3} GB] Limit/Trigger" -f $LimitGB ) 
     if( $FreePhysicalMemory -le $LimitGB ) {
         $beLowGB=$true
-        write-host "Free Physical Memory is low."}
+        write-host "Free Physical Memory is low."
+        $MyMode += " Memory Low:" 
+    }
     else {
         $beLowGB = $false
         write-host "Free Physical Memory is sufficient."
+        $MyMode += " Memory Low:" 
     }
     
     # What processess are we looking for?
@@ -74,9 +77,7 @@ Function fjUnAiMe {
     
     # How much memory is used by each instance of $ProcessName.
     $freeGB = $($tasks | Measure-Object -property WorkingSet64 -sum).sum
-    
     Write-Host ("[{0:N3} GB] Physical Memory Used by {1}" -f $($freeGB / 1GB), $($ProcessName -join ' & ') )
-    # Get-FreePhysicalMemory
     
     if ((!$stop -and !$Start) -and ($beLowGB -and $Auto)) {
         Write-Warning "Physical Memory is below or equal to $LimitGB GB and neither -Stop or -Start options were selected. Suggesting to run with -Stop option."
@@ -86,6 +87,7 @@ Function fjUnAiMe {
     
     try {
         if ($Stop) {
+            $MyMode += " Stop:"
             $tasks.foreach{stop-process -id $_.id -force -Verbose} 
 
             if (-not $LeaveServiceRunning) {
@@ -94,6 +96,7 @@ Function fjUnAiMe {
             }
         }
         if ($Start) {
+            $MyMode += " Start:"
             Set-Service -Name $ServiceName -StartupType AutomaticDelayedStart -Verbose && Start-Service -Name $ServiceName -Verbose
         }
     }
@@ -108,7 +111,14 @@ Function fjUnAiMe {
             Get-FreePhysicalMemory
         }
         get-service -name $ServiceName|format-table status,name,StartType 
+        write-host ("`$MyMode is [{0}]" -f $MyMode) -ForegroundColor Green
         Write-Warning "[END  ] Leaving: $($MyInvocation.Mycommand)"
+
+$MyReturn = [PSCustomObject]@{
+    Mode = $mymode
+}
+
+        $MyReturn # return $MyMode
     }
 }
 

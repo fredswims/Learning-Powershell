@@ -1,10 +1,14 @@
 function PopBurntToast {
-    param($PSReadLineVersion=9)
+    param(
+        [Int64]$PSReadLineVersion=9,
+        [string]$mode
+    )
     <# 
         Burnt Toast MAY not work with PWSH app INSTALLED from the STORE.
         It works with an '.msi' installation. Documented as such for the PREVIEW."
     #>
-    Write-Output "In function $($MyInvocation.MyCommand.Name):"
+    Write-Host "In function $($MyInvocation.MyCommand.Name):"
+    Write-Host "`$mode is $Mode"
     # [string[]]$BTtext=@()
     $IsElevated=$([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
     $IsOnline=test-connection www.microsoft.com -count 1 -ping -quiet
@@ -23,10 +27,10 @@ function PopBurntToast {
     $BTtext += "[PWSH $($psversiontable.PSEdition) $($psversiontable.PSVersion)]"
     # fix this. Use fjgpp.  foreach ..name like "terminal" ) | split-path -leaf ($p.processpath.split -leaf)
     if ($HasParent) {$BTtext += "`n[Parent: {0}]" -f $($Process.parent.name + $Preview)}
-    $BTtext += "`n[PSReadline: $($PSReadLineVersion)]"
-    if ($IsOnline) {$BTtext += "`n[Online]"} else {$BTtext += "`n[Not Online]"}
+    # $BTtext += "`n[PSReadline: $($PSReadLineVersion)]"
+    # if ($IsOnline) {$BTtext += "`n[Online]"} else {$BTtext += "`n[Not Online]"}
     if ($IsElevated) {$BTtext += " [Elevated]"} else {$BTtext += " [Not Elevated]"}
-      
+    $BTtext += $Mode
     $header = New-BTHeader -Id '001' -Title "BurntToast Version $((get-installedpsresource -name burntToast)[0].version.tostring())"
     $parameters = @{       
         Attribution = "Scheduled Task fjUnAIme1.ps1"
@@ -42,12 +46,12 @@ function PopBurntToast {
 
 function Test-IsScheduledTask {
     # Method A: parent process
-    Write-Output "In function $($MyInvocation.MyCommand.Name):"
+    Write-Host "In function $($MyInvocation.MyCommand.Name):"
 
     $parent = (Get-CimInstance Win32_Process -Filter "ProcessId = $PID").ParentProcessId
     $parentName = (Get-Process -Id $parent).Name
-    write-output "Parent Process Name: $parentName"
-    write-output "Session Name: $env:SESSIONNAME"
+    write-host "Parent Process Name: $parentName"
+    write-host "Session Name: $env:SESSIONNAME"
 
     if ($parentName -in 'taskeng', 'svchost') {
         return $true
@@ -66,34 +70,30 @@ function Test-IsScheduledTask {
 # Program/script: pwsh
 # arguments: -w Hidden -nonInteractive -noProfile -noLogo -file "C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1" *> "C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAiMe1.log"
 #dot source and then call the function
-$path = "$home\mystuff\fjUnAIme1.log"
-$pathTranscript = "$home\mystuff\fjUnAImeTranscript.log"
-
-Start-Transcript -Path $pathTranscript -Append
-"***[$(Get-Date -Format o)]" | Out-File -Append $path
-out-file -InputObject   "In Script $($PSCommandPath): [$(Get-Date -Format o)] " -append $path
-Write-warning "Write-warning In Script $($PSCommandPath): [$(Get-Date -Format o)] "
+$TranscriptPath= (join-path $home MyStuff Logs fjUnAImeTranscript.log)
+Start-Transcript -Path $TranscriptPath -Append
+Write-warning "`PScommandpath In Script $($PSCommandPath): [$(Get-Date -Format o)] "
 Write-host "Write-host In Script $($PSCommandPath): [$(Get-Date -Format o)] "
 
-"UserName: $env:USERNAME" | Out-File  -append $path
-"UserProfile: $env:USERPROFILE" | Out-File $path -Append
-Write-Output "Script started at $(Get-Date)"
-Write-Error "This is an error test"
+"UserName: $env:USERNAME" 
+"UserProfile: $env:USERPROFILE" 
+Write-Host "Script started at $(Get-Date)"
+Write-Error "Write-Error This is an error test"
 Write-Verbose "Verbose test" -Verbose
-Write-Output "In function $($MyInvocation.MyCommand.Name): [$(Get-Date -Format o)] "
+Write-Host "In function $($MyInvocation.MyCommand.Name): [$(Get-Date -Format o)] "
 $IsScheduledTask = Test-IsScheduledTask
 if ($IsScheduledTask) {
-    Write-Output "Running under Task Scheduler"
     Write-host "Using Write Host Running under Task Scheduler"
 } else {
-    Write-Output "Running interactively"
+    Write-Host "Running interactively"
 }
-Out-File -InputObject "IsScheduledTask: $IsScheduledTask" -Append $path
+write-host "IsScheduledTask: $IsScheduledTask"
 
-
+# [string]$MyMode=$null
 . C:\Users\freds\MyStuff\fjUnAIme.ps1
 # fjunaime -stop -LeaveServiceRunning 
-fjunaime -auto -limitgb 2.77
-PopBurntToast 
-out-file -InputObject "Exiting Script $($PSCommandPath): [$(Get-Date -Format o)]" -append $path
+$Mymode=$(fjunaime -auto -limitgb 2.77)
+# write-host "`$myMode is $mymode.mode"
+PopBurntToast -mode "test"
 Stop-Transcript
+Write-Host "Exiting Script $($PSCommandPath): [$(Get-Date -Format o)]"

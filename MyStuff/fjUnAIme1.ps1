@@ -61,8 +61,6 @@ function Test-IsScheduledTask {
     return $false
 }
 
-
-
 #region Script Body
 #task scheduler call example:
 # Program/script: pwsh
@@ -72,7 +70,6 @@ $path = "$home\mystuff\fjUnAIme1.log"
 $pathTranscript = "$home\mystuff\fjUnAImeTranscript.log"
 
 Start-Transcript -Path $pathTranscript -Append
-
 "***[$(Get-Date -Format o)]" | Out-File -Append $path
 out-file -InputObject   "In Script $($PSCommandPath): [$(Get-Date -Format o)] " -append $path
 Write-warning "Write-warning In Script $($PSCommandPath): [$(Get-Date -Format o)] "
@@ -96,7 +93,7 @@ Out-File -InputObject "IsScheduledTask: $IsScheduledTask" -Append $path
 
 . C:\Users\freds\MyStuff\fjUnAIme.ps1
 # fjunaime -stop -LeaveServiceRunning 
-fjunaime -auto -limitgb 1
+fjunaime -auto -limitgb 2.77
 PopBurntToast 
 out-file -InputObject "Exiting Script $($PSCommandPath): [$(Get-Date -Format o)]" -append $path
 Stop-Transcript

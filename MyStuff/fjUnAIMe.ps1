@@ -1,11 +1,52 @@
 Function fjUnAiMe {
+    <#
+        .SYNOPSIS
+        Frees up AI memory.
+        AUTHOR:FAJ January 2026
+
+        .DESCRIPTION
+        PURPOSE: Free-Java-AI-Memory. Stops WSAIFabricSvc and related processes when physical memory is low.
+        Optionally just stops the processes "WorkLoadsSessionManager", "WorkloadsSessionHost" and leaves the service running.
+
+        .PARAMETER Id
+        ?Unique string identifying this header instance. Used for replacement or updating by reuse.
+
+        .PARAMETER Title
+        ?The text displayed to the user as the header.
+
+        .PARAMETER Arguments
+        ?String data passed to Activation if the header itself is clicked.
+
+        .PARAMETER ActivationType
+        ?Enum specifying the activation type (defaults to Protocol).
+
+        .INPUTS
+        None. You cannot pipe input to this function.
+
+        .OUTPUTS
+        Custom Object: 
+            Mode  - what actions were taken
+            Return - ($True/$False)
+        A BurntToast Notification
+
+        .EXAMPLE
+        ?New-BTHeader -Title 'First Category'
+        Creates a header titled 'First Category' for categorizing toasts.
+
+        .EXAMPLE
+        ?New-BTHeader -Id '001' -Title 'Stack Overflow Questions' -Arguments 'http://stackoverflow.com/'
+        Creates a header with ID '001' and links activation to a URL.
+
+        .LINK
+        ?https://github.com/Windos/BurntToast/blob/main/Help/New-BTHeader.md
+    #>
     [CmdletBinding()]
     param(
-        $LimitGB = 1,        # Less than or equal triggers the -stop opton.
-        [switch]$Auto= $false,
-        [switch]$Start = $false,
-        [switch]$Stop = $false,
-        [switch]$LeaveServiceRunning = $false
+        $LimitGB = 1,               # Less than or equal triggers the -stop opton.
+        [switch]$Auto= $false,      # Automatically stop processes if memory is low but leave the service running; recall memory.
+        [switch]$Start = $false,    # Start the service again.
+        [switch]$Stop = $false,     # Stop the service and related processes.
+        [switch]$LeaveServiceRunning = $false # When stopping processes, leave the service running.
     )
 
         Function Get-FreePhysicalMemory {
@@ -54,6 +95,7 @@ Function fjUnAiMe {
     
     $FreePhysicalMemory = Get-FreePhysicalMemory #get Free Physical Memory
     Write-Host -msg ("[{0:N3} GB] Trigger Threshold" -f $LimitGB ) 
+    $MyMode += " InitialFree-$([math]::Round($FreePhysicalMemory,3))GB "
     if( $FreePhysicalMemory -le $LimitGB ) {
         $beLowGB=$true
         write-host "Free Physical Memory is low."
@@ -113,7 +155,8 @@ Function fjUnAiMe {
         if ($stop) {
             # show available memory
             SleepProgress -Seconds 4 # Give the system a moment to settle.
-            $null = Get-FreePhysicalMemory
+            $FinalFreeGB = Get-FreePhysicalMemory
+            $MyMode += " FreeMemory-$([math]::Round($FinalFreeGB,3))GB"
         }
 
         $gs = Get-Service -name $ServiceName # don't let the object go down the pipeline.
@@ -125,8 +168,10 @@ Function fjUnAiMe {
         Write-Warning "[END  ] Leaving: $($MyInvocation.Mycommand)"
 
         $MyReturn = [PSCustomObject]@{
-            Mode = $mymode
-            ReturnCode = $True
+            Mode = $mymode;
+            'StartingFreeMemory' = $FreePhysicalMemory;
+            'FinalFreeMemory' = $FinalFreeGB;
+            'ReturnCode' = $True
         }
         $MyReturn # return $MyMode
     } #end finally

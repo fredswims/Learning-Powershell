@@ -71,7 +71,11 @@ function Test-IsScheduledTask {
 # arguments: -w Hidden -nonInteractive -noProfile -noLogo -file "C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1" *> "C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAiMe1.log"
 #dot source and then call the function
 $TranscriptPath= (join-path $home MyStuff Logs fjUnAImeTranscript.log)
+$TranscriptPath= (join-path  Logs fjUnAImeTranscript.log) # relative to current directory set in task scheduler.     
+
 Start-Transcript -Path $TranscriptPath -Append
+$WorkingDir = (get-location).path
+write-host -msg ("Working Directory [$WorkingDir]")
 Write-warning "Script started at $(Get-Date -format o)"
 Write-warning "Start Script $($MyInvocation.MyCommand.Name): [$(Get-Date -Format o)] "
 Write-warning "`PScommandpath In Script $($PSCommandPath): [$(Get-Date -Format o)] "

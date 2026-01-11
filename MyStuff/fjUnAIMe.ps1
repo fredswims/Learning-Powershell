@@ -40,7 +40,7 @@ Function fjUnAiMe {
     # Define Service and Process Names
     $ServiceName = "WSAIFabricSvc"
     $ProcessName = ( "WorkLoadsSessionManager", "WorkloadsSessionHost")
-    [string]$MyMode=$null # returned to caller. What was done.
+    [string]$MyMode="" # returned to caller. What was done.
     
     # Cant have -Start and -Stop option at the same time.
     if ($Start -and $Stop) { Write-Warning "Both the -Start and -Stop options were selected. Terminating."; return }
@@ -53,16 +53,16 @@ Function fjUnAiMe {
     }
     
     $FreePhysicalMemory = Get-FreePhysicalMemory #get Free Physical Memory
-    Write-Host ("[{0:N3} GB] Limit/Trigger" -f $LimitGB ) 
+    Write-Host -msg ("[{0:N3} GB] Trigger Threshold" -f $LimitGB ) 
     if( $FreePhysicalMemory -le $LimitGB ) {
         $beLowGB=$true
         write-host "Free Physical Memory is low."
-        $MyMode += " Memory Low:" 
+        $MyMode += " Low-Memory" 
     }
     else {
         $beLowGB = $false
         write-host "Free Physical Memory is sufficient."
-        $MyMode += " Memory Low:" 
+        $MyMode += " Sufficient-Memory" 
     }
     
     # What processess are we looking for?
@@ -87,17 +87,21 @@ Function fjUnAiMe {
     
     try {
         if ($Stop) {
-            $MyMode += " Stop:"
+            $MyMode += " Stop"
             $tasks.foreach{stop-process -id $_.id -force -Verbose} 
 
             if (-not $LeaveServiceRunning) {
+                #neither of these two cmdlets return an object.
+                $MyMode += " Service-Disabled"
                 Set-Service -Name $ServiceName -StartupType Disabled  -verbose
                 Stop-Service -Name $ServiceName -Force -Verbose
             }
         }
         if ($Start) {
-            $MyMode += " Start:"
-            Set-Service -Name $ServiceName -StartupType AutomaticDelayedStart -Verbose && Start-Service -Name $ServiceName -Verbose
+            $MyMode += " Start"
+            #neither of these two cmdlets return an object.
+            Set-Service -Name $ServiceName -StartupType AutomaticDelayedStart -Verbose && `
+            Start-Service -Name $ServiceName -Verbose
         }
     }
     catch {
@@ -107,19 +111,25 @@ Function fjUnAiMe {
     finally {
         <#Do this after the try block regardless of whether an exception occurred or not#>
         if ($stop) {
+            # show available memory
             SleepProgress -Seconds 4 # Give the system a moment to settle.
-            Get-FreePhysicalMemory
+            $null = Get-FreePhysicalMemory
         }
-        get-service -name $ServiceName|format-table status,name,StartType 
+
+        $gs = Get-Service -name $ServiceName # don't let the object go down the pipeline.
+        Write-Host -msg ("Service-Name -> [{1}] Status -> [{0}] StartupType -> [{2}]" `
+        -f $gs.status, $gs.name,$gs.StartUpType) -ForegroundColor Green
+        
+        $MyMode = $MyMode.trim()
         write-host ("`$MyMode is [{0}]" -f $MyMode) -ForegroundColor Green
         Write-Warning "[END  ] Leaving: $($MyInvocation.Mycommand)"
 
-$MyReturn = [PSCustomObject]@{
-    Mode = $mymode
-}
-
+        $MyReturn = [PSCustomObject]@{
+            Mode = $mymode
+            ReturnCode = $True
+        }
         $MyReturn # return $MyMode
-    }
-}
+    } #end finally
+} #end function fjUnAiMe
 
     # fjUnAiMe

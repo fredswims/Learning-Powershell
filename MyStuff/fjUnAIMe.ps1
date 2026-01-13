@@ -95,7 +95,7 @@ Function fjUnAiMe {
     
     $FreePhysicalMemory = Get-FreePhysicalMemory #get Free Physical Memory
     Write-Host -msg ("[{0:N3} GB] Trigger Threshold" -f $LimitGB ) 
-    $MyMode += " InitialFree-$([math]::Round($FreePhysicalMemory,3))GB "
+    $MyMode += " InitialFree: $([math]::Round($FreePhysicalMemory,3)) GB "
     if( $FreePhysicalMemory -le $LimitGB ) {
         $beLowGB=$true
         write-host "Free Physical Memory is low."
@@ -156,7 +156,7 @@ Function fjUnAiMe {
             # show available memory
             SleepProgress -Seconds 4 # Give the system a moment to settle.
             $FinalFreeGB = Get-FreePhysicalMemory
-            $MyMode += " FreeMemory-$([math]::Round($FinalFreeGB,3))GB"
+            $MyMode += " FreeMemory: $([math]::Round($FinalFreeGB,3)) GB"
         }
 
         $gs = Get-Service -name $ServiceName # don't let the object go down the pipeline.

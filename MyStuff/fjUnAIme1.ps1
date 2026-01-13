@@ -1,7 +1,8 @@
 function PopBurntToast {
     param(
         [Int64]$PSReadLineVersion=9,
-        [string]$mode
+        [string]$mode,
+        [double]$TriggerGB
     )
     <# 
         Burnt Toast MAY not work with PWSH app INSTALLED from the STORE.
@@ -23,16 +24,22 @@ function PopBurntToast {
     }
     
     # Build BTtext
-    $BTtext += "[PWSH $($psversiontable.PSEdition) $($psversiontable.PSVersion)]"
+    $BTtext += "Trigger $TriggerGB GB"
+    # $BTtext += "[PWSH $($psversiontable.PSEdition) $($psversiontable.PSVersion)]"
     if ($HasParent) {$BTtext += "`n[Parent: {0}]" -f $($Process.parent.name + $Preview)}
-    if ($IsElevated) {$BTtext += " [Elevated]"} else {$BTtext += " [Not Elevated]"}
+    if ($IsElevated) {$BTtext += " [Admin]"} else {$BTtext += ""}
     $BTtext += "`n[$Mode]"
 
     # Create and show the toast notification
-    $header = New-BTHeader -Id '001' `
-        -Title "BurntToast Version $((get-installedpsresource -name burntToast)[0].version.tostring())"
+    # Build Header
+    $id ='001'
+    $myString1 = "BurntToast Version $((get-installedpsresource -name burntToast)[0].version.tostring())"
+    $MyString2 = "Scheduled Task: $(Split-Path -leaf $PSCommandPath)"
+
+    $header = New-BTHeader -Id $id -Title $MyString2
+        
     $parameters = @{       
-        Attribution = "Scheduled Task fjUnAIme1.ps1"
+        Attribution = $myString1
         Header      = $header
         Text        = $BTtext
         Silent      = $true
@@ -90,7 +97,7 @@ if ($IsScheduledTask) {
 . C:\Users\freds\MyStuff\fjUnAIme.ps1
 # fjunaime -stop -LeaveServiceRunning
 #fjunaime returns a string object with a property 'mode' that contains what was done. 
-$Mymode=$(fjunaime -auto -limitgb 2.77)
-PopBurntToast -mode $Mymode.mode.tostring()
+$Mymode=$(fjunaime -auto -TriggerGB 2.345)
+PopBurntToast -mode $Mymode.mode.tostring() -TriggerGB $Mymode.TriggerGB
 Stop-Transcript
 Write-Host "Exiting Script $($PSCommandPath): [$(Get-Date -Format o)]"

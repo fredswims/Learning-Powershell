@@ -42,7 +42,7 @@ Function fjUnAiMe {
     #>
     [CmdletBinding()]
     param(
-        $LimitGB = 1,               # Less than or equal triggers the -stop opton.
+        $TriggerGB = 2.567,             # Less than or equal triggers the -stop opton.
         [switch]$Auto= $false,      # Automatically stop processes if memory is low but leave the service running; recall memory.
         [switch]$Start = $false,    # Start the service again.
         [switch]$Stop = $false,     # Stop the service and related processes.
@@ -94,9 +94,9 @@ Function fjUnAiMe {
     }
     
     $FreePhysicalMemory = Get-FreePhysicalMemory #get Free Physical Memory
-    Write-Host -msg ("[{0:N3} GB] Trigger Threshold" -f $LimitGB ) 
+    Write-Host -msg ("[{0:N3} GB] Trigger Threshold" -f $TriggerGB ) 
     $MyMode += " InitialFree: $([math]::Round($FreePhysicalMemory,3)) GB "
-    if( $FreePhysicalMemory -le $LimitGB ) {
+    if( $FreePhysicalMemory -le $TriggerGB ) {
         $beLowGB=$true
         write-host "Free Physical Memory is low."
         $MyMode += " Low-Memory" 
@@ -122,7 +122,7 @@ Function fjUnAiMe {
     Write-Host ("[{0:N3} GB] Physical Memory Used by {1}" -f $($freeGB / 1GB), $($ProcessName -join ' & ') )
     
     if ((!$stop -and !$Start) -and ($beLowGB -and $Auto)) {
-        Write-Warning "Physical Memory is below or equal to $LimitGB GB and neither -Stop or -Start options were selected. Suggesting to run with -Stop option."
+        Write-Warning "Physical Memory is below or equal to $TriggerGB GB and neither -Stop or -Start options were selected. Suggesting to run with -Stop option."
         $stop=$true
         $LeaveServiceRunning = $true
     }
@@ -171,6 +171,7 @@ Function fjUnAiMe {
             Mode = $mymode;
             'StartingFreeMemory' = $FreePhysicalMemory;
             'FinalFreeMemory' = $FinalFreeGB;
+            'TriggerGB' = $TriggerGB;
             'ReturnCode' = $True
         }
         $MyReturn # return $MyMode

@@ -56,7 +56,7 @@ Function fjUnAiMe {
             # Get Free Physical Memory
             $freeGB1 = (Get-Counter '\Memory\Available MBytes').CounterSamples.CookedValue / 1KB
             # write-warning ("Free Physical Memory: {0} GB" -f $($(Get-ComputerInfo).OsFreePhysicalMemory / (1024*1024)))
-            Write-Host ("[{0:N3} GB] Free Physical Memory " -f $freeGB1 ) 
+            Write-Host ("[{0:N3} GiB] Free Physical Memory " -f $freeGB1 ) 
             $freeGB1 # return
         }
         
@@ -94,7 +94,7 @@ Function fjUnAiMe {
     }
     
     $FreePhysicalMemory = Get-FreePhysicalMemory #get Free Physical Memory
-    Write-Host -msg ("[{0:N3} GB] Trigger Threshold" -f $TriggerGB )
+    Write-Host -msg ("[{0:N3} GiB] Trigger Threshold" -f $TriggerGB )
 
 
     if( $FreePhysicalMemory -le $TriggerGB ) {
@@ -115,15 +115,15 @@ Function fjUnAiMe {
     write-host "[$($Tasks.Count)] Instances of $($ProcessName -join ' & ') are running."
     # List each process and its memory usage
     Foreach ($Task in $Tasks) {
-        write-host " `tPID: $($Task.Id) `tMemory Usage (GB): $([math]::Round($Task.WorkingSet64 /1GB,3)) `t$($task.name)"
+        write-host " `tPID: $($Task.Id) `tMemory Usage (GiB): $([math]::Round($Task.WorkingSet64 /1GB,3)) `t$($task.name)"
     }
     
     # How much memory is used by each instance of $ProcessName.
     $AIusedGB = $($tasks | Measure-Object -property WorkingSet64 -sum).sum /1GB
-    Write-Host ("[{0:N3} GB] Physical Memory Used by {1}" -f $($AIusedGB), $($ProcessName -join ' & ') )
+    Write-Host ("[{0:N3} GiB] Physical Memory Used by {1}" -f $($AIusedGB), $($ProcessName -join ' & ') )
     
     if ((!$stop -and !$Start) -and ($beLowGB -and $Auto)) {
-        Write-Warning "Physical Memory is below or equal to $TriggerGB GB and neither -Stop or -Start options were selected. Suggesting to run with -Stop option."
+        Write-Warning "Physical Memory is below or equal to $TriggerGB GiB and neither -Stop or -Start options were selected. Suggesting to run with -Stop option."
         $stop=$true
         $LeaveServiceRunning = $true
     }
@@ -164,9 +164,9 @@ Function fjUnAiMe {
         Write-Host -msg ("Service-Name -> [{1}] Status -> [{0}] StartupType -> [{2}]" `
         -f $gs.status, $gs.name,$gs.StartUpType) -ForegroundColor Green
         
-        $MyMode += "[Free: $([math]::Round($FreePhysicalMemory,3)) GB] "
-        $MyMode += "[Trigger: $TriggerGB GB] " 
-        $MyMode += "[AI: $([math]::Round($AIusedGB,3)) GB] " 
+        $MyMode += "[Free: $([math]::Round($FreePhysicalMemory,3)) GiB] "
+        $MyMode += "[Trigger: $TriggerGB GiB] " 
+        $MyMode += "[AI: $([math]::Round($AIusedGB,3)) GiB] " 
         If ($Stop) {$MyMode += "[FinalFreeMemory: $([math]::Round($FinalFreeGB,3)) GB] "}
 
         $MyMode = $MyMode.trim()
@@ -177,8 +177,8 @@ Function fjUnAiMe {
             Mode = $mymode;
             'StartingFreeMemory' = $FreePhysicalMemory
             'FinalFreeMemory' = $FinalFreeGB;
-            'TriggerGB' = $TriggerGB;
-            'AIUsedGB' = $AIusedGB;
+            'Trigger' = $TriggerGB;
+            'AIUsed' = $AIusedGB;
             'ReturnCode' = $True
         }
         $MyReturn # return $MyMode

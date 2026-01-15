@@ -2,7 +2,8 @@ function PopBurntToast {
     param(
         [Int64]$PSReadLineVersion=9,
         [string]$mode,
-        [double]$TriggerGB
+        [double]$TriggerGB,
+        [double]$AIusedGB
     )
     <# 
         Burnt Toast MAY not work with PWSH app INSTALLED from the STORE.
@@ -10,7 +11,7 @@ function PopBurntToast {
     #>
     Write-Host "In function $($MyInvocation.MyCommand.Name):"
     Write-Host "`$mode is $Mode"
-    # [string[]]$BTtext=@()
+
     $IsElevated=$([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
     $Process=get-process -id $PID
     # Determine if we have a parent process.
@@ -24,11 +25,13 @@ function PopBurntToast {
     }
     
     # Build BTtext
-    $BTtext += "Trigger $TriggerGB GB"
+    # $BTtext = @()
+    # $BTtext += "[AI Used: $([math]::Round($AIUsedGB,3)) GB]"
+    # $BTtext += "[Trigger $TriggerGB GB]"
     # $BTtext += "[PWSH $($psversiontable.PSEdition) $($psversiontable.PSVersion)]"
     if ($HasParent) {$BTtext += "`n[Parent: {0}]" -f $($Process.parent.name + $Preview)}
     if ($IsElevated) {$BTtext += " [Admin]"} else {$BTtext += ""}
-    $BTtext += "`n[$Mode]"
+    $BTtext += "`n$Mode"
 
     # Create and show the toast notification
     # Build Header
@@ -97,7 +100,7 @@ if ($IsScheduledTask) {
 . C:\Users\freds\MyStuff\fjUnAIme.ps1
 # fjunaime -stop -LeaveServiceRunning
 #fjunaime returns a string object with a property 'mode' that contains what was done. 
-$Mymode=$(fjunaime -auto -TriggerGB 2.345)
-PopBurntToast -mode $Mymode.mode.tostring() -TriggerGB $Mymode.TriggerGB
+$Mymode=$(fjunaime -auto -TriggerGB '0.500')
+PopBurntToast -mode $Mymode.mode.tostring() -TriggerGB $Mymode.TriggerGB -AIusedGB $Mymode.AIUsedGB
 Stop-Transcript
 Write-Host "Exiting Script $($PSCommandPath): [$(Get-Date -Format o)]"

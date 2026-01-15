@@ -94,17 +94,18 @@ Function fjUnAiMe {
     }
     
     $FreePhysicalMemory = Get-FreePhysicalMemory #get Free Physical Memory
-    Write-Host -msg ("[{0:N3} GB] Trigger Threshold" -f $TriggerGB ) 
-    $MyMode += " InitialFree: $([math]::Round($FreePhysicalMemory,3)) GB "
+    Write-Host -msg ("[{0:N3} GB] Trigger Threshold" -f $TriggerGB )
+
+
     if( $FreePhysicalMemory -le $TriggerGB ) {
         $beLowGB=$true
         write-host "Free Physical Memory is low."
-        $MyMode += " Low-Memory" 
+        $MyMode += "[Low-Memory] " 
     }
     else {
         $beLowGB = $false
         write-host "Free Physical Memory is sufficient."
-        $MyMode += " Sufficient-Memory" 
+        $MyMode += "[Sufficient-Memory] " 
     }
     
     # What processess are we looking for?
@@ -118,8 +119,8 @@ Function fjUnAiMe {
     }
     
     # How much memory is used by each instance of $ProcessName.
-    $freeGB = $($tasks | Measure-Object -property WorkingSet64 -sum).sum
-    Write-Host ("[{0:N3} GB] Physical Memory Used by {1}" -f $($freeGB / 1GB), $($ProcessName -join ' & ') )
+    $AIusedGB = $($tasks | Measure-Object -property WorkingSet64 -sum).sum /1GB
+    Write-Host ("[{0:N3} GB] Physical Memory Used by {1}" -f $($AIusedGB), $($ProcessName -join ' & ') )
     
     if ((!$stop -and !$Start) -and ($beLowGB -and $Auto)) {
         Write-Warning "Physical Memory is below or equal to $TriggerGB GB and neither -Stop or -Start options were selected. Suggesting to run with -Stop option."
@@ -129,18 +130,18 @@ Function fjUnAiMe {
     
     try {
         if ($Stop) {
-            $MyMode += " Stop"
+            $MyMode += "[Stop] "
             $tasks.foreach{stop-process -id $_.id -force -Verbose} 
 
             if (-not $LeaveServiceRunning) {
                 #neither of these two cmdlets return an object.
-                $MyMode += " Service-Disabled"
+                $MyMode += "[Service-Disabled] "
                 Set-Service -Name $ServiceName -StartupType Disabled  -verbose
                 Stop-Service -Name $ServiceName -Force -Verbose
             }
         }
         if ($Start) {
-            $MyMode += " Start"
+            $MyMode += "[Start] "
             #neither of these two cmdlets return an object.
             Set-Service -Name $ServiceName -StartupType AutomaticDelayedStart -Verbose && `
             Start-Service -Name $ServiceName -Verbose
@@ -156,22 +157,28 @@ Function fjUnAiMe {
             # show available memory
             SleepProgress -Seconds 4 # Give the system a moment to settle.
             $FinalFreeGB = Get-FreePhysicalMemory
-            $MyMode += " FreeMemory: $([math]::Round($FinalFreeGB,3)) GB"
+
         }
 
         $gs = Get-Service -name $ServiceName # don't let the object go down the pipeline.
         Write-Host -msg ("Service-Name -> [{1}] Status -> [{0}] StartupType -> [{2}]" `
         -f $gs.status, $gs.name,$gs.StartUpType) -ForegroundColor Green
         
+        $MyMode += "[Free: $([math]::Round($FreePhysicalMemory,3)) GB] "
+        $MyMode += "[Trigger: $TriggerGB GB] " 
+        $MyMode += "[AI: $([math]::Round($AIusedGB,3)) GB] " 
+        If ($Stop) {$MyMode += "[FinalFreeMemory: $([math]::Round($FinalFreeGB,3)) GB] "}
+
         $MyMode = $MyMode.trim()
-        write-host ("`$MyMode is [{0}]" -f $MyMode) -ForegroundColor Green
+        write-host ("`$MyMode is {0}" -f $MyMode) -ForegroundColor Green
         Write-Warning "[END  ] Leaving: $($MyInvocation.Mycommand)"
 
         $MyReturn = [PSCustomObject]@{
             Mode = $mymode;
-            'StartingFreeMemory' = $FreePhysicalMemory;
+            'StartingFreeMemory' = $FreePhysicalMemory
             'FinalFreeMemory' = $FinalFreeGB;
             'TriggerGB' = $TriggerGB;
+            'AIUsedGB' = $AIusedGB;
             'ReturnCode' = $True
         }
         $MyReturn # return $MyMode

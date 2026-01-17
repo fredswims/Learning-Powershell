@@ -3,6 +3,7 @@ Function fjUnAiMe {
         .SYNOPSIS
         Frees up AI memory.
         AUTHOR:FAJ January 2026
+        REVISION HISTORY:FAJ 2026.01.17 Version 1.1.1
 
         .DESCRIPTION
         PURPOSE: Free-Java-AI-Memory. Stops WSAIFabricSvc and related processes when physical memory is low.
@@ -42,11 +43,11 @@ Function fjUnAiMe {
     #>
     [CmdletBinding()]
     param(
-        $TriggerGB = 2.567,             # Less than or equal triggers the -stop opton.
-        [switch]$Auto= $false,      # Automatically stop processes if memory is low but leave the service running; recall memory.
-        [switch]$Start = $false,    # Start the service again.
-        [switch]$Stop = $false,     # Stop the service and related processes.
-        [switch]$LeaveServiceRunning = $false # When stopping processes, leave the service running.
+        $TriggerGB = 0.500,         # Used with $Auto 
+        [switch]$Auto = $false,     # Free memory if 'Free Physical Memory' -le $TriggerGB
+        [switch]$Stop = $false,     # Free memory by stopping the related processes (WorkloadsSessionManager, WorkloadsSessionHost).
+        [switch]$StartService = $false, # Start the service.
+        [switch]$StopService = $false   # Stop the service.
     )
 
         Function Get-FreePhysicalMemory {
@@ -75,21 +76,24 @@ Function fjUnAiMe {
             
     #region main starts here
     write-host "$(get-date -Format "dddd yyyy.MM.dd HH:mm:ss K")"
-    # Write-Host "[*BEGIN  ] Starting: $($MyInvocation.Mycommand)" -ForegroundColor Green
-    Write-Host "[*BEGIN  ] Starting:`$pscommandpath $($PSCommandPath)" -ForegroundColor Green
+    # Write-Host "[*BEGIN  ] Starting: $($MyInvocation.Mycommand):" -ForegroundColor Green
+    Write-Host "[*BEGIN  ] Starting:`$pscommandpath $($PSCommandPath):V1" -ForegroundColor Green
 
     # Define Service and Process Names
     $ServiceName = "WSAIFabricSvc"
     $ProcessName = ( "WorkLoadsSessionManager", "WorkloadsSessionHost")
     [string]$MyMode="" # returned to caller. What was done.
     
+    if (-not $Auto -and -not $Stop -and -not $StartService -and -not $StopService) {
+        write-warning "No options selected. Reporting only"
+    }
     # Cant have -Start and -Stop option at the same time.
-    if ($Start -and $Stop) { Write-Warning "Both the -Start and -Stop options were selected. Terminating."; return }
+    if ($StartService -and $Stop) { Write-Warning "Both the -Start and -Stop switches were selected. Terminating."; return }
     # Are we elevated?
     $IsElevated = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
     Write-Host "IsElevated: $IsElevated "
-    if (($Stop -or $Start) -and !$IsElevated) {
-        Write-Warning "You must be elevated to run with -Stop or -Start option. Terminating."
+    if (($Auto -or $Stop -or $StartService -or $StopService) -and -not $IsElevated) {
+        Write-Warning "You must be elevated to run with any switches. Terminating."
         return "Not Elevated"
     }
     
@@ -105,7 +109,7 @@ Function fjUnAiMe {
     else {
         $beLowGB = $false
         write-host "Free Physical Memory is sufficient."
-        $MyMode += "[Sufficient-Memory] " 
+        # $MyMode += "[Sufficient-Memory] " 
     }
     
     # What processess are we looking for?
@@ -122,29 +126,43 @@ Function fjUnAiMe {
     $AIusedGB = $($tasks | Measure-Object -property WorkingSet64 -sum).sum /1GB
     Write-Host ("[{0:N3} GiB] Physical Memory Used by {1}" -f $($AIusedGB), $($ProcessName -join ' & ') )
     
-    if ((!$stop -and !$Start) -and ($beLowGB -and $Auto)) {
-        Write-Warning "Physical Memory is below or equal to $TriggerGB GiB and neither -Stop or -Start options were selected. Suggesting to run with -Stop option."
-        $stop=$true
-        $LeaveServiceRunning = $true
+    # -Auto works alone.
+    if ((!$stop -and !$StartService -and !$StopService) -and ($beLowGB -and $Auto)) {
+        Write-Warning -msg (
+            "Available Memory [$FreePhysicalMemory] is less than or equal to [$TriggerGB] GiB `
+            and neither -Stop or -Start switches were selected. `
+            -> Running with -Stop option. <-" `
+            )
+        $Stop=$true
+        $StopService = $false
     }
     
     try {
         if ($Stop) {
             $MyMode += "[Stop] "
-            $tasks.foreach{stop-process -id $_.id -force -Verbose} 
-
-            if (-not $LeaveServiceRunning) {
-                #neither of these two cmdlets return an object.
+            $tasks.foreach{stop-process -id $_.id -force -Verbose}
+        } 
+        
+        if ($StopService) {
+            #neither of these two cmdlets return an object.
+            Set-Service -Name $ServiceName -StartupType Disabled  -verbose
+            if (!(get-service -Name $ServiceName)) {
                 $MyMode += "[Service-Disabled] "
-                Set-Service -Name $ServiceName -StartupType Disabled  -verbose
-                Stop-Service -Name $ServiceName -Force -Verbose
+                Stop-Service -Name $ServiceName -Force -Verbose}
+            else {
+                    Write-Warning "[$ServiceName] is already stopped"
             }
         }
-        if ($Start) {
-            $MyMode += "[Start] "
+
+        if ($StartService) {
             #neither of these two cmdlets return an object.
-            Set-Service -Name $ServiceName -StartupType AutomaticDelayedStart -Verbose && `
-            Start-Service -Name $ServiceName -Verbose
+            Set-Service -Name $ServiceName -StartupType AutomaticDelayedStart -Verbose
+            if (!(get-service -Name $ServiceName)) {
+                $MyMode += "[Start] "
+                Start-Service -Name $ServiceName -Verbose}
+            else {
+                Write-Warning "[$ServiceName] is already running"
+            }
         }
     }
     catch {
@@ -157,7 +175,6 @@ Function fjUnAiMe {
             # show available memory
             SleepProgress -Seconds 4 # Give the system a moment to settle.
             $FinalFreeGB = Get-FreePhysicalMemory
-
         }
 
         $gs = Get-Service -name $ServiceName # don't let the object go down the pipeline.
@@ -176,13 +193,16 @@ Function fjUnAiMe {
         $MyReturn = [PSCustomObject]@{
             Mode = $mymode;
             'StartingFreeMemory' = $FreePhysicalMemory
-            'FinalFreeMemory' = $FinalFreeGB;
             'Trigger' = $TriggerGB;
             'AIUsed' = $AIusedGB;
+            'FinalFreeMemory' = $FinalFreeGB;
             'ReturnCode' = $True
         }
         $MyReturn # return $MyMode
     } #end finally
 } #end function fjUnAiMe
 
-    # fjUnAiMe
+    # source it 
+    #   . (join-path $home MyStuff fjUnAIme.ps1)
+    #  fjUnAiMe -Auto [-TriggerGB 5.000]
+    #  fjUnAiMe -Stopservice

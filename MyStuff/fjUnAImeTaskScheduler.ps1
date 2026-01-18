@@ -1,8 +1,110 @@
+[CmdletBinding()]
+param(
+    # [string]$TaskName # Name of scheduled task
+    [Switch]$Init # If set, initializes the scheduled task environment; otherwise, runs normally.
+    )
     <#
-        .SYNOPSIS
-        Frees up AI memory.
-        AUTHOR:FAJ January 2026
-        REVISION HISTORY:FAJ 2026.01.17 Version 1.1.1
+    .SYNOPSIS
+    Creates a hidden scheduled task to run the fjUnAImeWrapper.ps1 script every X minutes.
+    AUTHOR:FAJ January 2026
+    REVISION HISTORY:FAJ 2026.01.17 1.1.2
+    #>
+    
+# Code starts after all function definitions.
+ function New-HiddenScheduledTask {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)]
+        [string]$Name,
+
+        [Parameter(Mandatory)]
+        [string]$ScriptPath,
+
+        [Parameter()]
+        [int]$EveryMinutes = 15,
+
+        [Parameter()]
+        [string]$PwshPath = "pwsh.exe"
+    )
+
+    Write-Warning -msg "`n[$(get-date -Format "dddd yyyy.MM.ddTHH:mm:ss K")]" 
+    Write-Warning "In function $($MyInvocation.MyCommand.Name):"
+
+    if (-not (Test-Path $ScriptPath)) {
+        throw "Script not found: $ScriptPath"
+    }
+
+    # Build pwsh command with automatic -TaskName injection
+    $pwshArgs =
+        "-w Hidden -nonInteractive -noProfile -noLogo " +
+        "-file `"$ScriptPath`" " +
+        "-TaskName `"$Name`""
+
+    # Build schtasks command
+    $taskCommand = @(
+        "/create"
+        "/tn `"$Name`""
+        "/tr `"$PwshPath $pwshArgs`""
+        "/sc minute"
+        "/mo $EveryMinutes"
+        "/ru `"$env:USERNAME`""
+        "/rp *"
+    ) -join " "
+
+    Write-Host "Creating scheduled task [$Name]..."
+    Write-Host "You will be prompted for your password."
+
+    # Create the repeating task
+    $proc = Start-Process -FilePath "schtasks.exe" `
+        -ArgumentList $taskCommand `
+        -Wait `
+        -PassThru `
+        -NoNewWindow
+
+    if ($proc.ExitCode -ne 0) {
+        throw "schtasks.exe failed with exit code $($proc.ExitCode)"
+    }
+
+    # Add a one-time trigger in the past to force immediate run
+    # $runNowCmd = "/change /tn `"$Name`" /st 00:00 /sd 01/01/2000" #this doesnt work.
+<# 
+    $proc2 = Start-Process -FilePath "schtasks.exe" `
+        -ArgumentList $runNowCmd `
+        -Wait `
+        -PassThru `
+        -NoNewWindow
+
+    if ($proc2.ExitCode -ne 0) {
+        throw "schtasks.exe /change failed with exit code $($proc2.ExitCode)"
+    }
+ #>
+    Start-ScheduledTask -TaskName $Name # Trigger it immediately
+    Write-Host "Task '$Name' created and triggered immediately."
+}#end function New-HiddenScheduledTask
+
+#region Script Body 
+
+$ScriptPath = (join-path $home mystuff fjUnAImeWrapper.ps1)
+$Name = "fjUnAiMe"  # Name of scheduled task
+#is it already registered?
+if ($Init) {
+    Write-Warning "Initializing Scheduled Task Environment..."
+    Write-Host "Removing existing scheduled task [$Name] if it exists..."
+    Unregister-ScheduledTask -TaskName fjunaime -Verbose -Confirm:$false -ErrorAction SilentlyContinue
+    remove-item "C:\Users\freds\MyStuff\Logs\fjUnAImeTranscript.log" -force -verbose -ErrorAction SilentlyContinue
+}
+$Task = Get-ScheduledTask -TaskName $Name -ErrorAction SilentlyContinue
+if ($null -ne $Task) {
+    Write-Warning "Scheduled Task [$Name] already exists. No action taken.`n Try again with -Init switch to re-create."
+    return
+}
+New-HiddenScheduledTask -Name $Name -ScriptPath $ScriptPath -EveryMinutes 15 -PwshPath pwsh -Verbose
+#endregion Script Body #############################################################
+
+
+
+ # Prior Versions - do not use
+
 #>
 <#
 $transcriptPath = ".\logs\test.log"
@@ -251,91 +353,3 @@ function New-HiddenScheduledTask {
 }
 #>
 # New-HiddenScheduledTask -Name fjUnAiMePlease -ScriptPath (join-path $home mystuff fjunaime1.ps1) -EveryMinutes 16 -PwshPath pwsh -Verbose
-
-function New-HiddenScheduledTask {
-    [CmdletBinding()]
-    param(
-        [Parameter(Mandatory)]
-        [string]$Name,
-
-        [Parameter(Mandatory)]
-        [string]$ScriptPath,
-
-        [Parameter()]
-        [int]$EveryMinutes = 15,
-
-        [Parameter()]
-        [string]$PwshPath = "pwsh.exe"
-    )
-    <#
-        .SYNOPSIS
-        Frees up AI memory.
-        AUTHOR:FAJ January 2026
-        REVISION HISTORY:FAJ 2026.01.17 1.1.0
-    #>
-
-    Write-Warning -msg "`n[$(get-date -Format "dddd yyyy.MM.ddTHH:mm:ss K")]" 
-    Write-Warning "In function $($MyInvocation.MyCommand.Name):"
-
-    if (-not (Test-Path $ScriptPath)) {
-        throw "Script not found: $ScriptPath"
-    }
-
-    # Build pwsh command with automatic -TaskName injection
-    $pwshArgs =
-        "-w Hidden -nonInteractive -noProfile -noLogo " +
-        "-file `"$ScriptPath`" " +
-        "-TaskName `"$Name`""
-
-    # Build schtasks command
-    $taskCommand = @(
-        "/create"
-        "/tn `"$Name`""
-        "/tr `"$PwshPath $pwshArgs`""
-        "/sc minute"
-        "/mo $EveryMinutes"
-        "/ru `"$env:USERNAME`""
-        "/rp *"
-    ) -join " "
-
-    Write-Host "Creating scheduled task [$Name]..."
-    Write-Host "You will be prompted for your password."
-
-    # Create the repeating task
-    $proc = Start-Process -FilePath "schtasks.exe" `
-        -ArgumentList $taskCommand `
-        -Wait `
-        -PassThru `
-        -NoNewWindow
-
-    if ($proc.ExitCode -ne 0) {
-        throw "schtasks.exe failed with exit code $($proc.ExitCode)"
-    }
-
-    # Add a one-time trigger in the past to force immediate run
-    $runNowCmd = "/change /tn `"$Name`" /st 00:00 /sd 01/01/2000"
-<# 
-    $proc2 = Start-Process -FilePath "schtasks.exe" `
-        -ArgumentList $runNowCmd `
-        -Wait `
-        -PassThru `
-        -NoNewWindow
-
-    if ($proc2.ExitCode -ne 0) {
-        throw "schtasks.exe /change failed with exit code $($proc2.ExitCode)"
-    }
- #>
-    Start-ScheduledTask -TaskName $Name
-    Write-Host "Task '$Name' created and triggered immediately."
-}
-$ScriptPath = (join-path $home mystuff fjUnAImeWrapper.ps1)
-$Name = "fjUnAiMe"
-#is it already registered?
-$Task = Get-ScheduledTask -TaskName $Name -ErrorAction SilentlyContinue
-if ($null -ne $Task) {
-    Write-Host "Scheduled Task '$Name' already exists. No action taken."
-    return
-}
-New-HiddenScheduledTask -Name $Name -ScriptPath $ScriptPath -EveryMinutes 15 -PwshPath pwsh -Verbose
-# Start-ScheduledTask -TaskName fjUnAiMePlease
-# Unregister-ScheduledTask -TaskName fjunaimeplease

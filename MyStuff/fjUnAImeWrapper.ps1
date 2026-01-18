@@ -11,7 +11,7 @@ param(
         .SYNOPSIS
         Frees up AI memory.
         AUTHOR:FAJ January 2026
-        REVISION HISTORY:FAJ 2026.01.17 Version 1.1.1
+        REVISION HISTORY:FAJ 2026.01.17 Version 1.1.2
     #>
 
 function PopBurntToast {
@@ -101,7 +101,7 @@ function Test-IsScheduledTask {
 #   arguments: -w Hidden -nonInteractive -noProfile -noLogo `
             -file "C:\Users\freds\OneDrive\PowershellScripts\MyStuff\fjUnAIme1.ps1" 
 #dot source and then call the function
-$TranscriptPath= (join-path $home MyStuff Logs fjUnAImeTranscript.log)
+$TranscriptPath= (join-path $home MyStuff Logs "$($TaskName)Transcript.log")
 $Url = [System.Uri]::new($TranscriptPath).AbsoluteUri # convert to file:// URI for BurntToast link
 # $TranscriptPath= (join-path  Logs fjUnAImeTranscript.log) # relative to current directory set in task scheduler.     
 

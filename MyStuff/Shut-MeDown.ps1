@@ -100,37 +100,22 @@ Is there a way to have Windows 11 actually shut down?. https://learn.microsoft.c
         REVISION HISTORY:FAJ 2026.01.17 Version 1.2.0
 
         .DESCRIPTION
-        PURPOSE: Free-Java-AI-Memory. Stops WSAIFabricSvc and related processes when physical memory is low.
-        Optionally just stops the processes "WorkLoadsSessionManager", "WorkloadsSessionHost" and leaves the service running.
+        PURPOSE: Shut down the system in one of three mode bypassing Fast Startup
 
         .PARAMETER Id
-        ?Unique string identifying this header instance. Used for replacement or updating by reuse.
 
         .PARAMETER Title
-        ?The text displayed to the user as the header.
 
         .PARAMETER Arguments
-        ?String data passed to Activation if the header itself is clicked.
 
         .PARAMETER ActivationType
-        ?Enum specifying the activation type (defaults to Protocol).
 
         .INPUTS
         None. You cannot pipe input to this function.
 
         .OUTPUTS
-        Custom Object: 
-            Mode  - what actions were taken
-            Return - ($True/$False)
-        A BurntToast Notification
-
+            None.
         .EXAMPLE
-        ?New-BTHeader -Title 'First Category'
-        Creates a header titled 'First Category' for categorizing toasts.
-
-        .EXAMPLE
-        ?New-BTHeader -Id '001' -Title 'Stack Overflow Questions' -Arguments 'http://stackoverflow.com/'
-        Creates a header with ID '001' and links activation to a URL.
 
         .LINK
         ?https://github.com/Windos/BurntToast/blob/main/Help/New-BTHeader.md
@@ -144,20 +129,21 @@ param (
     })]
     [ValidateSet("FullShutdown", "Restart", "Hibernate", "ReportBootType")]
     [string]$Action = "ReportBootType",
+    [Int64]$TimeoutSeconds = 0,
     [switch]$AllEvents = $false    
 )
 switch ($Action) {
     "FullShutdown" {
         Write-Host "Initiating full shutdown..."
-        shutdown /s /f /t 0
+        shutdown /s /f /t $TimeoutSeconds
     }
     "Restart" {
         Write-Host "Initiating restart..."
-        shutdown /r /f /t 0
+        shutdown /r /f /t $TimeoutSeconds
     }
     "Hibernate" {
         Write-Host "Initiating hibernation..."
-        shutdown /h /f /t 0
+        shutdown /h
     }
     "ReportBootType" {
         Write-Host "Reporting last boot type..."

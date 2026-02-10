@@ -11,7 +11,7 @@ param(
         .SYNOPSIS
         Frees up AI memory.
         AUTHOR:FAJ January 2026
-        REVISION HISTORY:FAJ 2026.01.17 Version 1.1.2
+        REVISION HISTORY:FAJ 2026.02.09 1.1.3 - Updated revision on all files.
     #>
 
 function PopBurntToast {

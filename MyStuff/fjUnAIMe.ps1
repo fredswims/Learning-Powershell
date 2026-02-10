@@ -3,7 +3,7 @@ Function fjUnAiMe {
         .SYNOPSIS
         Frees up AI memory.
         AUTHOR:FAJ January 2026
-        REVISION HISTORY:FAJ 2026.01.17 Version 1.1.1
+        REVISION HISTORY:FAJ 2026.02.09 1.1.3 - Updated revision on all files.
 
         .DESCRIPTION
         PURPOSE: Free-Java-AI-Memory. Stops WSAIFabricSvc and related processes when physical memory is low.
@@ -44,6 +44,7 @@ Function fjUnAiMe {
     [CmdletBinding()]
     param(
         $TriggerGB = 0.500,         # Used with $Auto 
+        [switch]$StopAI,
         [switch]$Auto = $false,     # Free memory if 'Free Physical Memory' -le $TriggerGB
         [switch]$Stop = $false,     # Free memory by stopping the related processes (WorkloadsSessionManager, WorkloadsSessionHost).
         [switch]$StartService = $false, # Start the service.
@@ -84,6 +85,11 @@ Function fjUnAiMe {
     $ProcessName = ( "WorkLoadsSessionManager", "WorkloadsSessionHost")
     [string]$MyMode="" # returned to caller. What was done.
     
+    If ($StopAI) {
+    $Stop=$true
+    $StopService=$true
+}
+
     if (-not $Auto -and -not $Stop -and -not $StartService -and -not $StopService) {
         write-warning "No options selected. Reporting only"
     }

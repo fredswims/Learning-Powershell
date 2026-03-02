@@ -1,0 +1,153 @@
+
+Enabling Quicken to Be Excluded from Windows Recall Snapshots
+Overview
+Windows Recall allows users to prevent specific applications from being captured in screen snapshots. However, this exclusion mechanism only works for applications that expose a valid AppUserModelID (AUMID) through the Windows AppModel framework. Traditional Win32 applications—such as Quicken—often do not provide this identity, which prevents them from being added to Recall’s "Do not capture these apps" list.
+
+This document explains the technical requirements for Recall compatibility and outlines the steps Quicken’s developers would need to take to ensure the application can be excluded from Recall snapshots.
+
+Why Quicken Cannot Currently Be Excluded
+Although Quicken appears in the output of PowerShell’s Get-StartApps, this does not indicate that it has a valid AppModel identity. Get-StartApps lists Start Menu entries, including classic shortcuts (.lnk files), which may contain an AppID but do not constitute a true AUMID.
+
+Windows Recall relies exclusively on packaged application identities, not Start Menu metadata. As a result, Recall cannot recognize or target Quicken for exclusion.
+
+Requirements for Recall Exclusion Compatibility
+To be eligible for exclusion from Windows Recall snapshots, an application must meet one of the following criteria:
+
+1. Be packaged as an MSIX application
+MSIX packaging provides:
+
+A valid AppUserModelID
+
+Integration with the Windows AppModel subsystem
+
+Full compatibility with Windows privacy controls, including Recall
+
+2. Register a packaged-style AppUserModelID programmatically
+If MSIX packaging is not feasible, a classic Win32 application can still expose a valid AUMID by registering it explicitly with the Windows Shell. This requires:
+
+Creating a unique, persistent AUMID
+
+Registering it under the appropriate AppModel registry keys
+
+Ensuring the application launches through the registered identity
+
+This approach allows Recall and other Windows privacy features to recognize the application as a first-class entity.
+
+Recommended Implementation Path
+Option A: Provide an MSIX-packaged version of Quicken
+This is the most robust and future-proof solution. Benefits include:
+
+Full Windows AppModel support
+
+Clean installation and updates
+
+Improved security and isolation
+
+Compatibility with Recall’s exclusion list
+
+Option B: Register a real AppUserModelID for the existing Win32 application
+If MSIX packaging is not currently viable, Quicken can:
+
+Define a stable AUMID (e.g., Quicken.Inc.Quicken.App)
+
+Register it under HKCU\Software\Classes\AppUserModelId or the appropriate AppModel keys
+
+Ensure the application launches using this identity
+
+This enables Windows Recall to recognize Quicken as an excludable application.
+
+Technical Notes
+A Start Menu shortcut AppID is not sufficient for Recall compatibility.
+
+The AUMID must be registered through the Windows AppModel system.
+
+The application must launch using the registered identity for Recall to associate snapshots with it.
+
+Conclusion
+To allow users to exclude Quicken from Windows Recall snapshots, the application must expose a valid AppUserModelID recognized by the Windows AppModel framework. This can be achieved either by adopting MSIX packaging or by programmatically registering a packaged-style AUMID for the existing Win32 application.
+
+Implementing one of these approaches will ensure Quicken integrates cleanly with Windows privacy controls and meets user expectations for data protection.
+
+Enabling Quicken to Be Excluded from Windows Recall Snapshots
+Overview
+Windows Recall allows users to prevent specific applications from being captured in screen snapshots. However, this exclusion mechanism only works for applications that expose a valid AppUserModelID (AUMID) through the Windows AppModel framework. Traditional Win32 applications—such as Quicken—often do not provide this identity, which prevents them from being added to Recall’s "Do not capture these apps" list.
+
+This document explains the technical requirements for Recall compatibility and outlines the steps Quicken’s developers would need to take to ensure the application can be excluded from Recall snapshots.
+
+Why Quicken Cannot Currently Be Excluded
+Although Quicken appears in the output of PowerShell’s Get-StartApps, this does not indicate that it has a valid AppModel identity. Get-StartApps lists Start Menu entries, including classic shortcuts (.lnk files), which may contain an AppID but do not constitute a true AUMID.
+
+Windows Recall relies exclusively on packaged application identities, not Start Menu metadata. As a result, Recall cannot recognize or target Quicken for exclusion.
+
+Requirements for Recall Exclusion Compatibility
+To be eligible for exclusion from Windows Recall snapshots, an application must meet one of the following criteria:
+
+1. Be packaged as an MSIX application
+MSIX packaging provides:
+
+A valid AppUserModelID
+
+Integration with the Windows AppModel subsystem
+
+Full compatibility with Windows privacy controls, including Recall
+
+2. Register a packaged-style AppUserModelID programmatically
+If MSIX packaging is not feasible, a classic Win32 application can still expose a valid AUMID by registering it explicitly with the Windows Shell. This requires:
+
+Creating a unique, persistent AUMID
+
+Registering it under the appropriate AppModel registry keys
+
+Ensuring the application launches through the registered identity
+
+This approach allows Recall and other Windows privacy features to recognize the application as a first-class entity.
+
+Recommended Implementation Path
+Option A: Provide an MSIX-packaged version of Quicken
+This is the most robust and future-proof solution. Benefits include:
+
+Full Windows AppModel support
+
+Clean installation and updates
+
+Improved security and isolation
+
+Compatibility with Recall’s exclusion list
+
+Option B: Register a real AppUserModelID for the existing Win32 application
+If MSIX packaging is not currently viable, Quicken can:
+
+Define a stable AUMID (e.g., Quicken.Inc.Quicken.App)
+
+Register it under HKCU\Software\Classes\AppUserModelId or the appropriate AppModel keys
+
+Ensure the application launches using this identity
+
+This enables Windows Recall to recognize Quicken as an excludable application.
+
+Technical Notes
+A Start Menu shortcut AppID is not sufficient for Recall compatibility.
+
+The AUMID must be registered through the Windows AppModel system.
+
+The application must launch using the registered identity for Recall to associate snapshots with it.
+
+Additional Behavior Observed in Windows Recall
+When deleting all snapshots related to Quicken, Windows Recall offers to add Quicken to the app exclusion filter. This suggests that Recall can dynamically detect applications involved in snapshot management and propose adding them to the exclusion list, even if the application does not have a fully registered AppUserModelID.
+
+This behavior enhances user experience by simplifying the process of excluding apps like Quicken from snapshot capture, despite the technical limitations described above.
+
+Conclusion
+To allow users to exclude Quicken from Windows Recall snapshots, the application must expose a valid AppUserModelID recognized by the Windows AppModel framework. This can be achieved either by adopting MSIX packaging or by programmatically registering a packaged-style AUMID for the existing Win32 application.
+
+Implementing one of these approaches will ensure Quicken integrates cleanly with Windows privacy controls and meets user expectations for data protection.
+
+Apply revision
+Reject
+Ask
+
+
+
+
+
+

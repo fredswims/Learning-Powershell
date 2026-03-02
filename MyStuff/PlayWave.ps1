@@ -106,8 +106,8 @@ Function fjPlayWav2 {
     }
 }
 
-cd "C:\Users\freds\OneDrive\Documents\EchoLink\wav"
-$files=gci -filter f*
+push-location "C:\Users\freds\OneDrive\Documents\EchoLink\wav"
+$files=get-childitem -filter f*
 # $files.fullname|fjplaywav2 -Async
-(get-item f*) | fjpt -Verbose
+(get-item f*) | fjPlayWav2 -Verbose
 # fjpt -Paths (Get-Item f*) -Verbose

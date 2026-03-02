@@ -1,0 +1,65 @@
+Running a here‑string is wonderfully simple once you know the trick: you don’t “run” the here‑string itself — you run whatever you stored inside it.
+
+Let me show you the three patterns PowerShell supports, and you can pick the one that fits your workflow.
+
+⭐ 1. Store text → then execute it with Invoke-Expression
+
+$fred = @"
+Write-Host 'Hello from inside the here-string'
+Get-Date
+"@
+
+Invoke-Expression $fred
+
+This treats the contents of the here‑string as PowerShell code and executes it.
+
+Important: Invoke-Expression is powerful but should be used only when you intend to run dynamically generated code.
+
+⭐ 2. Store text → pipe it into PowerShell
+
+This avoids Invoke-Expression and is sometimes cleaner:
+
+$fred = @"
+Write-Host 'Hello again'
+"@
+
+$fred | pwsh -Command -
+
+This runs the here‑string as if it were a script file.
+
+⭐ 3. Write the here‑string to a .ps1 file → run the script
+
+$fred = @"
+Write-Host 'Running from a file'
+"@
+
+$fred | Set-Content C:\temp\demo.ps1
+& C:\temp\demo.ps1
+
+This is the safest and most explicit method.
+
+⭐ 4. If your here‑string contains data, not code
+
+Then you don’t “run” it — you use it:
+
+$fred = @"
+line 1
+line 2
+line 3
+"@
+
+Write-Host $fred
+
+✔️ Quick reminder on correct here‑string syntax
+
+$fred = @"
+<your multi-line content>
+"@
+
+@" must be at the start of the line
+
+"@ must be at the end of the line
+
+No spaces or tabs around either delimiter
+
+If you want, tell me what kind of content you’re pasting — code, JSON, XML, logs, SQL, whatever — and I’ll show you the cleanest way to “run” or use it.

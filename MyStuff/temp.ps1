@@ -74,3 +74,16 @@ function fgetProfile {
     copy-item -confirm -path $RepositoryProfile -destination $LocalProfile
 }
 set-alias getProfileFromRepository -value fgetProfile -Option Readonly -passthru | format-list;#remove-variable thisPath#
+
+
+select-string -path $profile.CurrentUserAllHosts -Pattern  '^\s*function fj.+\{' `
+| ForEach-Object {$_.line.Substring(0,$($_.Line.IndexOf("{")+1))}
+
+
+select-string -path $profile.CurrentUserAllHosts -Pattern  '^\s*function fj.+[\s?\{]' | ForEach-Object {$_.line.Substring(0,$_.Line.IndexOf("{")).Substring($_.Line.IndexOf(" "))}
+select-string -path $profile.CurrentUserAllHosts -Pattern  '^\s*function fj[a-z]+\{' 
+
+
+cls;sprofile -MyFunctions | ForEach-Object {$_.line.Substring((0),$($_.Line.IndexOf("{")+1)).substring($_.indexof(" "))}
+
+

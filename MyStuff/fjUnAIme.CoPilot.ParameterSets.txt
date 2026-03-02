@@ -1,0 +1,142 @@
+Here’s the clean, conceptual explanation you’re looking for — and since you already think deeply about PowerShell internals, I’ll go beyond the surface and show how parameter sets shape the binder’s decision-making.
+
+Parameter Sets in PowerShell
+
+Parameter sets are PowerShell’s way of defining mutually exclusive “modes” of invocation for a single function or cmdlet. They let you overload a command so that different combinations of parameters trigger different execution paths — without ambiguity.
+
+Think of a parameter set as a contract that says:
+
+“If the user supplies this parameter, then these other parameters become valid, and those become illegal.”
+
+Why Parameter Sets Exist
+
+PowerShell’s binder needs a deterministic way to figure out which version of your function you intend to call. Without parameter sets, a function with many optional parameters would be ambiguous or impossible to validate.
+
+Parameter sets solve three problems:
+
+1. Disambiguation
+
+If two parameters cannot logically be used together, put them in different sets.
+
+2. Overload-like behavior
+
+You can design a single function that behaves differently depending on which set is chosen.
+
+3. Pipeline binding clarity
+
+Parameter sets help the binder decide which parameter should bind to pipeline input.
+
+How PowerShell Chooses a Parameter Set
+
+This is the part most people never think about — but you will appreciate the nuance.
+
+PowerShell resolves the parameter set using this priority order:
+
+1. Explicitly bound parameters
+
+If you type -ComputerName, and that parameter only exists in one set, the binder immediately selects that set.
+
+2. Pipeline binding
+
+If pipeline input arrives and only one parameter in one set accepts that type, that set wins.
+
+3. Default parameter set
+
+If ambiguity remains, PowerShell falls back to the function’s declared DefaultParameterSetName.
+
+4. Ambiguity → runtime error
+
+If the binder cannot choose a set unambiguously, you get:
+
+Parameter set cannot be resolved using the specified named parameters.
+
+You’ve probably hit this when experimenting with pipeline-binding demos.
+
+A Minimal Example
+
+Here’s a simple function with two mutually exclusive modes:
+
+function Get-Thing {
+    [CmdletBinding(DefaultParameterSetName='ByName')]
+    param(
+        [Parameter(ParameterSetName='ByName', Mandatory)]
+        [string]$Name,
+
+        [Parameter(ParameterSetName='ById', Mandatory)]
+        [int]$Id
+    )
+
+    switch ($PSCmdlet.ParameterSetName) {
+        'ByName' { "Looking up by name: $Name" }
+        'ById'   { "Looking up by ID: $Id" }
+    }
+}
+
+Usage:
+
+Get-Thing -Name 'Server01'   # selects ByName
+Get-Thing -Id 42             # selects ById
+
+If you try:
+
+Get-Thing -Name 'X' -Id 1
+
+You get a parameter-set resolution error.
+
+Subtle Behaviors You’ll Appreciate
+
+1. A parameter can belong to multiple sets
+
+This is how you create shared parameters:
+
+[Parameter(ParameterSetName='A')]
+[Parameter(ParameterSetName='B')]
+[switch]$VerboseMode
+
+2. Mandatory is evaluated per set
+
+A parameter can be mandatory in one set and optional in another.
+
+3. Pipeline binding can force a parameter set
+
+If only one parameter in one set accepts pipeline input, that set becomes the chosen one even if the user didn’t specify anything else.
+
+This is why pipeline-binding demos often “lock” you into a set unexpectedly.
+
+4. The binder resolves sets before running your code
+
+This means you cannot dynamically change parameter-set membership at runtime.
+
+How to Inspect the Chosen Parameter Set
+
+Inside your function:
+
+$PSCmdlet.ParameterSetName
+
+This is the canonical way to branch logic.
+
+Why Parameter Sets Matter for Ergonomic API Design
+
+Given your interest in ergonomic wrappers and predictable pipeline semantics, parameter sets are one of the most powerful tools you have:
+
+They prevent users from invoking your function in invalid combinations.
+
+They let you design clean, intention-revealing APIs.
+
+They make pipeline behavior deterministic.
+
+They allow you to overload behavior without creating multiple functions.
+
+They’re one of the few places where PowerShell’s binder gives you real leverage over how your function “feels” to use.
+
+If you want, I can walk through:
+
+how parameter sets interact with pipeline binding in edge cases
+
+how to design “ergonomic” parameter sets for wrappers like your schtasks.exe tooling
+
+how to debug parameter-set resolution with tracing
+
+or a deep dive into how the binder actually walks the parameter metadata
+
+Just tell me which direction you want to explore next.

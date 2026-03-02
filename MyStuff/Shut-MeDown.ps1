@@ -125,9 +125,9 @@ Is there a way to have Windows 11 actually shut down?. https://learn.microsoft.c
 [CmdletBinding()]
 param (
     [ArgumentCompleter({
-        'FullShutdown', 'Restart', 'Hibernate', 'ReportBootType'
+        'FullShutdown', 'Restart', 'Hibernate', 'Sleep', 'ReportBootType'
     })]
-    [ValidateSet("FullShutdown", "Restart", "Hibernate", "ReportBootType")]
+    [ValidateSet("FullShutdown", "Restart", "Hibernate", "Sleep", "ReportBootType")]
     [string]$Action = "ReportBootType",
     [Int64]$TimeoutSeconds = 0,
     [switch]$AllEvents = $false    
@@ -144,6 +144,22 @@ switch ($Action) {
     "Hibernate" {
         Write-Host "Initiating hibernation..."
         shutdown /h
+    }
+    "Sleep" {
+    # powershell.exe -command "(Add-Type '[DllImport(\"user32.dll\")]public static extern int SendMessage(int hWnd, int hMsg, int wParam, int lParam);' -Name a -Pas)::SendMessage(-1,0x0112,0xF170,2)"
+# function Sleep-S0 {
+Add-Type @"
+using System;
+using System.Runtime.InteropServices;
+public class SleepHelper {
+    [DllImport("user32.dll")]
+    public static extern int SendMessage(int hWnd, int hMsg, int wParam, int lParam);
+}
+"@
+    [SleepHelper]::SendMessage(-1, 0x0112, 0xF170, 2)
+# }
+        # Write-Host "Initiating sleep (S0)..."
+        # Sleep-S0
     }
     "ReportBootType" {
         Write-Host "Reporting last boot type..."

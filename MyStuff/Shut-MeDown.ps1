@@ -160,7 +160,7 @@ public class SleepHelper {
 # }
         # Write-Host "Initiating sleep (S0)..."
         # Sleep-S0
-    }
+    } # End of Sleep case
     "ReportBootType" {
         Write-Host "Reporting last boot type..."
         if ($AllEvents.IsPresent) { $all=100 } else { $all=1 }
@@ -182,8 +182,8 @@ public class SleepHelper {
                 Write-Host "No boot event found."
             }
         }
-    } 
-}
+    } # End of ReportBootType case 
+} # End of switch statement
 
 <# 
 $logPath = "$env:ProgramData\BootTypeLog.txt"
